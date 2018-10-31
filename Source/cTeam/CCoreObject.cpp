@@ -200,7 +200,7 @@ void CoreObject::DischargeArmor( float MaxDist, float Weight, float SpeedRatio )
 					pInitSpeed = new D3DXVECTOR3( Vec );
 					break;
 			}
-		pArmor_Index.at(i)->Break(*pInitSpeed, DelayFrame);
+		pArmor_Index.at(i)->Break(*pInitSpeed, (unsigned int)DelayFrame);
 
 			
 		}

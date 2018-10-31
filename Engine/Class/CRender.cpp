@@ -155,7 +155,7 @@ bool Render2D::Begin(RENDER2D_TYPE R2D_TYPE)
 	case R2D_PORIGON:
 		Render2D_Porigon(pTransform);
 		break;
-	case R2D_RORIGON_ROTATE:
+	case R2D_PORIGON_ROTATE:
 		Render2D_Porigon_Rotate(pTransform);
 		break;
 	case R2D_TEXTURE_SIZE:
