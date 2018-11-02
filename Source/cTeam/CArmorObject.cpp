@@ -43,6 +43,7 @@ void ArmorObject::Update()
 		this->transform.Position += this->Speed;
 		this->Speed += GRAVITY;
 	}
+
 	// 
 	if( bBreak && 0 < DelayFrameForDrop )
 	{
