@@ -71,6 +71,9 @@ public:
 	Transform*	pTransform;
 	Texture*	pTexture;
 
+	bool bRender;
+
+public:
 	//コンストラクタ
 	Render3D();
 	Render3D(Transform* pTransform, Texture* pTexture);
@@ -84,6 +87,8 @@ public:
 class Render2D:public Render
 {
 private:
+
+public:
 
 public:
 	Transform2* pTransform;

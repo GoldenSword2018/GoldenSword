@@ -58,6 +58,7 @@ typedef struct MeshTag
 void XModel_Initialize();	//‰Šú‰»
 void XModel_Finalize();		//I—¹
 
+void NXModel_Load(MeshData *pMesh, char ModelFile[10], D3DXVECTOR3* pvecPosition);
 void XModel_Load(MeshData *pMesh, LPSTR szXFileName, D3DXVECTOR3* pvecPosition);		//ƒ‚ƒfƒ‹“Ç‚İ‚İ
 void XModel_Render(MeshData *pMesh);	//•`‰æ
 void XModel_Render(MeshData *pMesh, D3DXMATRIXA16 mtx);

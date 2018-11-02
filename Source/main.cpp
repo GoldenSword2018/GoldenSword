@@ -17,6 +17,8 @@
 
 #define MODEL_FILE ()
 
+#include"CTransform.h"
+
 //Class
 #include"CUI.h"
 
@@ -80,6 +82,7 @@ void Main_UpdateBegin(void)
 void Main_Render(void)
 {
 	//XModel_Render();
+	Transform::ResetConvert();		//•ÏŠ·”»’è‚ğ‰Šú‰»
 
 	CTeamProt_Render();
 	uiSprite.render.Begin(R2D_SPRITE_ROTATE);
