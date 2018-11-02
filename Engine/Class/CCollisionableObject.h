@@ -23,7 +23,6 @@
 //	マクロ定義	define
 //================================================
 
-#define Squared( a ) ( a * a ) // これ危険かも 要確認 ------CAUTION!>
 
 //================================================
 //	列挙型		enum
@@ -70,11 +69,12 @@ public:
 class ShapeSphere : public Shape
 {
 public:
-	D3DXVECTOR3 Pos;
+	D3DXVECTOR3* pParentPos; // 持ち主の位置ポインタ ( オブジェクト中央を想定 )
+	D3DXVECTOR3 GapPos; // 持ち主との位置の補正（オブジェクト中央からずらす）
 	float Radius;
 public:
-	ShapeSphere( D3DXVECTOR3 Pos, float Radius );
-	ShapeSphere( float x, float y, float z, float Radius );
+	ShapeSphere( D3DXVECTOR3* pParentPos, float Radius, D3DXVECTOR3 GapPos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f ));
+public:
 	~ShapeSphere();
 };
 
