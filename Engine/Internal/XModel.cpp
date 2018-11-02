@@ -11,9 +11,9 @@
 //===============================================
 //	インクルード	include
 //===============================================
+#define _CRT_SECURE_NO_WARNINGS
 #include"common.h"
 #include<d3dx9.h>
-#define _CRT_SECURE_NO_WARNINGS
 #include<string.h>
 #include<Windows.h>
 
