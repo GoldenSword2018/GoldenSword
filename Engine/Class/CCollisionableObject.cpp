@@ -4,7 +4,10 @@
 //===============================================
 //	変更者 Changed By
 //		Name:	DATE:
-//
+//		Name: Yuto Hashimoto DATE: 2018/11/02
+//	ShapeSphereクラスのメンバ,コンストラクタを改変
+//  中心座標を持ち主のアドレス参照に変更した.
+//	GapPosについては未だ活用せず.
 //-----------------------------------------------
 
 //===============================================
@@ -45,17 +48,11 @@ Shape::~Shape()
 //  コンストラクタ デストラクタ
 //-------------------------------------
 
-ShapeSphere::ShapeSphere( D3DXVECTOR3 init_Pos, float init_Radius )
-	: Shape( SHAPE_TYPE::SPHERE ), 
-	Pos( init_Pos ), Radius( init_Radius )
+ShapeSphere::ShapeSphere( D3DXVECTOR3* init_pParentPos, float init_Radius, D3DXVECTOR3 init_GapPos )
+	: Shape( SHAPE_TYPE::SPHERE ),
+	 Radius( init_Radius ), GapPos( init_GapPos )
 {
-	
-}
-ShapeSphere::ShapeSphere( float init_x, float init_y, float init_z, float init_Radius )
-	: Shape( SHAPE_TYPE::SPHERE ), 
-	Pos( init_x, init_y, init_z ), Radius( init_Radius )
-{
-
+	pParentPos = init_pParentPos;
 }
 ShapeSphere::~ShapeSphere()
 {
@@ -89,7 +86,7 @@ ShapeCuboid::~ShapeCuboid()
 
 bool Collision::SphereVsSphere( ShapeSphere& Sphere0, ShapeSphere& Sphere1 )
 {
-	D3DXVECTOR3 vecLength = Sphere1.Pos - Sphere0.Pos;
+	D3DXVECTOR3 vecLength = *(Sphere1.pParentPos) - *(Sphere0.pParentPos);
 	FLOAT fLength = D3DXVec3LengthSq(&vecLength);
 	if( ( Sphere0.Radius + Sphere1.Radius ) * ( Sphere0.Radius + Sphere1.Radius )  > fLength )
 	{ // hit 
