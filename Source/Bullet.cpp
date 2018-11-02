@@ -91,7 +91,7 @@ void Bullet_Render()
 //-------------------------------------
 //	生成
 //-------------------------------------
-void Bullet_Create(D3DXVECTOR3 position, D3DXVECTOR3 face, BULLET_TYPE type)
+void Bullet_Create(D3DXVECTOR3 position, D3DXVECTOR3 face, Bullet::TYPE type)
 {
 	for(int i= 0; i< BULLET_MAX; i++)
 	{
@@ -147,14 +147,14 @@ Bullet::Bullet():ColSphape(this->BulletMesh.vecPosition,0.5f)
 
 Bullet::Bullet(Transform* pTransform, Texture* pTexture):GameObject(pTransform,pTexture),ColSphape(pTransform->Position,0.5f)
 {
-	type = BULLET_NORMAL;
+	type = NORMAL;
 	Bullet();
 }
 
 //-------------------------------------
 //	弾のタイプ設定
 //-------------------------------------
-void Bullet::TypeSet(BULLET_TYPE tyep)
+void Bullet::TypeSet(TYPE tyep)
 {
 	this->type = type;
 }
@@ -170,13 +170,13 @@ void Bullet::Update()
 
 	switch (this->type)
 	{
-	case BULLET_NORMAL:
+	case NORMAL:
 		//スプライトの中心座標を更新する
 		this->BulletMesh.vecPosition += this->face * BULLET_NORMAL_SPEED;
 		break;
 
 	//回転させる弾
-	case BULLET_TORNADO:
+	case TORNADO:
 		this->BulletMesh.vecPosition += this->face * BULLET_NORMAL_SPEED;
 		//this->transform.Position = MainPosition;
 
@@ -215,7 +215,7 @@ bool Bullet::GetEnable()
 //--------------------------------------
 //	弾を設定
 //--------------------------------------
-void Bullet::SetBullet(D3DXVECTOR3 position, D3DXVECTOR3 face, BULLET_TYPE type)
+void Bullet::SetBullet(D3DXVECTOR3 position, D3DXVECTOR3 face, TYPE type)
 {
 	D3DXVec3Normalize(&face,&face);		//単位化
 	//this->MainPosition = position;

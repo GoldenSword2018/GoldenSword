@@ -12,7 +12,6 @@
 
 using namespace std;
 
-
 #include"CGameObject.h"
 #include"CBodyObject.h"
 #include"CArmorObject.h"

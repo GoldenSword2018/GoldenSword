@@ -108,7 +108,7 @@ void CoreObject::Update()
 				Hit();
 				Bullet_GetBullet(i)->SetFace(face);
 				Bullet_GetBullet(i)->SetPos(this->transform.Position - ColShape.Radius * face * 1.0f);
-				Screwdrop_Create(Bullet_GetBullet(i)->ColSphape.Pos, CorrectSphere.Pos, BULLET_NORMAL, *Bullet_GetBullet(i)->GetFace());
+				Screwdrop_Create(Bullet_GetBullet(i)->ColSphape.Pos, CorrectSphere.Pos, Bullet::NORMAL, *Bullet_GetBullet(i)->GetFace());
 				Bullet_GetBullet(i)->DisEnable();
 			}
 		}
