@@ -9,6 +9,13 @@
 //	BodyObject	
 //===============================================
 
+//-------------------------------------
+//	コンストラクタ
+//-------------------------------------
+BodyObject::BodyObject(Transform* pTransform,Texture* pTexture):GameObject(pTransform,pTexture)
+{
+
+}
 
 
 
