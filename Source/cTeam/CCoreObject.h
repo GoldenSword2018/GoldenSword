@@ -40,28 +40,33 @@ public:
 
 private:
 	vector<ArmorObject*> pArmor_Index;	//アーマーオブジェクト
-	BodyObject*	pBodyObject;
-	CORE_DISCHARGE_JUDGE_TYPE Type;
-	D3DXVECTOR3 face;
+	BodyObject*	pBodyObject;			//ボディオブジェクト
+	
+	CORE_DISCHARGE_JUDGE_TYPE Type;		//飛び方判定タイプ
+	D3DXVECTOR3 face;					//飛ぶ向き
 
 public:
-	bool bHit;
-	ShapeSphere ColShape;
-	ShapeSphere CorrectSphere;			// 補正球
-	CoreObject(Transform* pTransform, Texture* pTexture):CoreObject(pTransform,pTexture,CORE_JUDGE_TYPE_0) {};
-	CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type);
+	bool bHit;							//当たった
+	ShapeSphere ColShape;				//ネジ自身
+	ShapeSphere CorrectSphere;			//補正球
+
+public:
+	CoreObject(Transform* pTransform, Texture* pTexture) :CoreObject(pTransform, pTexture, CORE_JUDGE_TYPE_0) {};
+	CoreObject(Transform* pTransform, CORE_DISCHARGE_JUDGE_TYPE Type) :CoreObject(pTransform, &Texture(), Type) {};
+	CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type) :CoreObject(pTransform, pTexture, Type, { 0.0f,0.0f,-1.0f }) {};
 	CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face);
 	~CoreObject();
 
+public:
 	void Hit();
+
+	void SetBody(BodyObject* pBodyObject);
 	void Set(ArmorObject* pArmorObject);
 	void Set(ArmorObject* pArmorObject, BodyObject* pBodyObject);
 	void Set_JudgeType(CORE_DISCHARGE_JUDGE_TYPE Type);
 	void Update();
 	void Render();
 	D3DXVECTOR3 GetFace();
-
-	
 
 	void DischargeArmor( float MaxDistance, float Weight, float SpeedRatio = 1.0f ); // Dist^2 * Weight = DelayFrame
 

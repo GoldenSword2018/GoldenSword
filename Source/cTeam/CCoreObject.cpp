@@ -22,29 +22,14 @@
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type) :GameObject(pTransform, pTexture), ColShape(pTransform->Position, 0.5f), CorrectSphere(pTransform->Position, 1.0f)
-{
-	this->Type = Type;
-	this->face = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
-}
-
-CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face) : GameObject(pTransform, pTexture), ColShape(pTransform->Position, 0.5f), CorrectSphere(pTransform->Position, 1.0f)
+CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face) 
+: 
+	GameObject(pTransform, pTexture),
+	ColShape(pTransform->Position, 0.5f),
+	CorrectSphere(pTransform->Position, 1.0f)
 {
 	this->face = face;
 }
-
-void CoreObject::Set(ArmorObject* pArmorObject)
-{
-	this->pArmor_Index.push_back(pArmorObject);
-}
-
-void CoreObject::Set(ArmorObject* pArmorObject,BodyObject* pBodyObject)
-{
-	this->pArmor_Index.push_back(pArmorObject);
-	this->pBodyObject = pBodyObject;
-	this->Set_Parent(this->pBodyObject);
-}
-
 
 //-------------------------------------
 //	デストラクタ
@@ -54,6 +39,31 @@ CoreObject::~CoreObject()
 
 }
 
+//-------------------------------------
+//	胴体オブジェクト登録
+//-------------------------------------
+void CoreObject::SetBody(BodyObject* pBodyObject)
+{
+	this->pBodyObject = pBodyObject;
+}
+
+//-------------------------------------
+//	アーマーオブジェクトを登録
+//-------------------------------------
+void CoreObject::Set(ArmorObject* pArmorObject)
+{
+	this->pArmor_Index.push_back(pArmorObject);
+}
+
+//--------------------------------------
+//	アーマーオブジェクトと胴体を同時に登録
+//--------------------------------------
+void CoreObject::Set(ArmorObject* pArmorObject,BodyObject* pBodyObject)
+{
+	this->pArmor_Index.push_back(pArmorObject);
+	this->pBodyObject = pBodyObject;
+	this->Set_Parent(this->pBodyObject);
+}
 
 //-------------------------------------
 //	弾に当たった
@@ -61,6 +71,7 @@ CoreObject::~CoreObject()
 void CoreObject::Hit()
 {
 	this->bHit = true;
+
 	if(this->pArmor_Index.size() > 0)
 	{
 		DischargeArmor( 11.0f, 20.0f);
@@ -72,8 +83,10 @@ void CoreObject::Hit()
 //-------------------------------------
 void CoreObject::Update()
 {
+	//弾との当たり判定
 	for (int i = 0; i<BULLET_MAX; i++)
 	{
+		//弾が有効
 		if (Bullet_IsEnable(i))
 		{
 			//引き寄せる	
@@ -88,14 +101,8 @@ void CoreObject::Update()
 					Bullet_GetBullet(i)->CorrectFace(vec);
 				}
 			}
-		}
-	}
 
-	for (int i = 0; i<BULLET_MAX; i++)
-	{
-		
-		if (Bullet_IsEnable(i))
-		{
+			//ネジ本体の当たり判定
 			if (Collision::SphereVsSphere(ColShape, Bullet_ColShape(i)) && this->pArmor_Index.size() > 0)
 			{
 				Hit();
@@ -105,8 +112,8 @@ void CoreObject::Update()
 				Bullet_GetBullet(i)->DisEnable();
 			}
 		}
-		
 	}
+
 
 }
 
@@ -115,22 +122,30 @@ void CoreObject::Update()
 //-------------------------------------
 void CoreObject::Render()
 {
+	//アーマーオブジェクトを持っている。
 	if (this->pArmor_Index.size() > 0)
 	{
 		DebugBufferManager::Sphere_BatchBegin();
 
+		//Xモデルの行列変換
 		D3DXMATRIXA16 mtxWorld;
 		D3DXMATRIXA16 mtxTranslation;
 		D3DXMATRIXA16 mtxTranslation2;
 		D3DXMATRIXA16 mtxRotation;
 		D3DXMATRIXA16 mtxScaling;
+
 		D3DXMatrixTranslation(&mtxTranslation, this->transform.Position.x, this->transform.Position.y, this->transform.Position.z);
 		D3DXMatrixTranslation(&mtxTranslation2, 0.0f, -0.5f, 0.0f);
 		D3DXMatrixRotationY(&mtxRotation, D3DX_PI);
 		D3DXMatrixScaling(&mtxScaling, 0.4f, 0.4f, 0.4f);
+
+		//合成
 		mtxWorld = mtxTranslation2*mtxRotation*mtxScaling*mtxTranslation;
+		
+		//ネジの描画
 		XModel_Render(GetMeshData(ScrewIndex), mtxWorld);
 
+		//当たり判定の描画
 		DebugBufferManager::BatchDrawSphere(&this->ColShape);
 		DebugBufferManager::BatchDrawSphere(&this->CorrectSphere);
 
@@ -143,7 +158,7 @@ void CoreObject::Render()
 //-------------------------------------
 D3DXVECTOR3 CoreObject::GetFace()
 {
-	return face;
+	return this->face;
 }
 
 //-------------------------------------
@@ -159,6 +174,7 @@ void CoreObject::Set_JudgeType(CORE_DISCHARGE_JUDGE_TYPE Type)
 //-------------------------------------
 void CoreObject::DischargeArmor( float MaxDist, float Weight, float SpeedRatio )
 {
+	//持っている全てのアーマーオブジェクトにアクセス
 	for(int i = 0; i < pArmor_Index.size(); i++ )
 	{
 		const D3DXVECTOR3* pInitSpeed;
@@ -171,6 +187,7 @@ void CoreObject::DischargeArmor( float MaxDist, float Weight, float SpeedRatio )
 
 		if( SquaredDist < MaxDist * MaxDist )
 		{
+			//飛び方の判定
 			switch (this->Type)
 			{
 			case CORE_JUDGE_TYPE_0:	//距離
@@ -184,7 +201,6 @@ void CoreObject::DischargeArmor( float MaxDist, float Weight, float SpeedRatio )
 				break;
 			}
 
-			
 			const ARMOR_DISCHARGING_TYPE Type = pArmor_Index.at(i)->Discharging_Type;
 
 			switch( Type )
@@ -200,12 +216,11 @@ void CoreObject::DischargeArmor( float MaxDist, float Weight, float SpeedRatio )
 					pInitSpeed = new D3DXVECTOR3( Vec );
 					break;
 			}
-		pArmor_Index.at(i)->Break(*pInitSpeed, (unsigned int)DelayFrame);
 
-			
+			pArmor_Index.at(i)->Break(*pInitSpeed, (unsigned int)DelayFrame);
 		}
 
 	}
 
-	this->pArmor_Index.clear();
+	this->pArmor_Index.clear();	//アーマーオブジェクトを全て破棄
 }
