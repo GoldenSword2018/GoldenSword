@@ -49,6 +49,9 @@
 class Shape
 {
 public:
+	D3DXVECTOR3* pParentPos; // 持ち主の位置ポインタ ( オブジェクト中央を想定 )
+	D3DXVECTOR3 GapPos; // 持ち主との位置の補正（オブジェクト中央からずらす）
+public:
 	enum SHAPE_TYPE
 	{
 		SPHERE = 0,
@@ -68,9 +71,6 @@ public:
 //-------------------------------------
 class ShapeSphere : public Shape
 {
-public:
-	D3DXVECTOR3* pParentPos; // 持ち主の位置ポインタ ( オブジェクト中央を想定 )
-	D3DXVECTOR3 GapPos; // 持ち主との位置の補正（オブジェクト中央からずらす）
 	float Radius;
 public:
 	ShapeSphere( D3DXVECTOR3* pParentPos, float Radius, D3DXVECTOR3 GapPos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f ));

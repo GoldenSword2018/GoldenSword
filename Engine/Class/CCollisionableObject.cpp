@@ -86,7 +86,7 @@ ShapeCuboid::~ShapeCuboid()
 
 bool Collision::SphereVsSphere( ShapeSphere& Sphere0, ShapeSphere& Sphere1 )
 {
-	D3DXVECTOR3 vecLength = *(Sphere1.pParentPos) - *(Sphere0.pParentPos);
+	D3DXVECTOR3 vecLength = *(Sphere0.pParentPos) - *(Sphere1.pParentPos);
 	FLOAT fLength = D3DXVec3LengthSq(&vecLength);
 	if( ( Sphere0.Radius + Sphere1.Radius ) * ( Sphere0.Radius + Sphere1.Radius )  > fLength )
 	{ // hit 
