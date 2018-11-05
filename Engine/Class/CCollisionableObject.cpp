@@ -31,13 +31,29 @@
 //===============================================
 //	Shape クラス
 //===============================================
-Shape::Shape( SHAPE_TYPE init_ShapeType )
+
+//-------------------------------------
+//  コンストラクタ デストラクタ
+//-------------------------------------
+
+Shape::Shape( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_GapPos, SHAPE_TYPE init_ShapeType )
 {
+	pParentPos = init_pParentPos;
+	GapPos = *init_GapPos;
 	ShapeType = init_ShapeType;
 }
 Shape::~Shape()
 {
 	// null
+}
+
+//-------------------------------------
+//  実効座標を戻す関数
+//-------------------------------------
+
+D3DXVECTOR3 Shape::GetEffectivePos( void )const
+{
+	return *pParentPos + GapPos;
 }
 
 //===============================================
@@ -48,11 +64,10 @@ Shape::~Shape()
 //  コンストラクタ デストラクタ
 //-------------------------------------
 
-ShapeSphere::ShapeSphere( D3DXVECTOR3* init_pParentPos, float init_Radius, D3DXVECTOR3 init_GapPos )
-	: Shape( SHAPE_TYPE::SPHERE ),
-	 Radius( init_Radius ), GapPos( init_GapPos )
+ShapeSphere::ShapeSphere( D3DXVECTOR3* init_pParentPos, float init_Radius, D3DXVECTOR3* init_GapPos )
+	: Shape( init_pParentPos, init_GapPos, SHAPE_TYPE::SPHERE )
 {
-	pParentPos = init_pParentPos;
+	Radius = init_Radius;
 }
 ShapeSphere::~ShapeSphere()
 {
@@ -67,11 +82,11 @@ ShapeSphere::~ShapeSphere()
 //  コンストラクタ デストラクタ
 //-------------------------------------
 
-ShapeCuboid::ShapeCuboid( D3DXVECTOR3 init_Pos, D3DXVECTOR3 init_Length, D3DXVECTOR3 init_Radian )
-	: Shape( SHAPE_TYPE::CUBOID ),
-	Pos( init_Pos ), Length( init_Length ), Angle( init_Radian )
+ShapeCuboid::ShapeCuboid( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3 init_Length, D3DXVECTOR3 init_Radian )
+	: Shape( init_pParentPos, &init_Length, SHAPE_TYPE::CUBOID )
 {
-
+	Length = init_Length;
+	Angle = init_Radian;
 }
 
 ShapeCuboid::~ShapeCuboid()
@@ -86,7 +101,7 @@ ShapeCuboid::~ShapeCuboid()
 
 bool Collision::SphereVsSphere( ShapeSphere& Sphere0, ShapeSphere& Sphere1 )
 {
-	D3DXVECTOR3 vecLength = *(Sphere0.pParentPos) - *(Sphere1.pParentPos);
+	D3DXVECTOR3 vecLength =Sphere1.GetEffectivePos() - Sphere0.GetEffectivePos();
 	FLOAT fLength = D3DXVec3LengthSq(&vecLength);
 	if( ( Sphere0.Radius + Sphere1.Radius ) * ( Sphere0.Radius + Sphere1.Radius )  > fLength )
 	{ // hit 

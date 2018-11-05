@@ -42,6 +42,7 @@ void GameObject::Set_Parent(GameObject* pParent)
 //------------------------------------
 void GameObject::Update()
 {
+
 }
 
 //------------------------------------

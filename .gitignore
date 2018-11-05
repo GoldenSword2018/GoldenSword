@@ -1,7 +1,9 @@
 Debug/
 x64/
 v14/
+.vs/
 *.db
 *.cd
 *.props
 *.opendb
+*.vcxproj.filters

@@ -49,7 +49,8 @@ static ArmorObject Armor_7_11(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_12(
@@ -59,7 +60,8 @@ static ArmorObject Armor_7_12(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 255, 0, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_13(
@@ -69,7 +71,8 @@ static ArmorObject Armor_7_13(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 0, 255, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_14(
@@ -79,7 +82,8 @@ static ArmorObject Armor_7_14(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_21(
@@ -89,7 +93,8 @@ static ArmorObject Armor_7_21(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 255, 0, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_22(
@@ -99,7 +104,8 @@ static ArmorObject Armor_7_22(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 0, 255, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_23(
@@ -109,7 +115,8 @@ static ArmorObject Armor_7_23(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_24(
@@ -119,7 +126,8 @@ static ArmorObject Armor_7_24(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 255, 0, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_31(
@@ -129,7 +137,8 @@ static ArmorObject Armor_7_31(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 0, 255, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_32(
@@ -139,7 +148,8 @@ static ArmorObject Armor_7_32(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_33(
@@ -149,7 +159,8 @@ static ArmorObject Armor_7_33(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 255, 0, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_34(
@@ -159,7 +170,8 @@ static ArmorObject Armor_7_34(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 0, 255, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_41(
@@ -169,7 +181,8 @@ static ArmorObject Armor_7_41(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_42(
@@ -179,7 +192,8 @@ static ArmorObject Armor_7_42(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 255, 0, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_43(
@@ -189,7 +203,8 @@ static ArmorObject Armor_7_43(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 0, 255, 255)
-	)
+	),
+	RADIALLY
 );
 //アーマー
 static ArmorObject Armor_7_44(
@@ -199,7 +214,8 @@ static ArmorObject Armor_7_44(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	RADIALLY
 );
 
 //ネジ
@@ -244,7 +260,8 @@ static ArmorObject Armor_8_11(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_12(
@@ -254,7 +271,8 @@ static ArmorObject Armor_8_12(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 255, 0, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_13(
@@ -264,7 +282,8 @@ static ArmorObject Armor_8_13(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 0, 255, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_14(
@@ -274,7 +293,8 @@ static ArmorObject Armor_8_14(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_21(
@@ -284,7 +304,8 @@ static ArmorObject Armor_8_21(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 255, 0, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_22(
@@ -294,7 +315,8 @@ static ArmorObject Armor_8_22(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 0, 255, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_23(
@@ -304,7 +326,8 @@ static ArmorObject Armor_8_23(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_24(
@@ -314,7 +337,8 @@ static ArmorObject Armor_8_24(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 255, 0, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_31(
@@ -324,7 +348,8 @@ static ArmorObject Armor_8_31(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 0, 255, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_32(
@@ -334,7 +359,8 @@ static ArmorObject Armor_8_32(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_33(
@@ -344,7 +370,8 @@ static ArmorObject Armor_8_33(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 255, 0, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_34(
@@ -354,7 +381,8 @@ static ArmorObject Armor_8_34(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 0, 255, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_41(
@@ -364,7 +392,8 @@ static ArmorObject Armor_8_41(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_42(
@@ -374,7 +403,8 @@ static ArmorObject Armor_8_42(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 255, 0, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_43(
@@ -384,7 +414,8 @@ static ArmorObject Armor_8_43(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 0, 255, 255)
-	)
+	),
+	FALL
 );
 //アーマー
 static ArmorObject Armor_8_44(
@@ -394,7 +425,8 @@ static ArmorObject Armor_8_44(
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
-	)
+	),
+	FALL
 );
 
 //ネジ
@@ -425,23 +457,6 @@ void CTeamProt_Initialize()
 {
 
 	Screw_07.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_1);
-	Armor_7_11.Set_DischargingType(RADIALLY);
-	Armor_7_12.Set_DischargingType(RADIALLY);
-	Armor_7_13.Set_DischargingType(RADIALLY);
-	Armor_7_14.Set_DischargingType(RADIALLY);
-	Armor_7_21.Set_DischargingType(RADIALLY);
-	Armor_7_22.Set_DischargingType(RADIALLY);
-	Armor_7_23.Set_DischargingType(RADIALLY);
-	Armor_7_24.Set_DischargingType(RADIALLY);
-	Armor_7_31.Set_DischargingType(RADIALLY);
-	Armor_7_32.Set_DischargingType(RADIALLY);
-	Armor_7_33.Set_DischargingType(RADIALLY);
-	Armor_7_34.Set_DischargingType(RADIALLY);
-	Armor_7_41.Set_DischargingType(RADIALLY);
-	Armor_7_42.Set_DischargingType(RADIALLY);
-	Armor_7_43.Set_DischargingType(RADIALLY);
-	Armor_7_44.Set_DischargingType(RADIALLY);
-
 
 	Screw_07.Set(&Armor_7_11, &Body_07);//ネジに胴体とアーマーを設定
 	Screw_07.Set(&Armor_7_12);			//ネジの胴体は決まっているので、アーマーだけ設定
@@ -460,25 +475,8 @@ void CTeamProt_Initialize()
 	Screw_07.Set(&Armor_7_43);			//アーマー設定
 	Screw_07.Set(&Armor_7_44);			//アーマー設定
 //	Screw_07.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_1);
-	
-	Screw_08.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_0);
-	Armor_8_11.Set_DischargingType(FALL);
-	Armor_8_12.Set_DischargingType(FALL);
-	Armor_8_13.Set_DischargingType(FALL);
-	Armor_8_14.Set_DischargingType(FALL);
-	Armor_8_21.Set_DischargingType(FALL);
-	Armor_8_22.Set_DischargingType(FALL);
-	Armor_8_23.Set_DischargingType(FALL);
-	Armor_8_24.Set_DischargingType(FALL);
-	Armor_8_31.Set_DischargingType(FALL);
-	Armor_8_32.Set_DischargingType(FALL);
-	Armor_8_33.Set_DischargingType(FALL);
-	Armor_8_34.Set_DischargingType(FALL);
-	Armor_8_41.Set_DischargingType(FALL);
-	Armor_8_42.Set_DischargingType(FALL);
-	Armor_8_43.Set_DischargingType(FALL);
-	Armor_8_44.Set_DischargingType(FALL);
 
+	Screw_08.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_0);
 
 	Screw_08.Set(&Armor_8_11, &Body_07);//ネジに胴体とアーマーを設定
 	Screw_08.Set(&Armor_8_12);			//ネジの胴体は決まっているので、アーマーだけ設定

@@ -37,7 +37,7 @@ void Screwdrop_Init()
 		g_Screwdrop[i].IsEnable = false;
 		g_Screwdrop[i].BulletPosition = D3DXVECTOR3(0.5f, 0.5f,0.5f);
 		g_Screwdrop[i].ScrewPosition = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
-		g_Screwdrop[i].bullet_type = BULLET_NORMAL;
+		g_Screwdrop[i].bullet_type = Bullet::NORMAL;
 		g_Screwdrop[i].face = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
 		g_Screwdrop[i].rotation_count = 0;
 		memcpy(&g_Screwdrop[i].BulletMesh, GetMeshData(BulletIndex), sizeof(MeshData));
@@ -122,7 +122,7 @@ void Screwdrop_Render()
 //-------------------------------------
 //	ê∂ê¨
 //-------------------------------------
-void  Screwdrop_Create(D3DXVECTOR3 pos_bullet, D3DXVECTOR3 pos_screw, BULLET_TYPE type, D3DXVECTOR3 face)
+void  Screwdrop_Create(D3DXVECTOR3 pos_bullet, D3DXVECTOR3 pos_screw, Bullet::TYPE type, D3DXVECTOR3 face)
 {
 	for (int i = 0; i< BULLET_MAX; i++)
 	{

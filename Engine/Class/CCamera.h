@@ -59,6 +59,10 @@
 //-------------------------------------
 class Camera
 {
+public:
+	static Camera* Get_Main();
+	static bool Begin();		//描画開始
+
 private:
 	static Camera* MainCamera;	//メインカメラ
 
@@ -73,15 +77,17 @@ public:
 	float atDistance;			//注視点までの距離
 	float fov;					//画角
 
+public:
 	Camera() :Camera(CAMERA_POS, CAMERA_AT, CAMERA_ATDISTANCE, CAMERA_FOV) {};
 	Camera(D3DXVECTOR3 Position) : Camera(Position, CAMERA_AT, CAMERA_ATDISTANCE, CAMERA_FOV) {};
 	Camera(D3DXVECTOR3 Position, D3DXVECTOR3 At, float AtDistance, float fov);
 
-	static Camera* Get_Main();
-	static bool Begin();		//描画開始
- 	virtual void Initialize();	//初期化
-	virtual void Update();		//更新
+public:
 	void Set_Main();			//メインカメラに設定
+
+public:
+	virtual void Initialize();	//初期化
+	virtual void Update();		//更新
 };
 
 
