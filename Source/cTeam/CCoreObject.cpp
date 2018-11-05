@@ -22,11 +22,12 @@
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
+// コンストラクタでのShape系クラスの初期化はCoreObject自身のtransformのアドレスを与えること. 引数のpTransformはコンストラクタ終了後,破棄される.
 CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face) 
 : 
 	GameObject(pTransform, pTexture),
-	ColShape(pTransform->Position, 0.5f),
-	CorrectSphere(pTransform->Position, 1.0f)
+	ColShape(&Transform.Position, 0.5f),
+	CorrectSphere(&Transform.Position, 1.0f)
 {
 	this->face = face;
 }
@@ -93,7 +94,7 @@ void CoreObject::Update()
 			if (Collision::SphereVsSphere(CorrectSphere, Bullet_ColShape(i))&& this->pArmor_Index.size() > 0)
 			{
 				const D3DXVECTOR3* bullet_face = Bullet_GetBullet(i)->GetFace();
-				D3DXVECTOR3 vec = CorrectSphere.Pos - Bullet_ColShape(i).Pos;		// ネジと弾の中心間ベクトル
+				D3DXVECTOR3 vec = *(CorrectSphere.pParentPos) - *(Bullet_ColShape(i).pParentPos);		// ネジと弾の中心間ベクトル
 				float Angle = acosf(D3DXVec3Dot(bullet_face, &vec));				// 弾の進行方向とvecの成す角
 
 				if (Angle <= D3DX_PI / 4 && Angle > 0.0f)
@@ -108,7 +109,7 @@ void CoreObject::Update()
 				Hit();
 				Bullet_GetBullet(i)->SetFace(face);
 				Bullet_GetBullet(i)->SetPos(this->transform.Position - ColShape.Radius * face * 1.0f);
-				Screwdrop_Create(Bullet_GetBullet(i)->ColSphape.Pos, CorrectSphere.Pos, Bullet::NORMAL, *Bullet_GetBullet(i)->GetFace());
+				Screwdrop_Create(*(Bullet_GetBullet(i)->ColSphape.pParentPos),*( CorrectSphere.pParentPos ), Bullet::NORMAL, *Bullet_GetBullet(i)->GetFace());
 				Bullet_GetBullet(i)->DisEnable();
 			}
 		}

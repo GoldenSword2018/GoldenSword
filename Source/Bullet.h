@@ -3,7 +3,7 @@
 //		Author:ÉnÉì DATE:
 //===============================================
 //	ïœçXé“ Changed by
-//		Author:HIROMASA IKEDA	DATE:2018/10/17
+//		Author:HIROMASA IKEDA	DATE:2018/11/02
 //
 //-----------------------------------------------
 #ifndef BULLET_H

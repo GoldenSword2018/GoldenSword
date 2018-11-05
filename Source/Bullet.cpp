@@ -140,12 +140,12 @@ Bullet* Bullet_GetBullet(int index)
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-Bullet::Bullet():ColSphape(this->BulletMesh.vecPosition,0.5f)
+Bullet::Bullet():ColSphape(&this->BulletMesh.vecPosition,0.5f)
 {
 	IsEnable = false;
 }
 
-Bullet::Bullet(Transform* pTransform, Texture* pTexture):GameObject(pTransform,pTexture),ColSphape(pTransform->Position,0.5f)
+Bullet::Bullet(Transform* pTransform, Texture* pTexture):GameObject(pTransform,pTexture),ColSphape(&pTransform->Position,0.5f)
 {
 	type = NORMAL;
 	Bullet();
@@ -166,7 +166,7 @@ static float value = 0;
 //-------------------------------------
 void Bullet::Update()
 {
-	ColSphape.Pos = this->BulletMesh.vecPosition;
+	// ColSphape.Pos = this->BulletMesh.vecPosition;
 
 	switch (this->type)
 	{
@@ -247,7 +247,7 @@ const D3DXVECTOR3* Bullet::GetFace()
 void Bullet::SetPos(D3DXVECTOR3 Pos)
 {
 	this->BulletMesh.vecPosition = Pos;
-	this->ColSphape.Pos = Pos;
+	// this->ColSphape.Pos = Pos;
 }
 
 //-------------------------------------

@@ -13,7 +13,6 @@
 //	グローバル変数
 //===============================================
 std::vector<GameObject*> GameObject::pIndex;
-
 //===============================================
 //	GameObject クラス
 //===============================================
@@ -27,6 +26,7 @@ GameObject::GameObject(Transform* pTransform, Texture* pTexture) : render(&this-
 	this->texture		= *pTexture;
 	this->pIndex.push_back(this);
 	this->pParent = NULL;
+	
 }
 
 //-------------------------------------
