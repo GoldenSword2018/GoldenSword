@@ -475,7 +475,7 @@ void CTeamProt_Initialize()
 	Screw_07.Set(&Armor_7_43);			//アーマー設定
 	Screw_07.Set(&Armor_7_44);			//アーマー設定
 //	Screw_07.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_1);
-	
+
 	Screw_08.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_0);
 
 	Screw_08.Set(&Armor_8_11, &Body_07);//ネジに胴体とアーマーを設定
