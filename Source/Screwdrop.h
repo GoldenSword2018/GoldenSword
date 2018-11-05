@@ -47,7 +47,7 @@ typedef struct
 	bool IsEnable;							//有効・無効
 	D3DXVECTOR3 BulletPosition;				//弾のポジション
 	D3DXVECTOR3 ScrewPosition;				//ネジのポジション
-	BULLET_TYPE bullet_type;				//弾のタイプ
+	Bullet::TYPE bullet_type;				//弾のタイプ
 //	SCREW_TYPE	screw_type;					//ネジのタイプ
 	MeshData BulletMesh;					//弾のメッシュデータ
 	MeshData ScrewMesh;						//ネジのメッシュデータ
@@ -65,7 +65,7 @@ typedef struct
 void Screwdrop_Render(void);
 void Screwdrop_Update(void);
 void Screwdrop_Init(void);
-void Screwdrop_Create(D3DXVECTOR3 pos_bullet, D3DXVECTOR3 pos_screw, BULLET_TYPE type, D3DXVECTOR3 face);
+void Screwdrop_Create(D3DXVECTOR3 pos_bullet, D3DXVECTOR3 pos_screw, Bullet::TYPE type, D3DXVECTOR3 face);
 void Screwdrop_DisEnable(int index);
 
 #endif

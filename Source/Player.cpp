@@ -59,7 +59,7 @@ void Player_Update(void)
 
 	if (JoyconInput_IsTrigger(JOYCON_BUTTON_INDEX_R_SR) || Keyboard_IsTrigger(DIK_F))
 	{
-		Bullet_Create(g_Player.Position, g_Player.vecDir,BULLET_NORMAL);
+		Bullet_Create(g_Player.Position, g_Player.vecDir,Bullet::NORMAL);
 	}
 
 	Bullet_Update();

@@ -24,6 +24,7 @@
 //-----------------------------------------------
 #include<Windows.h>
 #include<d3dx9.h>
+
 #include"System.h"
 #include"input.h"
 #include"Sprite.h"
@@ -50,9 +51,9 @@ void Debug_Render();
 //===============================================
 static HWND					g_hWnd = {};						//ハンドルの設定
 static HINSTANCE			g_hInstance = {};
-static LPDIRECT3D9			g_pd3d9 = NULL;						//ポインタ
-static LPDIRECT3DDEVICE9	g_pD3DDevice = NULL;				//デバイス
-static MSG					g_Msg = {};							//メッセージ
+static LPDIRECT3D9			g_pd3d9 = NULL;					//ポインタ
+static LPDIRECT3DDEVICE9	g_pD3DDevice = NULL;					//デバイス
+static MSG					g_Msg = {};						//メッセージ
 
 #ifdef DEBUG_KEY_ENABLE
 static bool					g_bDebug_Render = false;			//デバッグ表示している
