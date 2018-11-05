@@ -61,10 +61,10 @@ public:
 private:
 	Shape(){}
 public:
-	Shape( D3DXVECTOR3* pParentPos, D3DXVECTOR3* GapPos, SHAPE_TYPE ShapeType );
+	Shape( D3DXVECTOR3* pParentPos, D3DXVECTOR3* pGapPos, SHAPE_TYPE ShapeType );
 	virtual ~Shape();
 public:
-	D3DXVECTOR3* pParentPos; // 持ち主の位置ポインタ ( オブジェクト中央を想定 )
+	D3DXVECTOR3* pParentPos; // 持ち主の位置ポインタ ( オブジェクト中央を想定 ) // これプライベートにする？
 	D3DXVECTOR3 GapPos; // 持ち主との位置の補正（オブジェクト中央からずらす）
 public:
 	D3DXVECTOR3 GetEffectivePos( void )const;
