@@ -23,7 +23,7 @@
 //	コンストラクタ
 //-------------------------------------
 // コンストラクタでのShape系クラスの初期化はCoreObject自身のtransformのアドレスを与えること. 引数のpTransformはコンストラクタ終了後,破棄される.
-CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type) :GameObject(pTransform, pTexture), ColShape(&transform.Position, 0.5f), CorrectSphere( &transform.Position, 1.0f)
+CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type) :GameObject(pTransform, pTexture), ColShape(&transform.Position, 0.5f, &D3DXVECTOR3( 5.0f, 0.0f, 0.0f ) ), CorrectSphere( &transform.Position, 1.0f)
 {
 	this->Type = Type;
 	this->face = D3DXVECTOR3(0.0f, 0.0f, -1.0f);

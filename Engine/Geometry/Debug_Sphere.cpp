@@ -145,9 +145,9 @@ void DebugBufferManager::BatchDrawSphere( const ShapeSphere *Sphere )
 
 	for( int i = 0; i < CIRCLE_VERTEX_COUNT; i++ )
 	{
-		pDebugCircleVertex[ n + i ].position.x = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->x;
-		pDebugCircleVertex[ n + i ].position.y = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->y;
-		pDebugCircleVertex[ n + i ].position.z = Sphere->pParentPos->z;
+		pDebugCircleVertex[ n + i ].position.x = (float) cos( i * s ) * Sphere->Radius + Sphere->GetEffectivePos().x;
+		pDebugCircleVertex[ n + i ].position.y = (float) sin( i * s ) * Sphere->Radius + Sphere->GetEffectivePos().y;
+		pDebugCircleVertex[ n + i ].position.z = Sphere->GetEffectivePos().z;
 		pDebugCircleVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
 
 		pDebugCircleVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
@@ -158,9 +158,9 @@ void DebugBufferManager::BatchDrawSphere( const ShapeSphere *Sphere )
 	n += CIRCLE_VERTEX_COUNT;
 	for( int i = 0; i < CIRCLE_VERTEX_COUNT; i++ )
 	{
-		pDebugCircleVertex[ n + i ].position.x = Sphere->pParentPos->x;
-		pDebugCircleVertex[ n + i ].position.y = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->y;
-		pDebugCircleVertex[ n + i ].position.z = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->z;
+		pDebugCircleVertex[ n + i ].position.x = Sphere->GetEffectivePos().x;
+		pDebugCircleVertex[ n + i ].position.y = (float) cos( i * s ) * Sphere->Radius + Sphere->GetEffectivePos().y;
+		pDebugCircleVertex[ n + i ].position.z = (float) sin( i * s ) * Sphere->Radius + Sphere->GetEffectivePos().z;
 		pDebugCircleVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
 
 		pDebugCircleVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
@@ -170,9 +170,9 @@ void DebugBufferManager::BatchDrawSphere( const ShapeSphere *Sphere )
 	n += CIRCLE_VERTEX_COUNT;
 	for( int i = 0; i < CIRCLE_VERTEX_COUNT; i++ )
 	{
-		pDebugCircleVertex[ n + i ].position.x = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->x;
-		pDebugCircleVertex[ n + i ].position.y = Sphere->pParentPos->y;
-		pDebugCircleVertex[ n + i ].position.z = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->z;
+		pDebugCircleVertex[ n + i ].position.x = (float) sin( i * s ) * Sphere->Radius + Sphere->GetEffectivePos().x;
+		pDebugCircleVertex[ n + i ].position.y = Sphere->GetEffectivePos().y;
+		pDebugCircleVertex[ n + i ].position.z = (float) cos( i * s ) * Sphere->Radius + Sphere->GetEffectivePos().z;
 		pDebugCircleVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
 
 		pDebugCircleVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
