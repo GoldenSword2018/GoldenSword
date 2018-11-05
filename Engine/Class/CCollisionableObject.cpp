@@ -101,7 +101,7 @@ ShapeCuboid::~ShapeCuboid()
 
 bool Collision::SphereVsSphere( ShapeSphere& Sphere0, ShapeSphere& Sphere1 )
 {
-	D3DXVECTOR3 vecLength =Sphere0.GetEffectivePos() - Sphere0.GetEffectivePos();
+	D3DXVECTOR3 vecLength =Sphere1.GetEffectivePos() - Sphere0.GetEffectivePos();
 	FLOAT fLength = D3DXVec3LengthSq(&vecLength);
 	if( ( Sphere0.Radius + Sphere1.Radius ) * ( Sphere0.Radius + Sphere1.Radius )  > fLength )
 	{ // hit 

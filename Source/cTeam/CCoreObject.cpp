@@ -26,8 +26,8 @@
 CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face) 
 : 
 	GameObject(pTransform, pTexture),
-	ColShape(&Transform.Position, 0.5f),
-	CorrectSphere(&Transform.Position, 1.0f)
+	ColShape(&transform.Position, 0.5f),
+	CorrectSphere(&transform.Position, 1.0f)
 {
 	this->face = face;
 }
