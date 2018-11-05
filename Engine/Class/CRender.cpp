@@ -47,6 +47,7 @@ Render3D::Render3D()
 {
 	pTransform = NULL;
 	pTexture = NULL;
+	bRender = true;
 }
 
 //-------------------------------------
@@ -56,6 +57,7 @@ Render3D::Render3D(Transform* pTransform, Texture* pTexture)
 {
 	this->pTransform = pTransform;
 	this->pTexture = pTexture;
+	this->bRender = true;
 }
 
 //-------------------------------------
@@ -63,30 +65,9 @@ Render3D::Render3D(Transform* pTransform, Texture* pTexture)
 //-------------------------------------
 bool Render3D::Begin(DWORD SetFVF, D3DPRIMITIVETYPE PrimitiveType, void* Model, UINT DataSize, UINT PrimitiveCount)
 {
-	if (pTransform == NULL) return false;
+	if (pTransform == NULL && bRender == false) return false;
 
-	D3DXMATRIX MtxWorld;
-	D3DXMatrixIdentity(&MtxWorld);
-
-	D3DXMATRIX MtxTransform;
-	D3DXMatrixTranslation(&MtxTransform, pTransform->Position.x, pTransform->Position.y, pTransform->Position.z);
-
-	D3DXMATRIX MtxScale;
-	D3DXMatrixIdentity(&MtxScale);
-	D3DXMatrixScaling(&MtxScale, pTransform->Scale.x, pTransform->Scale.y, pTransform->Scale.z);
-
-	D3DXMATRIX MtxRotate;
-	D3DXMatrixIdentity(&MtxRotate);
-	D3DXMatrixRotationYawPitchRoll(&MtxRotate,pTransform->Rotation.y,pTransform->Rotation.x,pTransform->Rotation.z);
-
-	//向きを設定
-	D3DXVec3TransformNormal(&this->pTransform->right,&this->pTransform->right,&MtxRotate);
-	D3DXVec3TransformNormal(&this->pTransform->forward,&this->pTransform->forward,&MtxRotate);
-	D3DXVec3Cross(&this->pTransform->up,&this->pTransform->right,&this->pTransform->forward);
-
-	MtxWorld *= MtxScale  * MtxRotate * MtxTransform;
-
-	System_GetDevice()->SetTransform(D3DTS_WORLD, &MtxWorld);	//デバイスへ登録
+	System_GetDevice()->SetTransform(D3DTS_WORLD, &this->pTransform->Convert());	//デバイスへ登録
 	System_GetDevice()->SetFVF(SetFVF);
 
 	//色が設定されいるなら

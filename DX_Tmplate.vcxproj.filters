@@ -144,9 +144,6 @@
     <ClCompile Include="Source\cTeam\CCoreObject.cpp">
       <Filter>ソース ファイル\Assets\Class</Filter>
     </ClCompile>
-    <ClCompile Include="Source\cTeam\CTeamProt.cpp">
-      <Filter>ソース ファイル\Assets\Class</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Player.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
@@ -196,6 +193,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\Screwdrop.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\cTeam\CTeamProt.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
   </ItemGroup>
@@ -256,9 +256,6 @@
     </ClInclude>
     <ClInclude Include="Source\Player.h">
       <Filter>ヘッダー ファイル\Assets</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\cTeam\CTeamProt.h">
-      <Filter>ヘッダー ファイル\Assets\cTeam</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Internal\XModel.h">
       <Filter>ヘッダー ファイル\Engine\Internal</Filter>
@@ -322,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="Source\Screwdrop.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\cTeam\CTeamProt.h">
+      <Filter>ヘッダー ファイル\Assets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

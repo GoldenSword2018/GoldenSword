@@ -22,21 +22,27 @@ class GameObject
 {
 private:
 	static std::vector<GameObject*> pIndex;
-	GameObject* pParent;	//親
-
 public:
 	static void g_Update();	//全体更新
 	static void g_Render();	//全体描画
 
+private:
+	GameObject* pParent;	//親
+
+public:
 	Transform transform;	//位置
 	Texture texture;		//テクスチャ
 	Render3D render;		//描画
 
+public:
 	GameObject():GameObject(&Transform(), &Texture()) {};
 	GameObject(Transform* pTransform):GameObject(pTransform, &Texture()) {};
 	GameObject(Transform* pTransform,Texture* pTexture);
 
+public:
 	void Set_Parent(GameObject* pParent);	//親を設定
+
+public:
 	virtual void Update();
 	virtual void Render();
 };

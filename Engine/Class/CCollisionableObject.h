@@ -23,7 +23,6 @@
 //	マクロ定義	define
 //================================================
 
-#define Squared( a ) ( a * a ) // これ危険かも 要確認 ------CAUTION!>
 
 //================================================
 //	列挙型		enum
@@ -62,19 +61,23 @@ public:
 private:
 	Shape(){}
 public:
-	Shape( SHAPE_TYPE ShapeType );
+	Shape( D3DXVECTOR3* pParentPos, D3DXVECTOR3* pGapPos, SHAPE_TYPE ShapeType );
 	virtual ~Shape();
+public:
+	D3DXVECTOR3* pParentPos; // 持ち主の位置ポインタ ( オブジェクト中央を想定 ) // これプライベートにする？
+	D3DXVECTOR3 GapPos; // 持ち主との位置の補正（オブジェクト中央からずらす）
+public:
+	D3DXVECTOR3 GetEffectivePos( void )const;
 };
 
 //-------------------------------------
 class ShapeSphere : public Shape
 {
 public:
-	D3DXVECTOR3 Pos;
 	float Radius;
 public:
-	ShapeSphere( D3DXVECTOR3 Pos, float Radius );
-	ShapeSphere( float x, float y, float z, float Radius );
+	ShapeSphere( D3DXVECTOR3* pParentPos, float Radius, D3DXVECTOR3* pGapPos = &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ));
+public:
 	~ShapeSphere();
 };
 
@@ -86,7 +89,7 @@ public:
 	D3DXVECTOR3 Length;
 	D3DXVECTOR3 Angle;
 public:
-	ShapeCuboid( D3DXVECTOR3 Pos, D3DXVECTOR3 Length, D3DXVECTOR3 Radian );
+	ShapeCuboid( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3 init_Length, D3DXVECTOR3 init_Radian );
 	~ShapeCuboid();
 };
 

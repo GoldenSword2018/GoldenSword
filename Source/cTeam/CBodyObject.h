@@ -11,7 +11,16 @@
 //===============================================
 //	BodyObject	ƒNƒ‰ƒX
 //===============================================
-typedef GameObject BodyObject;
+class BodyObject:public GameObject
+{
+private:
+
+public:
+	BodyObject() :BodyObject(&Transform(), &Texture()) {};
+	BodyObject(Transform* pTransform) :BodyObject(pTransform, &Texture()) {};
+	BodyObject(Transform* pTransform, Texture* pTexture);
+
+};
 
 #endif // !CBODYOBJECT_H
 
