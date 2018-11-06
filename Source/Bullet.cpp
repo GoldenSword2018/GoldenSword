@@ -197,13 +197,14 @@ void Bullet::Update()
 
 	D3DXMATRIX matRotationFace;
 	D3DXVECTOR3 face = this->face;
-	D3DXVECTOR3 X, Y, Z;
+	D3DXVECTOR3 X, Y, Z; //X:âE Z:ëO Y:è„
 	D3DXVECTOR3 Faceup = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	Z = -face;
 	D3DXVec3Cross(&X, D3DXVec3Normalize(&Y, &Faceup), &Z);
 	D3DXVec3Normalize(&X, &X);
 	D3DXVec3Normalize(&Y, D3DXVec3Cross(&Y, &Z, &X));
 
+	//âÒì]çsóÒÇçÏÇÈ
 	matRotationFace._11 = X.x; matRotationFace._12 = X.y; matRotationFace._13 = X.z; matRotationFace._14 = 0;
 	matRotationFace._21 = Y.x; matRotationFace._22 = Y.y; matRotationFace._23 = Y.z; matRotationFace._24 = 0;
 	matRotationFace._31 = Z.x; matRotationFace._32 = Z.y; matRotationFace._33 = Z.z; matRotationFace._34 = 0;

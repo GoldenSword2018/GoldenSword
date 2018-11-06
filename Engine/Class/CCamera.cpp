@@ -27,6 +27,11 @@
 //===============================================
 Camera* Camera::MainCamera = NULL;
 
+D3DVIEWPORT9 g_port[] = { { 0, 0, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
+						{ WINDOWSCREEN_WIDTH / 2, 0, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
+						{ 0,WINDOWSCREEN_HEIGHT / 2, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
+						{ WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f } };
+
 //===============================================
 //	カメラ		class
 //===============================================
@@ -173,6 +178,14 @@ bool Camera::Begin()
 	D3DXMATRIX mtxView;							//ビュー変換行列
 	D3DXMatrixLookAtLH(&mtxView, &MainCamera->position, &MainCamera->at, &MainCamera->up);	//変換
 	System_GetDevice()->SetTransform(D3DTS_VIEW, &mtxView);		//デバイスへ登録
+
+	for (int i = 0, count = sizeof(g_port) / sizeof(g_port[0]); i < count; i++)
+	{
+		//描画領域を変更（ビューポート行列）
+		System_GetDevice()->SetViewport(&g_port[i]);
+		//カメラの座標を変更（ビュー行列）
+		System_GetDevice()->SetTransform(D3DTS_VIEW, &mtxView);
+	}
 
 	//------------------------------------
 	//	プロジェクション変換行列

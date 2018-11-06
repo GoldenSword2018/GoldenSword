@@ -66,6 +66,8 @@ public:
 private:
 	static Camera* MainCamera;	//メインカメラ
 
+	static Camera* SubCamera[4];	//メインカメラ
+
 public:
 	D3DXVECTOR3 position;		//位置
 	float Speed;				//移動速度
