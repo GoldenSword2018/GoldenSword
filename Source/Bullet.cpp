@@ -189,16 +189,30 @@ void Bullet::Update()
 	}
 
 	D3DXMATRIXA16 matPosition;
-	D3DXMatrixIdentity(&this->BulletMesh.matWorld);
+	//D3DXMatrixIdentity(&this->BulletMesh.matWorld);
 	D3DXMatrixTranslation(&matPosition, this->BulletMesh.vecPosition.x, this->BulletMesh.vecPosition.y, this->BulletMesh.vecPosition.z);
 
 	D3DXMATRIX matRotationZ;
 	D3DXMatrixRotationZ(&matRotationZ, fRoll);
 
+	D3DXMATRIX matRotationFace;
+	D3DXVECTOR3 face = this->face;
+	D3DXVECTOR3 X, Y, Z;
+	D3DXVECTOR3 Faceup = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	Z = -face;
+	D3DXVec3Cross(&X, D3DXVec3Normalize(&Y, &Faceup), &Z);
+	D3DXVec3Normalize(&X, &X);
+	D3DXVec3Normalize(&Y, D3DXVec3Cross(&Y, &Z, &X));
+
+	matRotationFace._11 = X.x; matRotationFace._12 = X.y; matRotationFace._13 = X.z; matRotationFace._14 = 0;
+	matRotationFace._21 = Y.x; matRotationFace._22 = Y.y; matRotationFace._23 = Y.z; matRotationFace._24 = 0;
+	matRotationFace._31 = Z.x; matRotationFace._32 = Z.y; matRotationFace._33 = Z.z; matRotationFace._34 = 0;
+	matRotationFace._41 = 0.0f; matRotationFace._42 = 0.0f; matRotationFace._43 = 0.0f; matRotationFace._44 = 1.0f;
+
 	D3DXMATRIX matSize;
 	D3DXMatrixScaling(&matSize, 0.2f, 0.2f, 0.2f);
 
-	this->BulletMesh.matWorld =matSize*matRotationZ*matPosition;
+	this->BulletMesh.matWorld =  matSize * matRotationZ * matRotationFace * matPosition;
 
 	fRoll += 0.001f;
 	value += 0.01f;
