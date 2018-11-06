@@ -8,6 +8,10 @@
 //	ShapeSphereクラスのメンバ,コンストラクタを改変
 //  中心座標を持ち主のアドレス参照に変更した.
 //	GapPosについては未だ活用せず.
+//		Name: Yuto Hashimoto DATE: 2018/11/06
+//	ShapeSphereクラスを実装( ? )
+//  CollisionクラスにOBBvsOBBの衝突判定を実装
+
 //-----------------------------------------------
 
 //===============================================
@@ -22,9 +26,9 @@
 //	マクロ定義		define
 //===============================================
 
-#define CUBOID_VECTOR_FORWARD		( 0 )
-#define CUBOID_VECTOR_RIGHT			( 1 )
-#define CUBOID_VECTOR_UP			( 2 )
+#define OBB_VECTOR_FORWARD		( 0 )
+#define OBB_VECTOR_RIGHT			( 1 )
+#define OBB_VECTOR_UP			( 2 )
 //===============================================
 //	グローバル変数	global
 //===============================================
@@ -81,7 +85,7 @@ ShapeSphere::~ShapeSphere()
 }
 
 //===============================================
-//	ShapeCuboid クラス
+//	ShapeOBB クラス
 //===============================================
 
 //-------------------------------------
@@ -89,31 +93,31 @@ ShapeSphere::~ShapeSphere()
 //-------------------------------------
 // arg0: 持ち主の座標ポインタ, arg1: 各座標軸回りの角度(ラジアン) 回す順番 Roll->Pitch->Yaw
 // arg2: x幅, y高さ, z奥行, arg3: 当たり判定の座標との差分
-ShapeCuboid::ShapeCuboid( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_pRadian, D3DXVECTOR3* init_pLength, D3DXVECTOR3* init_pGapPos )
-	: Shape( init_pParentPos, init_pGapPos, SHAPE_TYPE::CUBOID )
+ShapeOBB::ShapeOBB( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_pRadian, D3DXVECTOR3* init_pLength, D3DXVECTOR3* init_pGapPos )
+	: Shape( init_pParentPos, init_pGapPos, SHAPE_TYPE::OBB )
 {
 	// 前向きの単位ベクトルを作成
 	D3DXMATRIX mtxRot;
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, init_pRadian->y, init_pRadian->x, init_pRadian->z );
-	NormalDirect[ CUBOID_VECTOR_FORWARD ] = D3DXVECTOR3( 1.0f, 1.0f, 0.0f );
-	D3DXVec3TransformNormal( &NormalDirect[ CUBOID_VECTOR_FORWARD ], &NormalDirect[ CUBOID_VECTOR_FORWARD ], &mtxRot );
-	D3DXVec3Normalize( &NormalDirect[ CUBOID_VECTOR_FORWARD ], &NormalDirect[ CUBOID_VECTOR_FORWARD ] );
+	NormalDirect[ OBB_VECTOR_FORWARD ] = D3DXVECTOR3( 1.0f, 1.0f, 0.0f );
+	D3DXVec3TransformNormal( &NormalDirect[ OBB_VECTOR_FORWARD ], &NormalDirect[ OBB_VECTOR_FORWARD ], &mtxRot );
+	D3DXVec3Normalize( &NormalDirect[ OBB_VECTOR_FORWARD ], &NormalDirect[ OBB_VECTOR_FORWARD ] );
 
 	// 右向きの単位ベクトルを作成
-	D3DXVec3Cross( &NormalDirect[ CUBOID_VECTOR_RIGHT ], &NormalDirect[ CUBOID_VECTOR_UP ], &NormalDirect[ CUBOID_VECTOR_FORWARD ] );
-	D3DXVec3Normalize( &NormalDirect[ CUBOID_VECTOR_RIGHT ], &NormalDirect[ CUBOID_VECTOR_RIGHT ] );
+	D3DXVec3Cross( &NormalDirect[ OBB_VECTOR_RIGHT ], &NormalDirect[ OBB_VECTOR_UP ], &NormalDirect[ OBB_VECTOR_FORWARD ] );
+	D3DXVec3Normalize( &NormalDirect[ OBB_VECTOR_RIGHT ], &NormalDirect[ OBB_VECTOR_RIGHT ] );
 
 	// 上向きの単位ベクトルを作成
-	D3DXVec3Cross( &NormalDirect[ CUBOID_VECTOR_UP ], &NormalDirect[ CUBOID_VECTOR_FORWARD ], &NormalDirect[ CUBOID_VECTOR_RIGHT ] );
-	D3DXVec3Normalize( &NormalDirect[ CUBOID_VECTOR_UP ], &NormalDirect[ CUBOID_VECTOR_UP ] );
+	D3DXVec3Cross( &NormalDirect[ OBB_VECTOR_UP ], &NormalDirect[ OBB_VECTOR_FORWARD ], &NormalDirect[ OBB_VECTOR_RIGHT ] );
+	D3DXVec3Normalize( &NormalDirect[ OBB_VECTOR_UP ], &NormalDirect[ OBB_VECTOR_UP ] );
 
 	// 各向きの長さを指定
-	Length[ CUBOID_VECTOR_FORWARD ]	= init_pLength->x / 2.0f;
-	Length[ CUBOID_VECTOR_RIGHT ]	= init_pLength->y / 2.0f;
-	Length[ CUBOID_VECTOR_UP ]		= init_pLength->z / 2.0f;
+	Length[ OBB_VECTOR_FORWARD ]	= init_pLength->x / 2.0f;
+	Length[ OBB_VECTOR_RIGHT ]	= init_pLength->y / 2.0f;
+	Length[ OBB_VECTOR_UP ]		= init_pLength->z / 2.0f;
 }
 
-ShapeCuboid::~ShapeCuboid()
+ShapeOBB::~ShapeOBB()
 {
 	// null
 }
@@ -126,7 +130,7 @@ ShapeCuboid::~ShapeCuboid()
 bool Collision::SphereVsSphere( ShapeSphere& Sphere0, ShapeSphere& Sphere1 )
 {
 	D3DXVECTOR3 vecLength =Sphere1.GetEffectivePos() - Sphere0.GetEffectivePos();
-	FLOAT fLength = D3DXVec3LengthSq(&vecLength); // 二つの中心座標の距離
+	float fLength = D3DXVec3LengthSq(&vecLength); // 二つの中心座標の距離
 
 	if( ( Sphere0.Radius + Sphere1.Radius ) * ( Sphere0.Radius + Sphere1.Radius )  > fLength )
 	{ // hit 
@@ -138,23 +142,23 @@ bool Collision::SphereVsSphere( ShapeSphere& Sphere0, ShapeSphere& Sphere1 )
 	}
 }
 
-bool Collision::CuboidVsCuboid( ShapeCuboid& Cuboid0, ShapeCuboid& Cuboid1 )
+bool Collision::OBBVsOBB( ShapeOBB& OBB0, ShapeOBB& OBB1 )
 {
 
 	// 各方向ベクトルの確保
 	// （N***:標準化方向ベクトル）
-	D3DXVECTOR3 NAe1 = Cuboid0.NormalDirect[ 0 ], Ae1 = NAe1 * Cuboid0.Length[ 0 ];
-	D3DXVECTOR3 NAe2 = Cuboid0.NormalDirect[ 1 ], Ae2 = NAe2 * Cuboid0.Length[ 1 ];
-	D3DXVECTOR3 NAe3 = Cuboid0.NormalDirect[ 2 ], Ae3 = NAe3 * Cuboid0.Length[ 2 ];
-	D3DXVECTOR3 NBe1 = Cuboid1.NormalDirect[ 0 ], Be1 = NBe1 * Cuboid1.Length[ 0 ];
-	D3DXVECTOR3 NBe2 = Cuboid1.NormalDirect[ 1 ], Be2 = NBe2 * Cuboid1.Length[ 1 ];
-	D3DXVECTOR3 NBe3 = Cuboid1.NormalDirect[ 2 ], Be3 = NBe3 * Cuboid1.Length[ 2 ];
-	D3DXVECTOR3 Interval = Cuboid0.GetEffectivePos() - Cuboid1.GetEffectivePos();
+	D3DXVECTOR3 NAe1 = OBB0.NormalDirect[ 0 ], Ae1 = NAe1 * OBB0.Length[ 0 ];
+	D3DXVECTOR3 NAe2 = OBB0.NormalDirect[ 1 ], Ae2 = NAe2 * OBB0.Length[ 1 ];
+	D3DXVECTOR3 NAe3 = OBB0.NormalDirect[ 2 ], Ae3 = NAe3 * OBB0.Length[ 2 ];
+	D3DXVECTOR3 NBe1 = OBB1.NormalDirect[ 0 ], Be1 = NBe1 * OBB1.Length[ 0 ];
+	D3DXVECTOR3 NBe2 = OBB1.NormalDirect[ 1 ], Be2 = NBe2 * OBB1.Length[ 1 ];
+	D3DXVECTOR3 NBe3 = OBB1.NormalDirect[ 2 ], Be3 = NBe3 * OBB1.Length[ 2 ];
+	D3DXVECTOR3 Interval = OBB0.GetEffectivePos() - OBB1.GetEffectivePos();
 
 	// 分離軸 : Ae1
-	FLOAT rA = D3DXVec3Length( &Ae1 );
-	FLOAT rB = LenSegOnSeparateAxis( &NAe1, &Be1, &Be2, &Be3 );
-	FLOAT L = fabs( D3DXVec3Dot( &Interval, &NAe1 ) );
+	float rA = D3DXVec3Length( &Ae1 );
+	float rB = LenSegOnSeparateAxis( &NAe1, &Be1, &Be2, &Be3 );
+	float L = fabs( D3DXVec3Dot( &Interval, &NAe1 ) );
 	if( L > rA + rB )
 		return false; // 衝突していない
 
@@ -275,8 +279,8 @@ float Collision::LenSegOnSeparateAxis( D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVE
 {
 	// 3つの内積の絶対値の和で投影線分長を計算
 	// 分離軸Sepは標準化されていること
-	FLOAT r1 = fabs( D3DXVec3Dot( Sep, e1 ) );
-	FLOAT r2 = fabs( D3DXVec3Dot( Sep, e2 ) );
-	FLOAT r3 = e3 ? ( fabs( D3DXVec3Dot( Sep, e3 ) ) ) : 0;
+	float r1 = fabs( D3DXVec3Dot( Sep, e1 ) );
+	float r2 = fabs( D3DXVec3Dot( Sep, e2 ) );
+	float r3 = e3 ? ( fabs( D3DXVec3Dot( Sep, e3 ) ) ) : 0;
 	return r1 + r2 + r3;
 }
