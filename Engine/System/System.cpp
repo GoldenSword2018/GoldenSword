@@ -59,6 +59,10 @@ static MSG					g_Msg = {};						//メッセージ
 static bool					g_bDebug_Render = false;			//デバッグ表示している
 #endif // DEBUG_KEY_ENABLE
 
+D3DVIEWPORT9 g_port[] = { { 0, 0, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
+{ WINDOWSCREEN_WIDTH / 2, 0, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
+{ 0,WINDOWSCREEN_HEIGHT / 2, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
+{ WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f } };
 
 //===============================================
 //	ウィンドウ処理
@@ -125,11 +129,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//--------------------------
 	//	描画
 	//--------------------------
-
-			g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BG_COLOR, 1.0f, 0);
 			g_pD3DDevice->BeginScene();
 
-			Main_Render();
+			for (int i = 0, count = sizeof(g_port) / sizeof(g_port[0]); i < count; i++)
+			{
+				//描画領域を変更（ビューポート行列）
+				System_GetDevice()->SetViewport(&g_port[i]);
+				g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BG_COLOR, 1.0f, 0);
+				Main_Render();
+			}
 
 	//--------------------------
 	//	デバッグ　描画

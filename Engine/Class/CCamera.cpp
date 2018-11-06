@@ -27,11 +27,6 @@
 //===============================================
 Camera* Camera::MainCamera = NULL;
 
-D3DVIEWPORT9 g_port[] = { { 0, 0, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
-						{ WINDOWSCREEN_WIDTH / 2, 0, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
-						{ 0,WINDOWSCREEN_HEIGHT / 2, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
-						{ WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f } };
-
 //===============================================
 //	カメラ		class
 //===============================================
@@ -158,6 +153,14 @@ void Camera::Set_Main()
 }
 
 //-------------------------------------
+//	サブカメラに設定
+//-------------------------------------
+//void Camera::Set_Sub()
+//{
+//	this->SubCamera = this;
+//}
+
+//-------------------------------------
 //	メインカメラ取得
 //-------------------------------------
 Camera* Camera::Get_Main()
@@ -175,25 +178,16 @@ bool Camera::Begin()
 	//------------------------------------
 	//	ビュー変換行列
 	//------------------------------------
-	D3DXMATRIX mtxView;							//ビュー変換行列
-	D3DXMatrixLookAtLH(&mtxView, &MainCamera->position, &MainCamera->at, &MainCamera->up);	//変換
-	System_GetDevice()->SetTransform(D3DTS_VIEW, &mtxView);		//デバイスへ登録
-
-	for (int i = 0, count = sizeof(g_port) / sizeof(g_port[0]); i < count; i++)
-	{
-		//描画領域を変更（ビューポート行列）
-		System_GetDevice()->SetViewport(&g_port[i]);
-		//カメラの座標を変更（ビュー行列）
-		System_GetDevice()->SetTransform(D3DTS_VIEW, &mtxView);
-	}
-
+	D3DXMATRIX mtxView;							//メインビュー変換行列
 	//------------------------------------
 	//	プロジェクション変換行列
 	//------------------------------------
 	D3DXMATRIX mtxProjection;		//プロジェクション変換行列
 	D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
-	System_GetDevice()->SetTransform(D3DTS_PROJECTION, &mtxProjection);	//デバイスへ登録
-
+	D3DXMatrixLookAtLH(&mtxView, &MainCamera->position, &MainCamera->at, &MainCamera->up);	//変換
+																							//カメラの座標を変更（ビュー行列）
+	System_GetDevice()->SetTransform(D3DTS_VIEW, &mtxView);
+	System_GetDevice()->SetTransform(D3DTS_PROJECTION, &mtxProjection);
 	System_GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);	//ライティングをOFF
 
 	return true;
