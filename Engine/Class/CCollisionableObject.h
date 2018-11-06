@@ -52,7 +52,7 @@ public:
 	enum SHAPE_TYPE
 	{
 		SPHERE = 0,
-		CUBOID,
+		OBB,
 		/* MAX ENUM */
 		COLLISION_SHAPE_TYPE_ENUM_MAX
 	};
@@ -62,6 +62,7 @@ private:
 	Shape(){}
 public:
 	Shape( D3DXVECTOR3* pParentPos, D3DXVECTOR3* pGapPos, SHAPE_TYPE ShapeType );
+	Shape( D3DXVECTOR3* pParentPos, SHAPE_TYPE ShapeType );
 	virtual ~Shape();
 public:
 	D3DXVECTOR3* pParentPos; // 持ち主の位置ポインタ ( オブジェクト中央を想定 ) // これプライベートにする？
@@ -82,15 +83,15 @@ public:
 };
 
 //-------------------------------------
-class ShapeCuboid : public Shape
+class ShapeOBB : public Shape
 {
 public:
-	D3DXVECTOR3 Pos; // 重心の座標
-	D3DXVECTOR3 Length;
-	D3DXVECTOR3 Angle;
+	D3DXVECTOR3 NormalDirect[ 3 ]; // 0:前, 1:右, 2: 上 単位ベクトル
+	float Length[ 3 ];// 0:幅, 1:高さ, 2: 奥行
 public:
-	ShapeCuboid( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3 init_Length, D3DXVECTOR3 init_Radian );
-	~ShapeCuboid();
+	ShapeOBB( D3DXVECTOR3* pParentPos, D3DXVECTOR3* pRadian, D3DXVECTOR3* Length,D3DXVECTOR3* pGapPos = &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) ); 
+	~ShapeOBB();
+
 };
 
 /*
@@ -100,11 +101,11 @@ public:
 class Collision
 {
 private:
-	
+	static float LenSegOnSeparateAxis( D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0 );
 public:
 	static bool SphereVsSphere( ShapeSphere& Sphere0, ShapeSphere& Sphere1 );
-	static bool CuboidVsSphere(ShapeCuboid& Cuboid, ShapeSphere& Sphere) {};
-	static bool CuboidVsCuboid(ShapeCuboid& Cuboid0, ShapeCuboid& Cuboid1) {};
+	static bool OBBVsSphere(ShapeOBB& OBB, ShapeSphere& Sphere) {};
+	static bool OBBVsOBB( ShapeOBB& OBB0, ShapeOBB& OBB1 );
 };
 //-------------------------------------
 //	クラス名
