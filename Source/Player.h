@@ -13,6 +13,7 @@
 //Class
 #include"CGameObject.h"
 #include"CCamera.h"
+#include"CCollisionableObject.h"
 
 //===============================================
 //	Player 構造体
@@ -49,9 +50,25 @@ public:
 class Player:public GameObject
 {
 private:
-
+	D3DXVECTOR3 Forward;
+	D3DXVECTOR3 Right;
+	float AngleY;						// Y軸周りの回転角（視点の左右方向角度）
+	float AngleX;						// X軸周りの回転角（視点の仰角俯角）
+	float g_OldAngleX;
+	ShapeSphere ColShape;
 public:
-
+	Player(Transform* pTransform, D3DXVECTOR3* pForward);
+public:
+	PlayerCamera Camera;
+	void Update();
+	void Render();
+	void Move();
+	void Rotation();
+	void SetPosition(D3DXVECTOR3 Position);
+	void SetForward(D3DXVECTOR3 Forward);
+	void ResetAngle();
+	void Fire();
+	D3DXMATRIX CalWorldMtx();
 };
 
 //===============================================
