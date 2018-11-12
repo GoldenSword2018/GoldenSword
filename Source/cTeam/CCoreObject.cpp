@@ -75,7 +75,7 @@ void CoreObject::Hit()
 
 	if(this->pArmor_Index.size() > 0)
 	{
-		DischargeArmor( 120.0f, 1.0f, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
+		DischargeArmor( 120.0f, 1.0f, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) ); // ここ引数をメンバにして持つなりする！ -------------------------------------------------------------------------- CAUTION!>
 	}
 }
 
@@ -126,7 +126,6 @@ void CoreObject::Render()
 	//アーマーオブジェクトを持っている。
 	if (this->pArmor_Index.size() > 0)
 	{
-		DebugBufferManager::Sphere_BatchBegin();
 
 		//Xモデルの行列変換
 		D3DXMATRIXA16 mtxWorld;
@@ -146,11 +145,11 @@ void CoreObject::Render()
 		//ネジの描画
 		XModel_Render(GetMeshData(ScrewIndex), mtxWorld);
 
-		//当たり判定の描画
-		DebugBufferManager::BatchDrawSphere(&this->ColShape);
-		DebugBufferManager::BatchDrawSphere(&this->CorrectSphere);
-
-		DebugBufferManager::Sphere_BatchRun();
+		//当たり判定の描画 ここバッチ処理にしている意味がNasus?
+		DebugCollisionModule::Sphere_BatchBegin();
+		DebugCollisionModule::BatchDrawSphere(&this->ColShape);
+		DebugCollisionModule::BatchDrawSphere(&this->CorrectSphere);
+		DebugCollisionModule::Sphere_BatchRun();
 	}
 }
 
