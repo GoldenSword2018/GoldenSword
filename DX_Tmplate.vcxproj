@@ -170,7 +170,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Engine\Class\CCollisionableObject.cpp" />
+    <ClCompile Include="Engine\Class\CCollisionShape.cpp" />
     <ClCompile Include="Engine\Class\CGameObject.cpp" />
     <ClCompile Include="Engine\Class\CRender.cpp" />
     <ClCompile Include="Engine\Class\CSprite.cpp" />
@@ -179,7 +179,7 @@
     <ClCompile Include="Engine\Class\CUI.cpp" />
     <ClCompile Include="Engine\Geometry\Cube.cpp" />
     <ClCompile Include="Engine\Geometry\Cube_Debug.cpp" />
-    <ClCompile Include="Engine\Geometry\Debug_Sphere.cpp" />
+    <ClCompile Include="Engine\Geometry\Debug_Collision.cpp" />
     <ClCompile Include="Engine\Geometry\Geometry.cpp" />
     <ClCompile Include="Engine\Geometry\Grid.cpp" />
     <ClCompile Include="Engine\Internal\Animation.cpp" />
@@ -224,7 +224,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Engine\Class\CCollisionableObject.h" />
+    <ClInclude Include="Engine\Class\CCollisionShape.h" />
     <ClInclude Include="Engine\Class\CGameObject.h" />
     <ClInclude Include="Engine\Class\CRender.h" />
     <ClInclude Include="Engine\Class\CSprite.h" />
@@ -233,7 +233,7 @@
     <ClInclude Include="Engine\Class\CUI.h" />
     <ClInclude Include="Engine\Geometry\Cube.h" />
     <ClInclude Include="Engine\Geometry\Cube_Debug.h" />
-    <ClInclude Include="Engine\Geometry\Debug_Sphere.h" />
+    <ClInclude Include="Engine\Geometry\Debug_Collision.h" />
     <ClInclude Include="Engine\Geometry\Grid.h" />
     <ClInclude Include="Engine\Internal\Animation.h" />
     <ClInclude Include="Engine\Internal\Collision.h" />

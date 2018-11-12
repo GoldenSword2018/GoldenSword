@@ -20,15 +20,13 @@
 #include"common.h"
 
 //class
-#include "CCollisionableObject.h"
+#include "CCollisionShape.h"
 
 //===============================================
 //	マクロ定義		define
 //===============================================
 
-#define OBB_VECTOR_FORWARD		( 0 )
-#define OBB_VECTOR_RIGHT			( 1 )
-#define OBB_VECTOR_UP			( 2 )
+#define COLLISION_SHAPE_DEFAULT_POS	( D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) )
 //===============================================
 //	グローバル変数	global
 //===============================================
@@ -41,14 +39,19 @@
 //-------------------------------------
 //  コンストラクタ デストラクタ
 //-------------------------------------
+Shape::Shape()
+	: Shape( &COLLISION_SHAPE_DEFAULT_POS, &COLLISION_SHAPE_DEFAULT_POS,NO_TYPE )
+{
 
+}
 Shape::Shape( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_GapPos, SHAPE_TYPE init_ShapeType )
 	: Shape( init_pParentPos, init_ShapeType )
 {
-	GapPos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
+	GapPos = COLLISION_SHAPE_DEFAULT_POS;
 }
 Shape::Shape( D3DXVECTOR3* init_pParentPos, SHAPE_TYPE init_ShapeType )
-	:pParentPos( init_pParentPos ), ShapeType( init_ShapeType )
+	: pParentPos( init_pParentPos ), 
+	  ShapeType( init_ShapeType )
 {
 
 }
@@ -73,11 +76,17 @@ D3DXVECTOR3 Shape::GetEffectivePos( void )const
 //-------------------------------------
 //  コンストラクタ デストラクタ
 //-------------------------------------
-
-ShapeSphere::ShapeSphere( D3DXVECTOR3* init_pParentPos, float init_Radius, D3DXVECTOR3* init_GapPos )
-	: Shape( init_pParentPos, init_GapPos, SHAPE_TYPE::SPHERE )
+ShapeSphere::ShapeSphere()
+	: Shape(),
+	Radius( 0.0f )
 {
-	Radius = init_Radius;
+
+}
+ShapeSphere::ShapeSphere( D3DXVECTOR3* init_pParentPos, float init_Radius, D3DXVECTOR3* init_GapPos )
+	: Shape( init_pParentPos, init_GapPos, SHAPE_TYPE::SPHERE ),
+	Radius( init_Radius )
+{
+
 }
 ShapeSphere::~ShapeSphere()
 {
@@ -91,15 +100,50 @@ ShapeSphere::~ShapeSphere()
 //-------------------------------------
 //  コンストラクタ デストラクタ
 //-------------------------------------
+ShapeOBB::ShapeOBB()
+	:Shape( &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), SHAPE_TYPE::OBB )
+{
+	NormalDirect[ 0 ] = D3DXVECTOR3( 1.0f, 0.0f, 0.0f );
+	NormalDirect[ 1 ] = D3DXVECTOR3( 0.0f, 0.0f, 1.0f );
+	NormalDirect[ 2 ] = D3DXVECTOR3( 0.0f, 1.0f, 0.0f );
+	
+	Length[ 0 ] = 0.0f;
+	Length[ 1 ] = 0.0f;
+	Length[ 2 ] = 0.0f;
+}
 // arg0: 持ち主の座標ポインタ, arg1: 各座標軸回りの角度(ラジアン) 回す順番 Roll->Pitch->Yaw
 // arg2: x幅, y高さ, z奥行, arg3: 当たり判定の座標との差分
 ShapeOBB::ShapeOBB( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_pRadian, D3DXVECTOR3* init_pLength, D3DXVECTOR3* init_pGapPos )
 	: Shape( init_pParentPos, init_pGapPos, SHAPE_TYPE::OBB )
 {
+	D3DXMATRIX mtxRot;
+	D3DXMatrixRotationYawPitchRoll( &mtxRot, D3DXToRadian( init_pRadian->y ), D3DXToRadian( init_pRadian->x ), D3DXToRadian( init_pRadian->z ) );
+
 	// 前向きの単位ベクトルを作成
+	NormalDirect[ OBB_VECTOR_FORWARD ] = D3DXVECTOR3( 0.0f, 0.0f, 1.0f );
+	D3DXVec3TransformNormal( &NormalDirect[ OBB_VECTOR_FORWARD ], &NormalDirect[ OBB_VECTOR_FORWARD ], &mtxRot );
+	D3DXVec3Normalize( &NormalDirect[ OBB_VECTOR_FORWARD ], &NormalDirect[ OBB_VECTOR_FORWARD ] );
+
+
+	// 右向きの単位ベクトルを作成
+	NormalDirect[ OBB_VECTOR_RIGHT ] = D3DXVECTOR3( 1.0f, 0.0f, 0.0f );
+	D3DXVec3TransformNormal( &NormalDirect[ OBB_VECTOR_RIGHT ], &NormalDirect[ OBB_VECTOR_RIGHT ], &mtxRot );
+	D3DXVec3Normalize( &NormalDirect[ OBB_VECTOR_RIGHT ], &NormalDirect[ OBB_VECTOR_RIGHT ] );
+
+	// 上向きの単位ベクトルを作成
+	NormalDirect[ OBB_VECTOR_UP ] = D3DXVECTOR3( 0.0f, 1.0f, 0.0f );
+	D3DXVec3TransformNormal( &NormalDirect[ OBB_VECTOR_UP ], &NormalDirect[ OBB_VECTOR_UP ], &mtxRot );
+	D3DXVec3Normalize( &NormalDirect[ OBB_VECTOR_UP ], &NormalDirect[ OBB_VECTOR_UP ] );
+
+
+	// 各向きの長さを指定
+	Length[ OBB_VECTOR_FORWARD ] = init_pLength->z / 2.0f;
+	Length[ OBB_VECTOR_RIGHT ] = init_pLength->x / 2.0f;
+	Length[ OBB_VECTOR_UP ] = init_pLength->y / 2.0f;
+	/*
 	D3DXMATRIX mtxRot;
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, init_pRadian->y, init_pRadian->x, init_pRadian->z );
-	NormalDirect[ OBB_VECTOR_FORWARD ] = D3DXVECTOR3( 1.0f, 1.0f, 0.0f );
+	NormalDirect[ OBB_VECTOR_FORWARD ] = D3DXVECTOR3( 0.0f, 0.0f, 1.0f );
 	D3DXVec3TransformNormal( &NormalDirect[ OBB_VECTOR_FORWARD ], &NormalDirect[ OBB_VECTOR_FORWARD ], &mtxRot );
 	D3DXVec3Normalize( &NormalDirect[ OBB_VECTOR_FORWARD ], &NormalDirect[ OBB_VECTOR_FORWARD ] );
 
@@ -115,6 +159,7 @@ ShapeOBB::ShapeOBB( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_pRadian, D3D
 	Length[ OBB_VECTOR_FORWARD ]	= init_pLength->x / 2.0f;
 	Length[ OBB_VECTOR_RIGHT ]	= init_pLength->y / 2.0f;
 	Length[ OBB_VECTOR_UP ]		= init_pLength->z / 2.0f;
+	*/
 }
 
 ShapeOBB::~ShapeOBB()

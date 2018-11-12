@@ -24,6 +24,9 @@
 //================================================
 
 
+#define OBB_VECTOR_FORWARD		( 0 )
+#define OBB_VECTOR_RIGHT		( 1 )
+#define OBB_VECTOR_UP			( 2 )
 //================================================
 //	列挙型		enum
 //================================================
@@ -53,14 +56,14 @@ public:
 	{
 		SPHERE = 0,
 		OBB,
+		NO_TYPE,
 		/* MAX ENUM */
 		COLLISION_SHAPE_TYPE_ENUM_MAX
 	};
 public:
 	SHAPE_TYPE ShapeType;
-private:
-	Shape(){}
 public:
+	Shape(); // どうにかして継承先がデフォルトコンストラクタで生成されないようにしたい。
 	Shape( D3DXVECTOR3* pParentPos, D3DXVECTOR3* pGapPos, SHAPE_TYPE ShapeType );
 	Shape( D3DXVECTOR3* pParentPos, SHAPE_TYPE ShapeType );
 	virtual ~Shape();
@@ -77,8 +80,8 @@ class ShapeSphere : public Shape
 public:
 	float Radius;
 public:
+	ShapeSphere();
 	ShapeSphere( D3DXVECTOR3* pParentPos, float Radius, D3DXVECTOR3* pGapPos = &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ));
-public:
 	~ShapeSphere();
 };
 
@@ -87,8 +90,9 @@ class ShapeOBB : public Shape
 {
 public:
 	D3DXVECTOR3 NormalDirect[ 3 ]; // 0:前, 1:右, 2: 上 単位ベクトル
-	float Length[ 3 ];// 0:幅, 1:高さ, 2: 奥行
+	float Length[ 3 ];// 0:幅, 1:高さ, 2: 奥行 それぞれの半分
 public:
+	ShapeOBB();
 	ShapeOBB( D3DXVECTOR3* pParentPos, D3DXVECTOR3* pRadian, D3DXVECTOR3* Length,D3DXVECTOR3* pGapPos = &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) ); 
 	~ShapeOBB();
 

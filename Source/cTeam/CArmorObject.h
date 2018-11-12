@@ -14,7 +14,7 @@ using namespace std;
 
 //Class
 #include"CGameObject.h"
-#include"CCollisionableObject.h"
+#include"CCollisionShape.h"
 
 //===============================================
 //	アーマー飛ばすやつ
