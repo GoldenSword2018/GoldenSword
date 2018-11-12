@@ -37,23 +37,11 @@
     <Filter Include="ヘッダー ファイル\Engine\3DWorld">
       <UniqueIdentifier>{a1cc6b5a-3212-4879-b4dd-f631c2440900}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Assets">
-      <UniqueIdentifier>{48eb6d87-f43e-4a8e-be2d-48771ee551e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Assets">
-      <UniqueIdentifier>{6d7545aa-129c-462b-b82b-5b2fd3d43287}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Engine\Geometry">
       <UniqueIdentifier>{96f64e4c-6607-4c54-834e-a0faf11b0d65}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Engine\Geometry">
       <UniqueIdentifier>{d0abcb5c-f82f-471a-ae13-2cb8a68ce600}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Assets\cTeam">
-      <UniqueIdentifier>{86006bc0-a2f0-4f0b-b1d4-279d82304429}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Assets\Class">
-      <UniqueIdentifier>{9e0b0f2e-a4d3-46bf-bc1d-15b825be0d12}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Engine\System\InputDevice">
       <UniqueIdentifier>{6e3ae17a-4d10-4113-b029-2703a0401029}</UniqueIdentifier>
@@ -72,6 +60,24 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Engine\Class">
       <UniqueIdentifier>{9d2c04ce-f8b4-4954-a8bd-189ac0551a18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Geometry\MeshField">
+      <UniqueIdentifier>{15418ca8-d180-4f91-aef4-554b0b75e214}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Geometry\MeshField">
+      <UniqueIdentifier>{615af359-049e-4376-8e50-a66906cc79d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Assets">
+      <UniqueIdentifier>{05481edd-3b8f-4e70-83a8-70d850a2671e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Assets">
+      <UniqueIdentifier>{a8d79cd0-e404-439d-ade2-c9e3fa0819d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\System\WinSock">
+      <UniqueIdentifier>{4d3994e1-9bea-489d-ab90-87775daae172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\WinSock">
+      <UniqueIdentifier>{b640b651-c1be-427e-a535-cb868d3ccfe8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,35 +141,20 @@
     <ClCompile Include="Engine\Class\CAnimation.cpp">
       <Filter>ソース ファイル\Engine\Class</Filter>
     </ClCompile>
-    <ClCompile Include="Source\cTeam\CArmorObject.cpp">
-      <Filter>ソース ファイル\Assets\Class</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\cTeam\CBodyObject.cpp">
-      <Filter>ソース ファイル\Assets\Class</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\cTeam\CCoreObject.cpp">
-      <Filter>ソース ファイル\Assets\Class</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Player.cpp">
-      <Filter>ソース ファイル\Assets</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Geometry\Cube_Debug.cpp">
       <Filter>ソース ファイル\Engine\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Bullet.cpp">
-      <Filter>ソース ファイル\Assets</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Class\CCamera.cpp">
       <Filter>ソース ファイル\Engine\3DWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Class\CCollisionableObject.cpp">
+      <Filter>ソース ファイル\Engine\Class</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Internal\XModel.cpp">
       <Filter>ソース ファイル\Engine\Internal</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Geometry\Geometry.cpp">
       <Filter>ソース ファイル\Engine\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemy.cpp">
-      <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
     <ClCompile Include="Engine\System\Input.cpp">
       <Filter>ソース ファイル\Engine\System\InputDevice</Filter>
@@ -183,20 +174,41 @@
     <ClCompile Include="Engine\System\Debug_font.cpp">
       <Filter>ソース ファイル\Engine\System\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Geometry\Debug_Sphere.cpp">
+      <Filter>ソース ファイル\Engine\Geometry</Filter>
+    </ClCompile>
     <ClCompile Include="Source\main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Screwdrop.cpp">
+    <ClCompile Include="Source\Bullet.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\cTeam\CArmorObject.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\cTeam\CBodyObject.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\cTeam\CCoreObject.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
     <ClCompile Include="Source\cTeam\CTeamProt.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Geometry\Debug_Collision.cpp">
-      <Filter>ソース ファイル\Engine\Geometry</Filter>
+    <ClCompile Include="Source\Screwdrop.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Class\CCollisionShape.cpp">
-      <Filter>ソース ファイル\Engine\Class</Filter>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\System\SecondWindow.cpp">
+      <Filter>ソース ファイル\Engine\System\WinSock</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\System\WinSock.cpp">
+      <Filter>ソース ファイル\Engine\System\WinSock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,29 +251,11 @@
     <ClInclude Include="Engine\Internal\Animation.h">
       <Filter>ヘッダー ファイル\Engine\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="Source\cTeam\CArmorObject.h">
-      <Filter>ヘッダー ファイル\Assets\cTeam</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\cTeam\CBodyObject.h">
-      <Filter>ヘッダー ファイル\Assets\cTeam</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\cTeam\CCoreObject.h">
-      <Filter>ヘッダー ファイル\Assets\cTeam</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Geometry\Cube_Debug.h">
       <Filter>ヘッダー ファイル\Engine\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Bullet.h">
-      <Filter>ヘッダー ファイル\Assets</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player.h">
-      <Filter>ヘッダー ファイル\Assets</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Internal\XModel.h">
       <Filter>ヘッダー ファイル\Engine\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemy.h">
-      <Filter>ソース ファイル\Assets</Filter>
     </ClInclude>
     <ClInclude Include="Engine\System\Dualshock4.h">
       <Filter>ヘッダー ファイル\Engine\System\InputDevice</Filter>
@@ -287,10 +281,16 @@
     <ClInclude Include="Engine\Class\CCamera.h">
       <Filter>ヘッダー ファイル\Engine\3DWorld</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Geometry\Debug_Sphere.h">
+      <Filter>ヘッダー ファイル\Engine\Geometry</Filter>
+    </ClInclude>
     <ClInclude Include="Engine\Internal\Collision.h">
       <Filter>ヘッダー ファイル\Engine\Internal</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Class\CAnimation.h">
+      <Filter>ヘッダー ファイル\Engine\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Class\CCollisionableObject.h">
       <Filter>ヘッダー ファイル\Engine\Class</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Class\CUI.h">
@@ -311,22 +311,48 @@
     <ClInclude Include="Engine\Class\CTransform.h">
       <Filter>ヘッダー ファイル\Engine\Class</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Screwdrop.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Source\Bullet.h">
+      <Filter>ヘッダー ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\cTeam\CArmorObject.h">
+      <Filter>ヘッダー ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\cTeam\CBodyObject.h">
+      <Filter>ヘッダー ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\cTeam\CCoreObject.h">
+      <Filter>ヘッダー ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
+      <Filter>ヘッダー ファイル\Assets</Filter>
     </ClInclude>
     <ClInclude Include="Source\cTeam\CTeamProt.h">
       <Filter>ヘッダー ファイル\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Geometry\Debug_Collision.h">
-      <Filter>ヘッダー ファイル\Engine\Geometry</Filter>
+    <ClInclude Include="Source\Player.h">
+      <Filter>ヘッダー ファイル\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Class\CCollisionShape.h">
-      <Filter>ヘッダー ファイル\Engine\Class</Filter>
+    <ClInclude Include="Source\Screwdrop.h">
+      <Filter>ヘッダー ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\System\SecondWindow.h">
+      <Filter>ソース ファイル\Engine\System\WinSock</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\System\WinSock.h">
+      <Filter>ソース ファイル\Engine\System\WinSock</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\System\resource1.h">
+      <Filter>リソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\System\Dualshock4.def">
       <Filter>ヘッダー ファイル\Engine\System\InputDevice</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine\System\SecondWindow_Resource.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

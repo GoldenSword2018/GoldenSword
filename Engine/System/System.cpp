@@ -25,6 +25,7 @@
 #include<Windows.h>
 #include<d3dx9.h>
 
+#include"SecondWindow.h"
 #include"System.h"
 #include"input.h"
 #include"Sprite.h"
@@ -96,6 +97,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	UpdateWindow(g_hWnd);
 
 	g_hInstance = hInstance;
+	SecondWindow_Create(hInstance, nCmdShow);
 
 	g_Msg = {};				//Message
 
