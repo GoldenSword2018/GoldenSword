@@ -199,9 +199,11 @@
     <ClCompile Include="Engine\System\FileData.cpp" />
     <ClCompile Include="Engine\System\Input.cpp" />
     <ClCompile Include="Engine\System\joycon_input.cpp" />
+    <ClCompile Include="Engine\System\SecondWindow.cpp" />
     <ClCompile Include="Engine\System\sound.cpp" />
     <ClCompile Include="Engine\System\System.cpp" />
     <ClCompile Include="Engine\System\system_timer.cpp" />
+    <ClCompile Include="Engine\System\WinSock.cpp" />
     <ClCompile Include="Engine\UnImplemented\Lighting.cpp" />
     <ClCompile Include="Source\Bullet.cpp" />
     <ClCompile Include="Source\cTeam\CArmorObject.cpp" />
@@ -251,9 +253,12 @@
     <ClInclude Include="Engine\System\FileData.h" />
     <ClInclude Include="Engine\System\input.h" />
     <ClInclude Include="Engine\System\joycon_input.h" />
+    <ClInclude Include="Engine\System\resource1.h" />
+    <ClInclude Include="Engine\System\SecondWindow.h" />
     <ClInclude Include="Engine\System\sound.h" />
     <ClInclude Include="Engine\System\System.h" />
     <ClInclude Include="Engine\System\system_timer.h" />
+    <ClInclude Include="Engine\System\WinSock.h" />
     <ClInclude Include="Engine\UnImplemented\Lighting.h" />
     <ClInclude Include="Source\Bullet.h" />
     <ClInclude Include="Source\common.h" />
@@ -266,6 +271,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\System\Dualshock4.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine\System\SecondWindow_Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
