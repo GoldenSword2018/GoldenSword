@@ -8,12 +8,12 @@
 //Class
 #include"Cube.h"
 #include"CCoreObject.h"
-#include"CCollisionableObject.h"
+#include"CCollisionShape.h"
 #include"Bullet.h"
 #include"Screwdrop.h"
 #include"XModel.h"
 
-#include "Debug_Sphere.h"
+#include "Debug_Collision.h"
 
 //===============================================
 //	CoreObject	ƒNƒ‰ƒX

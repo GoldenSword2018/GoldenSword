@@ -18,7 +18,8 @@
 #include"CBodyObject.h"
 #include"CCamera.h"
 
-#include "Debug_Sphere.h"
+// Test
+#include "Debug_Collision.h"
 //===============================================
 //	ƒOƒ[ƒoƒ‹•Ï”
 //===============================================

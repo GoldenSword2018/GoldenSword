@@ -4,7 +4,7 @@
 //===============================================
 #include<d3dx9.h>
 #include"System.h"
-#include"Debug_Sphere.h"
+#include"Debug_Collision.h"
 
 
 //===============================================

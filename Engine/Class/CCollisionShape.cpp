@@ -20,7 +20,7 @@
 #include"common.h"
 
 //class
-#include "CCollisionableObject.h"
+#include "CCollisionShape.h"
 
 //===============================================
 //	É}ÉNÉçíËã`		define
