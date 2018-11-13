@@ -116,6 +116,7 @@ D3DXMATRIX Transform::Convert()
 void Transform::Set_Parent(Transform* pParent)
 {
 	this->pParent = pParent;
+	pParent->pChild.push_back(this);
 }
 
 //-------------------------------------

@@ -35,6 +35,7 @@ GameObject::GameObject(Transform* pTransform, Texture* pTexture) : render(&this-
 void GameObject::Set_Parent(GameObject* pParent)
 {
 	this->pParent = pParent;
+	this->transform.Set_Parent(&this->pParent->transform);
 }
 
 //------------------------------------
