@@ -61,6 +61,7 @@ private:
 	ShapeSphere ColShape;
 	
 public:
+	//Še•”ˆÊ
 	BodyObject Head;
 	BodyObject Body;
 	BodyObject LeftArm;
