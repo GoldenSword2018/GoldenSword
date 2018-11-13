@@ -56,15 +56,13 @@ Shape::Shape( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_pGapPos, SHAPE_TYP
 }
 Shape::Shape( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_GapPos, SHAPE_TYPE init_ShapeType )
 : 
-	Shape( init_pParentPos, init_GapPos, init_ShapeType ),
+	Shape( init_pParentPos, init_GapPos, init_ShapeType, COLLISION_SHAPE_DEFAULT_COLOR )
 {
 
 }
 Shape::Shape( D3DXVECTOR3* init_pParentPos, SHAPE_TYPE init_ShapeType )
 :
-	ShapeType( init_ShapeType ),
-	pParentPos( init_pParentPos ),
-	Color( COLLISION_SHAPE_DEFAULT_COLOR )
+	Shape( init_pParentPos, &COLLISION_SHAPE_DEFAULT_POS, init_ShapeType, COLLISION_SHAPE_DEFAULT_COLOR )
 {
 
 }
