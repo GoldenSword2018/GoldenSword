@@ -26,7 +26,6 @@
 static Camera g_Camera;	
 static float movez=-5.0f;
 
-// 
 class tmp : public GameObject
 {
 public:
@@ -546,6 +545,7 @@ void CTeamProt_Update()
 {
 	GameObject::g_Update();
 	g_Camera.Update();
+
 }
 
 //-------------------------------------
@@ -553,8 +553,11 @@ void CTeamProt_Update()
 //-------------------------------------
 void CTeamProt_Render()
 {
+	DebugCollisionModule::Sphere_BatchBegin();
+	DebugCollisionModule::Cuboid_BatchBegin();
 	GameObject::g_Render();
-
+	DebugCollisionModule::Sphere_BatchRun();
+	DebugCollisionModule::Cuboid_BatchRun();
 	//Grid_Render();
 
 	Camera::Begin();
