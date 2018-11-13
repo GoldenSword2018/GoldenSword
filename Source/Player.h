@@ -58,7 +58,7 @@ private:
 	float AngleY;						// Y²ü‚è‚Ì‰ñ“]Špi‹“_‚Ì¶‰E•ûŒüŠp“xj
 	float AngleX;						// X²ü‚è‚Ì‰ñ“]Špi‹“_‚Ì‹ÂŠp˜ëŠpj
 	float g_OldAngleX;
-	Shape* ColShape;
+	ShapeSphere ColShape;
 	
 public:
 	BodyObject Head;
