@@ -20,6 +20,8 @@
 
 #include"CTransform.h"
 
+#include"TestSpace.h"
+
 //Class
 #include"CUI.h"
 
@@ -55,6 +57,7 @@ void Main_Initialize(void)
 	Bullet_Initialize();
 	Screwdrop_Init();
 	CTeamProt_Initialize();
+	TestSpace_Initialize();	//テストスペース
 	Player_Initialize();
 	Cube_Initialize();
 
@@ -73,6 +76,7 @@ void Main_UpdateBegin(void)
 	WinSock_Receiver();	//データを受信します。
 
 	CTeamProt_Update();
+	TestSpace_UpdateBegin();
 	Bullet_Update();
 	Screwdrop_Update();
 	Player_Update();
@@ -85,6 +89,7 @@ void Main_UpdateBegin(void)
 void Main_Render(void)
 {
 	CTeamProt_Render();
+	TestSpace_Render();
 
 	uiSprite.render.Begin(R2D_SPRITE_ROTATE);
 	
@@ -100,7 +105,7 @@ void Main_Render(void)
 //=============================================================
 void Main_UpdateEnd()
 {
-
+	TestSpace_UpdateEnd();
 }
 
 //=============================================================
@@ -110,4 +115,5 @@ void Main_Finalize(void)
 {
 	Player_Finalize();
 	CTeamProt_Finalize();
+	TestSpace_Finalize();
 }
