@@ -13,7 +13,8 @@
 //Class
 #include"CGameObject.h"
 #include"CCamera.h"
-#include"CCollisionShape.h"
+#include"CCollisionableObject.h"
+#include"CBodyObject.h"
 
 //===============================================
 //	Player \‘¢‘Ì
@@ -56,6 +57,13 @@ private:
 	float AngleX;						// X²ü‚è‚Ì‰ñ“]Špi‹“_‚Ì‹ÂŠp˜ëŠpj
 	float g_OldAngleX;
 	ShapeSphere ColShape;
+	BodyObject Head;
+	BodyObject Body;
+	BodyObject LeftArm;
+	BodyObject RightArm;
+	BodyObject LeftLeg;
+	BodyObject RightLeg;
+
 public:
 	Player(Transform* pTransform, D3DXVECTOR3* pForward);
 public:
