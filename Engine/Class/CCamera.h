@@ -64,10 +64,13 @@ class Camera
 public:
 	static Camera* Get_Main();
 	static bool Begin();		//描画開始
+	static bool Begin(int num);
 
 private:
-	static Camera* MainCamera;					//メインカメラ
-	//static Camera* SubCamera;					//サブカメラ
+	static Camera* MainCamera;				//メインカメラ
+	static Camera* MainCamera1;				//サブカメラ
+	static Camera* MainCamera2;
+	static Camera* MainCamera3;
 
 public:
 	D3DXVECTOR3 position;		//位置
@@ -87,8 +90,7 @@ public:
 
 public:
 	void Set_Main();			//メインカメラに設定
-	//void Set_Sub();				//サブカメラに設定
-
+	void Set_Main(int Num);		//メインカメラ変更
 public:
 	virtual void Initialize();	//初期化
 	virtual void Update();		//更新

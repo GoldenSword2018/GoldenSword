@@ -41,12 +41,8 @@ Player Player01(&Transform(D3DXVECTOR3(0.0f, 0.0f, -10.0f),
 //===============================================
 void Player_Initialize(void)
 {
-	Player01.Camera.Set_Main();
+	Player01.Camera.Set_Main(0);
 	Bullet_Initialize();
-
-	
-
-
 }
 
 //===============================================

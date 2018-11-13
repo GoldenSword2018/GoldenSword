@@ -24,6 +24,9 @@
 //	ƒOƒ[ƒoƒ‹•Ï”
 //===============================================
 static Camera g_Camera;	
+static Camera g_Camera1;
+static Camera g_Camera2;
+static Camera g_Camera3;
 static float movez=-5.0f;
 
 // 
@@ -536,7 +539,10 @@ void CTeamProt_Initialize()
 	DebugCollisionModule::Init();
 
 	Grid_Initialize();
-	g_Camera.Set_Main();
+	g_Camera.Set_Main(0);
+	g_Camera1.Set_Main(1);
+	g_Camera2.Set_Main(2);
+	g_Camera3.Set_Main(3);
 }
 
 //-------------------------------------
@@ -557,8 +563,9 @@ void CTeamProt_Render()
 
 	//Grid_Render();
 
-	Camera::Begin();
+	//Camera::Begin();
 	
+
 }
 
 //-------------------------------------
