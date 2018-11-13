@@ -216,6 +216,9 @@
     <ClCompile Include="Ground.cpp">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="TestObj.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Internal\Component.h">
@@ -352,6 +355,9 @@
     </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>ソース ファイル\Assets\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="TestObj.h">
+      <Filter>ヘッダー ファイル\Assets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

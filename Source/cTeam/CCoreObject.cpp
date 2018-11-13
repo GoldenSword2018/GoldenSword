@@ -145,11 +145,9 @@ void CoreObject::Render()
 		//ƒlƒW‚Ì•`‰æ
 		XModel_Render(GetMeshData(ScrewIndex), mtxWorld);
 
-		//“–‚½‚è”»’è‚Ì•`‰æ ‚±‚±ƒoƒbƒ`ˆ—‚É‚µ‚Ä‚¢‚éˆÓ–¡‚ªNasus?
-		DebugCollisionModule::Sphere_BatchBegin();
-		DebugCollisionModule::BatchDrawSphere(&this->ColShape);
-		DebugCollisionModule::BatchDrawSphere(&this->CorrectSphere);
-		DebugCollisionModule::Sphere_BatchRun();
+		//“–‚½‚è”»’è‚Ì•`‰æ
+		ColShape.DebugDraw();
+		CorrectSphere.DebugDraw();
 	}
 }
 

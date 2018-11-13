@@ -17,6 +17,8 @@
 #include"CGameObject.h"
 //Class
 
+// Debug用
+#include "Debug_Collision.h"
 //===============================================
 //	マクロ定義
 //===============================================
@@ -100,7 +102,15 @@ void PlayerCamera::Update()
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward) :GameObject(pTransform, &Texture()), ColShape(&pTransform->Position,1.0f)
+Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward) 
+:
+	GameObject(pTransform, &Texture()), 
+	ColShape
+	( 
+		&transform.Position, 
+		&D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), 
+		&D3DXVECTOR3( 1.0f, 5.0f, 1.0f )
+	)
 {
 	this->Forward = *pForward;
 	float AngleY = 0.0f;
@@ -178,6 +188,7 @@ void Player::Update()
 void Player::Render()
 {
 	XModel_Render(GetMeshData(BulletIndex), CalWorldMtx());
+	DebugCollisionModule::BatchDrawCuboid( &ColShape );
 }
 
 

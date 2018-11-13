@@ -71,7 +71,7 @@ void DebugCollisionModule::Init( void )
 
 	// Cuboid用のバッファ確保
 	pDevice->CreateVertexBuffer( sizeof( DebugVertex ) * CUBOID_VERTEX_COUNT * CUBOID_DRAW_MAX, D3DUSAGE_WRITEONLY, FVF_DEBUG_VERTEX, D3DPOOL_MANAGED, &pCuboidVertexBuffer, NULL );
-	pDevice->CreateIndexBuffer( sizeof( WORD ) * CUBOID_EDGE_COUNT * 2 * CUBOID_POINT_COUNT_PER_EDGE, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &pCuboidIndexBuffer, NULL );
+	pDevice->CreateIndexBuffer( sizeof( WORD ) * CUBOID_EDGE_COUNT * CUBOID_POINT_COUNT_PER_EDGE * CUBOID_DRAW_MAX, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &pCuboidIndexBuffer, NULL );
 
 #endif // _DEBUG || DEBUG
 }
@@ -141,7 +141,7 @@ void DebugCollisionModule::Sphere_BatchRun( void )
 	pDevice->SetFVF( FVF_DEBUG_VERTEX );
 	pDevice->SetStreamSource( 0, pSphereVertexBuffer, 0, sizeof( DebugVertex ) );
 	pDevice->SetIndices( pSphereIndexBuffer );
-	pDevice->DrawIndexedPrimitive( D3DPT_LINELIST, 0, 0, CIRCLE_VERTEX_COUNT * CIRCLE_DRAW_MAX, 0, SphereCount * CIRCLE_VERTEX_COUNT * 3 );
+	pDevice->DrawIndexedPrimitive( D3DPT_LINELIST, 0, 0, CIRCLE_VERTEX_COUNT * SphereCount, 0, SphereCount * CIRCLE_VERTEX_COUNT * 3 );
 #endif // _DEBUG || DEBUG
 }
 
@@ -168,7 +168,6 @@ void DebugCollisionModule::BatchDrawSphere( const ShapeSphere *Sphere )
 		pSphereVertexIndex[ n * 2 + i * 2 + 1 ] = (WORD) ( n + ( i + 1 ) % CIRCLE_VERTEX_COUNT );
 	}
 
-	SphereCount++;
 	n += CIRCLE_VERTEX_COUNT;
 	for( int i = 0; i < CIRCLE_VERTEX_COUNT; i++ )
 	{
@@ -180,7 +179,6 @@ void DebugCollisionModule::BatchDrawSphere( const ShapeSphere *Sphere )
 		pSphereVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
 		pSphereVertexIndex[ n * 2 + i * 2 + 1 ] = (WORD) ( n + ( i + 1 ) % CIRCLE_VERTEX_COUNT );
 	}
-	SphereCount++;
 	n += CIRCLE_VERTEX_COUNT;
 	for( int i = 0; i < CIRCLE_VERTEX_COUNT; i++ )
 	{
@@ -235,7 +233,7 @@ void DebugCollisionModule::Cuboid_BatchRun( void )
 	pDevice->SetFVF( FVF_DEBUG_VERTEX );
 	pDevice->SetStreamSource( 0, pCuboidVertexBuffer, 0, sizeof( DebugVertex ) );
 	pDevice->SetIndices( pCuboidIndexBuffer );
-	pDevice->DrawIndexedPrimitive( D3DPT_LINELIST, 0, 0, CUBOID_VERTEX_COUNT * CUBOID_DRAW_MAX, 0, CuboidCount * CUBOID_EDGE_COUNT * 2 );
+	pDevice->DrawIndexedPrimitive( D3DPT_LINELIST, 0, 0, CUBOID_VERTEX_COUNT * CuboidCount, 0, CuboidCount * CUBOID_EDGE_COUNT );
 
 
 #endif // _DEBUG || DEBUG
@@ -252,15 +250,15 @@ void DebugCollisionModule::BatchDrawCuboid( const ShapeOBB* pCuboid )
 
 	DebugVertex CuboidVertex[] =
 	{
-		{ -AbsLocalX + AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), D3DCOLOR_RGBA( 255, 255, 255, 255 ) },
-		{  AbsLocalX + AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), D3DCOLOR_RGBA( 255, 255, 255, 255 ) },
-		{ -AbsLocalX - AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), D3DCOLOR_RGBA( 255, 255, 255, 255 ) },
-		{  AbsLocalX - AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), D3DCOLOR_RGBA( 255, 255, 255, 255 ) },
+		{ -AbsLocalX + AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{  AbsLocalX + AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{ -AbsLocalX - AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{  AbsLocalX - AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
 
-		{  AbsLocalX + AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), D3DCOLOR_RGBA( 255, 255, 255, 255 ) },
-		{ -AbsLocalX + AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), D3DCOLOR_RGBA( 255, 255, 255, 255 ) },
-		{  AbsLocalX - AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), D3DCOLOR_RGBA( 255, 255, 255, 255 ) },
-		{ -AbsLocalX - AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), D3DCOLOR_RGBA( 255, 255, 255, 255 ) },
+		{  AbsLocalX + AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{ -AbsLocalX + AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{  AbsLocalX - AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{ -AbsLocalX - AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color }
 	};
 
 	int Margin = CUBOID_VERTEX_COUNT * CuboidCount;

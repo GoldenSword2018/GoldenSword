@@ -21,12 +21,13 @@
 
 //class
 #include "CCollisionShape.h"
-
+#include "Debug_Collision.h"
 //===============================================
 //	マクロ定義		define
 //===============================================
 
 #define COLLISION_SHAPE_DEFAULT_POS	( D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) )
+#define COLLISION_SHAPE_DEFAULT_COLOR ( D3DCOLOR_RGBA( 255, 255, 255, 255 ))
 //===============================================
 //	グローバル変数	global
 //===============================================
@@ -44,14 +45,24 @@ Shape::Shape()
 {
 
 }
-Shape::Shape( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_GapPos, SHAPE_TYPE init_ShapeType )
-	: Shape( init_pParentPos, init_ShapeType )
+Shape::Shape( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_pGapPos, SHAPE_TYPE init_ShapeType, D3DCOLOR init_Color )
+:
+	pParentPos( init_pParentPos ),
+	GapPos( *init_pGapPos ),
+	ShapeType( init_ShapeType ),
+	Color( init_Color )
 {
-	GapPos = COLLISION_SHAPE_DEFAULT_POS;
+
+}
+Shape::Shape( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_GapPos, SHAPE_TYPE init_ShapeType )
+: 
+	Shape( init_pParentPos, init_GapPos, init_ShapeType, COLLISION_SHAPE_DEFAULT_COLOR )
+{
+
 }
 Shape::Shape( D3DXVECTOR3* init_pParentPos, SHAPE_TYPE init_ShapeType )
-	: pParentPos( init_pParentPos ), 
-	  ShapeType( init_ShapeType )
+:
+	Shape( init_pParentPos, &COLLISION_SHAPE_DEFAULT_POS, init_ShapeType, COLLISION_SHAPE_DEFAULT_COLOR )
 {
 
 }
@@ -93,6 +104,14 @@ ShapeSphere::~ShapeSphere()
 	// null
 }
 
+
+//-------------------------------------
+//  デバッグ描画
+//-------------------------------------
+void ShapeSphere::DebugDraw()
+{
+	DebugCollisionModule::BatchDrawSphere( this );
+}
 //===============================================
 //	ShapeOBB クラス
 //===============================================
@@ -140,26 +159,6 @@ ShapeOBB::ShapeOBB( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_pRadian, D3D
 	Length[ OBB_VECTOR_FORWARD ] = init_pLength->z / 2.0f;
 	Length[ OBB_VECTOR_RIGHT ] = init_pLength->x / 2.0f;
 	Length[ OBB_VECTOR_UP ] = init_pLength->y / 2.0f;
-	/*
-	D3DXMATRIX mtxRot;
-	D3DXMatrixRotationYawPitchRoll( &mtxRot, init_pRadian->y, init_pRadian->x, init_pRadian->z );
-	NormalDirect[ OBB_VECTOR_FORWARD ] = D3DXVECTOR3( 0.0f, 0.0f, 1.0f );
-	D3DXVec3TransformNormal( &NormalDirect[ OBB_VECTOR_FORWARD ], &NormalDirect[ OBB_VECTOR_FORWARD ], &mtxRot );
-	D3DXVec3Normalize( &NormalDirect[ OBB_VECTOR_FORWARD ], &NormalDirect[ OBB_VECTOR_FORWARD ] );
-
-	// 右向きの単位ベクトルを作成
-	D3DXVec3Cross( &NormalDirect[ OBB_VECTOR_RIGHT ], &NormalDirect[ OBB_VECTOR_UP ], &NormalDirect[ OBB_VECTOR_FORWARD ] );
-	D3DXVec3Normalize( &NormalDirect[ OBB_VECTOR_RIGHT ], &NormalDirect[ OBB_VECTOR_RIGHT ] );
-
-	// 上向きの単位ベクトルを作成
-	D3DXVec3Cross( &NormalDirect[ OBB_VECTOR_UP ], &NormalDirect[ OBB_VECTOR_FORWARD ], &NormalDirect[ OBB_VECTOR_RIGHT ] );
-	D3DXVec3Normalize( &NormalDirect[ OBB_VECTOR_UP ], &NormalDirect[ OBB_VECTOR_UP ] );
-
-	// 各向きの長さを指定
-	Length[ OBB_VECTOR_FORWARD ]	= init_pLength->x / 2.0f;
-	Length[ OBB_VECTOR_RIGHT ]	= init_pLength->y / 2.0f;
-	Length[ OBB_VECTOR_UP ]		= init_pLength->z / 2.0f;
-	*/
 }
 
 ShapeOBB::~ShapeOBB()
@@ -167,6 +166,13 @@ ShapeOBB::~ShapeOBB()
 	// null
 }
 
+//-------------------------------------
+//  デバッグ描画
+//-------------------------------------
+void ShapeOBB::DebugDraw()
+{
+	DebugCollisionModule::BatchDrawCuboid( this );
+}
 //===============================================
 //	Collision クラス
 //===============================================
