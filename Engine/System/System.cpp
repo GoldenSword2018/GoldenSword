@@ -25,12 +25,14 @@
 #include<Windows.h>
 #include<d3dx9.h>
 
+#include"SecondWindow.h"
 #include"System.h"
 #include"input.h"
 #include"Sprite.h"
 #include"Texture.h"
 #include"system_timer.h"
 #include"sound.h"
+#include"CCamera.h"
 
 #ifdef _DEBUG
 //#include"Debug_Circle.h"
@@ -58,6 +60,11 @@ static MSG					g_Msg = {};						//メッセージ
 #ifdef DEBUG_KEY_ENABLE
 static bool					g_bDebug_Render = false;			//デバッグ表示している
 #endif // DEBUG_KEY_ENABLE
+
+D3DVIEWPORT9 g_port[] = { { 0, 0, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
+{ WINDOWSCREEN_WIDTH / 2, 0, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
+{ 0,WINDOWSCREEN_HEIGHT / 2, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f },
+{ WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2, WINDOWSCREEN_WIDTH / 2,WINDOWSCREEN_HEIGHT / 2,0.0f,1.0f } };
 
 
 //===============================================
@@ -96,6 +103,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	UpdateWindow(g_hWnd);
 
 	g_hInstance = hInstance;
+	SecondWindow_Create(hInstance, nCmdShow);
 
 	g_Msg = {};				//Message
 
@@ -125,11 +133,18 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//--------------------------
 	//	描画
 	//--------------------------
-
-			g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BG_COLOR, 1.0f, 0);
 			g_pD3DDevice->BeginScene();
 
-			Main_Render();
+			Transform::ResetConvert();		//変換判定を初期化
+			for (int i = 0; i < 4; i++)
+			{
+				
+				//描画領域を変更（ビューポート行列）
+				System_GetDevice()->SetViewport(&g_port[i]);
+				g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BG_COLOR, 1.0f, 0);
+				Camera::Begin(i);		//メインカメラに登録されている内容
+				Main_Render();
+			}
 
 	//--------------------------
 	//	デバッグ　描画

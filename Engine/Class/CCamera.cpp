@@ -26,6 +26,9 @@
 //	グローバル変数	global
 //===============================================
 Camera* Camera::MainCamera = NULL;
+Camera* Camera::MainCamera1 = NULL;
+Camera* Camera::MainCamera2 = NULL;
+Camera* Camera::MainCamera3 = NULL;
 
 //===============================================
 //	カメラ		class
@@ -152,6 +155,37 @@ void Camera::Set_Main()
 	this->MainCamera = this;
 }
 
+//別々登録
+void Camera::Set_Main(int Num)
+{
+	switch (Num)
+	{
+	case 0:
+		this->MainCamera = this;
+		break;
+	case 1:
+		this->MainCamera1 = this;
+		break;
+	case 2:
+		this->MainCamera2 = this;
+		break;
+	case 3:
+		this->MainCamera3 = this;
+		break;
+	default:
+		this->MainCamera = this;
+		break;
+	}
+}
+
+//-------------------------------------
+//	サブカメラに設定
+//-------------------------------------
+//void Camera::Set_Sub()
+//{
+//	this->SubCamera = this;
+//}
+
 //-------------------------------------
 //	メインカメラ取得
 //-------------------------------------
@@ -170,21 +204,61 @@ bool Camera::Begin()
 	//------------------------------------
 	//	ビュー変換行列
 	//------------------------------------
-	D3DXMATRIX mtxView;							//ビュー変換行列
-	D3DXMatrixLookAtLH(&mtxView, &MainCamera->position, &MainCamera->at, &MainCamera->up);	//変換
-	System_GetDevice()->SetTransform(D3DTS_VIEW, &mtxView);		//デバイスへ登録
-
+	D3DXMATRIX mtxView;							//メインビュー変換行列
 	//------------------------------------
 	//	プロジェクション変換行列
 	//------------------------------------
 	D3DXMATRIX mtxProjection;		//プロジェクション変換行列
 	D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
-	System_GetDevice()->SetTransform(D3DTS_PROJECTION, &mtxProjection);	//デバイスへ登録
-
+	D3DXMatrixLookAtLH(&mtxView, &MainCamera->position, &MainCamera->at, &MainCamera->up);	//変換
+																							//カメラの座標を変更（ビュー行列）
+	System_GetDevice()->SetTransform(D3DTS_VIEW, &mtxView);
+	System_GetDevice()->SetTransform(D3DTS_PROJECTION, &mtxProjection);
 	System_GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);	//ライティングをOFF
 
 	return true;
 }
 
+bool Camera::Begin(int num)
+{
+	D3DXMATRIX mtxView;							//メインビュー変換行列
+	D3DXMATRIX mtxProjection;		//プロジェクション変換行列
+
+	switch (num)
+	{
+	case 0:
+		if (MainCamera == NULL) return false;
+		D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
+		D3DXMatrixLookAtLH(&mtxView, &MainCamera->position, &MainCamera->at, &MainCamera->up);	//変換
+
+		break;
+	case 1:
+		if (MainCamera1 == NULL) return false;
+		D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
+		D3DXMatrixLookAtLH(&mtxView, &MainCamera1->position, &MainCamera1->at, &MainCamera1->up);	//変換
+
+		break;
+	case 2:
+		if (MainCamera2 == NULL) return false;
+		D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
+		D3DXMatrixLookAtLH(&mtxView, &MainCamera2->position, &MainCamera2->at, &MainCamera2->up);	//変換
+
+		break;
+	case 3:
+		if (MainCamera3 == NULL) return false;
+		D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
+		D3DXMatrixLookAtLH(&mtxView, &MainCamera3->position, &MainCamera3->at, &MainCamera3->up);	//変換
+
+		break;
+	default:
+		break;
+	}
+
+	System_GetDevice()->SetTransform(D3DTS_VIEW, &mtxView);
+	System_GetDevice()->SetTransform(D3DTS_PROJECTION, &mtxProjection);
+	System_GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);	//ライティングをOFF
+
+	return true;
+}
 
 

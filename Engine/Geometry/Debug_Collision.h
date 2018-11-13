@@ -13,7 +13,7 @@
 #define DEBUG_PRIMITIVE_H
 
 #include<d3dx9.h>
-#include"CCollisionableObject.h"
+#include"CCollisionShape.h"
 
 typedef struct DebugVertex_tag
 {
@@ -21,17 +21,14 @@ typedef struct DebugVertex_tag
 	D3DCOLOR color;
 }DebugVertex;
 
-class DebugBufferManager
+class DebugCollisionModule
 {
-private:
-	static LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;		// 頂点バッファ
-	static LPDIRECT3DINDEXBUFFER9 pIndexBuffer;		// インデックスバッファ
 
 private:
-	DebugBufferManager() {}
-	~DebugBufferManager();
+	DebugCollisionModule() {}
+	~DebugCollisionModule();
 public: // instance 
-	static DebugBufferManager* pInstance;
+	static DebugCollisionModule* pInstance;
 public: // 関数
 	static void Init( void );
 	static void Finalize( void );
@@ -41,26 +38,33 @@ public: // 関数
 /*
  * スフィア用
  */
+
+private:
+	static LPDIRECT3DVERTEXBUFFER9 pSphereVertexBuffer;		// 頂点バッファ
+	static LPDIRECT3DINDEXBUFFER9 pSphereIndexBuffer;		// インデックスバッファ
 public: // バッチ処理 将来的にprivateメンバにする
 	static void Sphere_BatchBegin( void );
 	static void Sphere_BatchRun( void );
 private:
-	static int CircleCount;
-	static DebugVertex *pDebugCircleVertex;
-	static WORD *pDebugCircleVertexIndex;
+	static int SphereCount;
+	static DebugVertex* pSphereVertex;
+	static WORD* pSphereVertexIndex;
 public: // 座標登録
 	static void BatchDrawSphere( const ShapeSphere* Sphere );
 
 // キューブ用 _-----------------------------------------------------------------------------------------------NOT YET!>
-//private: // バッチ処理
-//	static void Cuboid_BatchBegin( void );
-//	static void Cuboid_BatchRun( void );
-//private:
-//	static int CuboidCount;
-//	static DebugVertex* pDebugCuboidVertex;
-//	static WORD*  pDebugCuboidVertexIndex;
-//public: // 座標登録
-//	static void BatchDrawCuboid( const ShapeCuboid* Sphere );
+private:
+	static LPDIRECT3DVERTEXBUFFER9 pCuboidVertexBuffer;		// 頂点バッファ
+	static LPDIRECT3DINDEXBUFFER9 pCuboidIndexBuffer;		// インデックスバッファ
+public: // バッチ処理
+	static void Cuboid_BatchBegin( void );
+	static void Cuboid_BatchRun( void );
+private:
+	static int CuboidCount;
+	static DebugVertex* pCuboidVertex;
+	static WORD*  pCuboidVertexIndex;
+public: // 座標登録
+	static void BatchDrawCuboid( const ShapeOBB* pCuboid );
 
 };
 

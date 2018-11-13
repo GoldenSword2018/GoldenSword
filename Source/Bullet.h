@@ -15,7 +15,7 @@
 
 //Class
 #include"CGameObject.h"
-#include"CCollisionableObject.h"
+#include"CCollisionShape.h"
 
 #define BULLET_MAX (256)
 

@@ -9,6 +9,7 @@
 #include"Cube.h"
 #include"Lighting.h"
 
+#include"SecondWindow.h"
 #include"CTeamProt.h"
 #include"Player.h"
 #include"Bullet.h"
@@ -69,6 +70,8 @@ void Main_Initialize(void)
 //=============================================================
 void Main_UpdateBegin(void)
 {
+	WinSock_Receiver();	//データを受信します。
+
 	CTeamProt_Update();
 	Bullet_Update();
 	Screwdrop_Update();
@@ -81,11 +84,10 @@ void Main_UpdateBegin(void)
 //=============================================================
 void Main_Render(void)
 {
-	//XModel_Render();
-	Transform::ResetConvert();		//変換判定を初期化
-
 	CTeamProt_Render();
+
 	uiSprite.render.Begin(R2D_SPRITE_ROTATE);
+	
 	Bullet_Render();
 	Screwdrop_Render();
 	Player_Render();
