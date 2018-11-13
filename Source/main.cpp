@@ -88,7 +88,9 @@ void Main_Render(void)
 	Transform::ResetConvert();		//•ÏŠ·”»’è‚ğ‰Šú‰»
 
 	CTeamProt_Render();
+
 	uiSprite.render.Begin(R2D_SPRITE_ROTATE);
+	
 	Bullet_Render();
 	Screwdrop_Render();
 	Player_Render();

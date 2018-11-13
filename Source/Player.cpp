@@ -43,6 +43,10 @@ void Player_Initialize(void)
 {
 	Player01.Camera.Set_Main();
 	Bullet_Initialize();
+
+	
+
+
 }
 
 //===============================================

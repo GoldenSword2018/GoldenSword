@@ -13,7 +13,7 @@
 //Class
 #include"CGameObject.h"
 #include"CCamera.h"
-#include"CCollisionableObject.h"
+#include"CCollisionShape.h"
 #include"CBodyObject.h"
 
 //===============================================
