@@ -205,6 +205,10 @@
     <ClCompile Include="Engine\System\system_timer.cpp" />
     <ClCompile Include="Engine\System\WinSock.cpp" />
     <ClCompile Include="Engine\UnImplemented\Lighting.cpp" />
+    <ClCompile Include="Ground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Source\Bullet.cpp" />
     <ClCompile Include="Source\cTeam\CArmorObject.cpp" />
     <ClCompile Include="Source\cTeam\CBodyObject.cpp" />
@@ -260,6 +264,10 @@
     <ClInclude Include="Engine\System\system_timer.h" />
     <ClInclude Include="Engine\System\WinSock.h" />
     <ClInclude Include="Engine\UnImplemented\Lighting.h" />
+    <ClInclude Include="Ground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Source\Bullet.h" />
     <ClInclude Include="Source\common.h" />
     <ClInclude Include="Source\cTeam\CArmorObject.h" />
