@@ -142,7 +142,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				//描画領域を変更（ビューポート行列）
 				System_GetDevice()->SetViewport(&g_port[i]);
 				g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BG_COLOR, 1.0f, 0);
-				Camera::Begin(i);
+				Camera::Begin(i);		//メインカメラに登録されている内容
 				Main_Render();
 			}
 

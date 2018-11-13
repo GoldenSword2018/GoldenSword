@@ -3,7 +3,7 @@
 //		Author:YU NISHIMAKI	DATE:2018/10/13
 //===============================================
 //	ïœçXé“ Changed By
-//		Name:HIROMASA IEKDA	DATE:2018/10/17
+//		Name:HIROMASA IEKDA	DATE:2018/11/13
 //
 //-----------------------------------------------
 #include<d3dx9.h>
@@ -112,6 +112,14 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward) :GameObject(pTransf
 	vecRight.y = 0.0f;
 	D3DXVec3Normalize(&vecRight, &vecRight);
 	this->Right = vecRight;
+}
+
+//-------------------------------------
+//	äeïîà Çê›íË
+//-------------------------------------
+void Player::Set_Parts()
+{
+	Head.transform = Transform();
 }
 
 //-------------------------------------

@@ -50,13 +50,17 @@ public:
 //-------------------------------------
 class Player:public GameObject
 {
+public:
+
 private:
 	D3DXVECTOR3 Forward;
 	D3DXVECTOR3 Right;
 	float AngleY;						// Y²ü‚è‚Ì‰ñ“]Špi‹“_‚Ì¶‰E•ûŒüŠp“xj
 	float AngleX;						// X²ü‚è‚Ì‰ñ“]Špi‹“_‚Ì‹ÂŠp˜ëŠpj
 	float g_OldAngleX;
-	ShapeSphere ColShape;
+	Shape* ColShape;
+	
+public:
 	BodyObject Head;
 	BodyObject Body;
 	BodyObject LeftArm;
@@ -66,6 +70,10 @@ private:
 
 public:
 	Player(Transform* pTransform, D3DXVECTOR3* pForward);
+
+private:
+	void Set_Parts();		//•”ˆÊ‚ğİ’è
+
 public:
 	PlayerCamera Camera;
 	void Update();
@@ -77,6 +85,7 @@ public:
 	void ResetAngle();
 	void Fire();
 	D3DXMATRIX CalWorldMtx();
+
 };
 
 //===============================================
