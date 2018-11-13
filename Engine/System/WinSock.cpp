@@ -388,6 +388,7 @@ int Server_Begin()
 //-------------------------------------
 TCHAR* WinSock_Receiver()
 {
+	//ƒoƒO
 	if(recvfrom(g_RecvSock,buf,sizeof(buf),0,NULL,NULL) == -1)
 	{
 		return NULL;

@@ -79,6 +79,9 @@
     <Filter Include="ヘッダー ファイル\Engine\WinSock">
       <UniqueIdentifier>{b640b651-c1be-427e-a535-cb868d3ccfe8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Assets\Stage">
+      <UniqueIdentifier>{fe1f42b3-42ef-405b-9eaf-0ba35f1a0365}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Class\CGameObject.cpp">
@@ -147,9 +150,6 @@
     <ClCompile Include="Engine\Class\CCamera.cpp">
       <Filter>ソース ファイル\Engine\3DWorld</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Class\CCollisionableObject.cpp">
-      <Filter>ソース ファイル\Engine\Class</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Internal\XModel.cpp">
       <Filter>ソース ファイル\Engine\Internal</Filter>
     </ClCompile>
@@ -173,9 +173,6 @@
     </ClCompile>
     <ClCompile Include="Engine\System\Debug_font.cpp">
       <Filter>ソース ファイル\Engine\System\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Geometry\Debug_Sphere.cpp">
-      <Filter>ソース ファイル\Engine\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Source\main.cpp">
       <Filter>ソース ファイル</Filter>
@@ -209,6 +206,15 @@
     </ClCompile>
     <ClCompile Include="Engine\System\WinSock.cpp">
       <Filter>ソース ファイル\Engine\System\WinSock</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Class\CCollisionShape.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Geometry\Debug_Collision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -281,16 +287,10 @@
     <ClInclude Include="Engine\Class\CCamera.h">
       <Filter>ヘッダー ファイル\Engine\3DWorld</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Geometry\Debug_Sphere.h">
-      <Filter>ヘッダー ファイル\Engine\Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Internal\Collision.h">
       <Filter>ヘッダー ファイル\Engine\Internal</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Class\CAnimation.h">
-      <Filter>ヘッダー ファイル\Engine\Class</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Class\CCollisionableObject.h">
       <Filter>ヘッダー ファイル\Engine\Class</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Class\CUI.h">
@@ -343,6 +343,15 @@
     </ClInclude>
     <ClInclude Include="Engine\System\resource1.h">
       <Filter>リソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Class\CCollisionShape.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Geometry\Debug_Collision.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
