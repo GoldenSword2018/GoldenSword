@@ -135,6 +135,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//--------------------------
 			g_pD3DDevice->BeginScene();
 
+#if !defined(DISABLE_SCREEN_SEGMENTATION)	
 			Transform::ResetConvert();		//変換判定を初期化
 			for (int i = 0; i < 4; i++)
 			{
@@ -145,6 +146,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				Camera::Begin(i);		//メインカメラに登録されている内容
 				Main_Render();
 			}
+#else
+			Transform::ResetConvert();
+			g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BG_COLOR, 1.0f, 0);
+			Camera::Begin(0);
+			Main_Render();
+
+#endif
 
 	//--------------------------
 	//	デバッグ　描画
