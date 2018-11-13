@@ -46,6 +46,8 @@
 #define CAMERA_ATDISTANCE (10.0f)
 #define CAMERA_FOV (D3DXToRadian(60))
 
+#define CAMERA_COUNT (4) //カメラ数
+
 //================================================
 //	グローバル変数　global
 //================================================
@@ -64,7 +66,8 @@ public:
 	static bool Begin();		//描画開始
 
 private:
-	static Camera* MainCamera;	//メインカメラ
+	static Camera* MainCamera;					//メインカメラ
+	//static Camera* SubCamera;					//サブカメラ
 
 public:
 	D3DXVECTOR3 position;		//位置
@@ -84,6 +87,7 @@ public:
 
 public:
 	void Set_Main();			//メインカメラに設定
+	//void Set_Sub();				//サブカメラに設定
 
 public:
 	virtual void Initialize();	//初期化
