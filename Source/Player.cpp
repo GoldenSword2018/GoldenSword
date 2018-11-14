@@ -14,6 +14,7 @@
 #include"Player.h"
 
 #include"Bullet.h"
+#include"CGameObject.h"
 //Class
 
 // Debug用
@@ -122,6 +123,8 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	vecRight.y = 0.0f;
 	D3DXVec3Normalize(&vecRight, &vecRight);
 	this->Right = vecRight;
+
+	this->Set_Parts();
 }
 
 //-------------------------------------
@@ -129,7 +132,27 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 //-------------------------------------
 void Player::Set_Parts()
 {
-	Head.transform = Transform();
+	//プレイヤーと親子関係を作る
+	Head.Set_Parent(this);
+	Body.Set_Parent(this);
+	LeftArm.Set_Parent(this);
+	RightArm.Set_Parent(this);
+	LeftLeg.Set_Parent(this);
+	RightLeg.Set_Parent(this);
+
+	//
+	Head.transform.Position = D3DXVECTOR3(0.0f,2.0f,0.0f);
+
+	//
+	Body.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
+
+	//
+	LeftArm.transform.Position = D3DXVECTOR3(-2.0f,1.0f,0.0f);
+	LeftArm.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
+
+	//
+	RightArm.transform.Position = D3DXVECTOR3(2.0f,1.0f,0.0f);
+	RightArm.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
 }
 
 //-------------------------------------
