@@ -38,14 +38,7 @@
 
 DebugCollisionModule* DebugCollisionModule::pInstance = NULL;
 
-// Sphere用バッファ
-int DebugCollisionModule::SphereCount = 0;
- LPDIRECT3DVERTEXBUFFER9 DebugCollisionModule::pSphereVertexBuffer;		// 頂点バッファ
- LPDIRECT3DINDEXBUFFER9 DebugCollisionModule::pSphereIndexBuffer;		// インデックスバッファ
-// Cuboid用バッファ 
- int DebugCollisionModule::CuboidCount = 0;
- LPDIRECT3DVERTEXBUFFER9 DebugCollisionModule::pCuboidVertexBuffer;
- LPDIRECT3DINDEXBUFFER9 DebugCollisionModule::pCuboidIndexBuffer;
+
 /* 
  * デストラクタ
  */
@@ -71,18 +64,32 @@ void DebugCollisionModule::Init( void )
 
 	// 球用のバッファ確保
 	// 円を3軸分書くので用意するバッファ領域は3倍
-	pDevice->CreateVertexBuffer( sizeof( DebugVertex ) * CIRCLE_VERTEX_COUNT * CIRCLE_DRAW_MAX * 3, D3DUSAGE_WRITEONLY, FVF_DEBUG_VERTEX, D3DPOOL_MANAGED, &pSphereVertexBuffer, NULL );
-	pDevice->CreateIndexBuffer( sizeof( WORD ) * ( CIRCLE_VERTEX_COUNT * 2 ) *  CIRCLE_DRAW_MAX * 3, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &pSphereIndexBuffer, NULL );
-	SphereCount = 0;
+	pDevice->CreateVertexBuffer( sizeof( DebugVertex ) * CIRCLE_VERTEX_COUNT * CIRCLE_DRAW_MAX * 3, D3DUSAGE_WRITEONLY, FVF_DEBUG_VERTEX, D3DPOOL_MANAGED, &pInstance->pSphereVertexBuffer, NULL );
+	pDevice->CreateIndexBuffer( sizeof( WORD ) * ( CIRCLE_VERTEX_COUNT * 2 ) *  CIRCLE_DRAW_MAX * 3, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &pInstance->pSphereIndexBuffer, NULL );
+	pInstance->SphereCount = 0;
 
 	// Cuboid用のバッファ確保
-	pDevice->CreateVertexBuffer( sizeof( DebugVertex ) * CUBOID_VERTEX_COUNT * CUBOID_DRAW_MAX, D3DUSAGE_WRITEONLY, FVF_DEBUG_VERTEX, D3DPOOL_MANAGED, &pCuboidVertexBuffer, NULL );
-	pDevice->CreateIndexBuffer( sizeof( WORD ) * CUBOID_EDGE_COUNT * CUBOID_POINT_COUNT_PER_EDGE * CUBOID_DRAW_MAX, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &pCuboidIndexBuffer, NULL );
+	pDevice->CreateVertexBuffer( sizeof( DebugVertex ) * CUBOID_VERTEX_COUNT * CUBOID_DRAW_MAX, D3DUSAGE_WRITEONLY, FVF_DEBUG_VERTEX, D3DPOOL_MANAGED, &pInstance->pCuboidVertexBuffer, NULL );
+	pDevice->CreateIndexBuffer( sizeof( WORD ) * CUBOID_EDGE_COUNT * CUBOID_POINT_COUNT_PER_EDGE * CUBOID_DRAW_MAX, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &pInstance->pCuboidIndexBuffer, NULL );
+	pInstance->CuboidCount = 0;
 
+#endif // _DEBUG || DEBUG
+}
+
+DebugCollisionModule* DebugCollisionModule::GetInstance( void )
+{
+#if defined(_DEBUG) || defined(DEBUG)
+	if( DebugCollisionModule::pInstance )
+	{
+		DebugCollisionModule::Init();
+	}
+
+	return pInstance;
 #endif // _DEBUG || DEBUG
 }
 void DebugCollisionModule::Finalize( void )
 {
+#if defined(_DEBUG) || defined(DEBUG)
 	if( pSphereIndexBuffer )
 	{
 		pSphereIndexBuffer->Release();
@@ -106,14 +113,13 @@ void DebugCollisionModule::Finalize( void )
 		pCuboidIndexBuffer = NULL;
 	}
 	MessageBox( NULL, "DELETE", "ok ", MB_OK );
+#endif // _DEBUG || DEBUG
 }
 
 //-------------------------------------
 //	Sphere
 //-------------------------------------
 
-DebugVertex* DebugCollisionModule::pSphereVertex;
-WORD* DebugCollisionModule::pSphereVertexIndex;
 
 /*
  * 描画開始 : 終了
@@ -122,10 +128,10 @@ void DebugCollisionModule::Sphere_BatchBegin( void )
 {
 #if defined(_DEBUG) || defined(DEBUG)
 
-	SphereCount = 0;
+	pInstance->SphereCount = 0;
 
-	pSphereVertexBuffer->Lock( 0, 0, (void**) &pSphereVertex, 0 );
-	pSphereIndexBuffer->Lock( 0, 0, (void**) &pSphereVertexIndex, 0 );
+	pInstance->pSphereVertexBuffer->Lock( 0, 0, (void**) &pInstance->pSphereVertex, 0 );
+	pInstance->pSphereIndexBuffer->Lock( 0, 0, (void**) &pInstance->pSphereVertexIndex, 0 );
 
 #endif // _DEBUG || DEBUG
 }
@@ -140,14 +146,14 @@ void DebugCollisionModule::Sphere_BatchRun( void )
 	D3DXMatrixIdentity( &mtxTransform );
 	pDevice->SetTransform( D3DTS_WORLD, &mtxTransform );
 
-	pSphereVertexBuffer->Unlock();
-	pSphereIndexBuffer->Unlock();
+	pInstance->pSphereVertexBuffer->Unlock();
+	pInstance->pSphereIndexBuffer->Unlock();
 
 	pDevice->SetTexture( 0, NULL );
 	pDevice->SetFVF( FVF_DEBUG_VERTEX );
-	pDevice->SetStreamSource( 0, pSphereVertexBuffer, 0, sizeof( DebugVertex ) );
-	pDevice->SetIndices( pSphereIndexBuffer );
-	pDevice->DrawIndexedPrimitive( D3DPT_LINELIST, 0, 0, CIRCLE_VERTEX_COUNT * SphereCount, 0, SphereCount * CIRCLE_VERTEX_COUNT * 3 );
+	pDevice->SetStreamSource( 0, pInstance->pSphereVertexBuffer, 0, sizeof( DebugVertex ) );
+	pDevice->SetIndices( pInstance->pSphereIndexBuffer );
+	pDevice->DrawIndexedPrimitive( D3DPT_LINELIST, 0, 0, CIRCLE_VERTEX_COUNT * pInstance->SphereCount, 0, pInstance->SphereCount * CIRCLE_VERTEX_COUNT * 3 );
 #endif // _DEBUG || DEBUG
 }
 
@@ -159,45 +165,45 @@ void DebugCollisionModule::BatchDrawSphere( const ShapeSphere *Sphere )
 {
 #if defined(_DEBUG) || defined(DEBUG)
 
-	int n = SphereCount * CIRCLE_VERTEX_COUNT;
+	int n = pInstance->SphereCount * CIRCLE_VERTEX_COUNT;
 
 	const float s = D3DX_PI * 2 / CIRCLE_VERTEX_COUNT;
 
 	for( int i = 0; i < CIRCLE_VERTEX_COUNT; i++ )
 	{
-		pSphereVertex[ n + i ].position.x = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->x;
-		pSphereVertex[ n + i ].position.y = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->y;
-		pSphereVertex[ n + i ].position.z = Sphere->pParentPos->z;
-		pSphereVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
+		pInstance->pSphereVertex[ n + i ].position.x = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->x;
+		pInstance->pSphereVertex[ n + i ].position.y = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->y;
+		pInstance->pSphereVertex[ n + i ].position.z = Sphere->pParentPos->z;
+		pInstance->pSphereVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
 
-		pSphereVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
-		pSphereVertexIndex[ n * 2 + i * 2 + 1 ] = (WORD) ( n + ( i + 1 ) % CIRCLE_VERTEX_COUNT );
+		pInstance->pSphereVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
+		pInstance->pSphereVertexIndex[ n * 2 + i * 2 + 1 ] = (WORD) ( n + ( i + 1 ) % CIRCLE_VERTEX_COUNT );
 	}
 
 	n += CIRCLE_VERTEX_COUNT;
 	for( int i = 0; i < CIRCLE_VERTEX_COUNT; i++ )
 	{
-		pSphereVertex[ n + i ].position.x = Sphere->pParentPos->x;
-		pSphereVertex[ n + i ].position.y = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->y;
-		pSphereVertex[ n + i ].position.z = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->z;
-		pSphereVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
+		pInstance->pSphereVertex[ n + i ].position.x = Sphere->pParentPos->x;
+		pInstance->pSphereVertex[ n + i ].position.y = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->y;
+		pInstance->pSphereVertex[ n + i ].position.z = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->z;
+		pInstance->pSphereVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
 
-		pSphereVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
-		pSphereVertexIndex[ n * 2 + i * 2 + 1 ] = (WORD) ( n + ( i + 1 ) % CIRCLE_VERTEX_COUNT );
+		pInstance->pSphereVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
+		pInstance->pSphereVertexIndex[ n * 2 + i * 2 + 1 ] = (WORD) ( n + ( i + 1 ) % CIRCLE_VERTEX_COUNT );
 	}
 	n += CIRCLE_VERTEX_COUNT;
 	for( int i = 0; i < CIRCLE_VERTEX_COUNT; i++ )
 	{
-		pSphereVertex[ n + i ].position.x = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->x;
-		pSphereVertex[ n + i ].position.y = Sphere->pParentPos->y;
-		pSphereVertex[ n + i ].position.z = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->z;
-		pSphereVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
+		pInstance->pSphereVertex[ n + i ].position.x = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->x;
+		pInstance->pSphereVertex[ n + i ].position.y = Sphere->pParentPos->y;
+		pInstance->pSphereVertex[ n + i ].position.z = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->z;
+		pInstance->pSphereVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
 
-		pSphereVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
-		pSphereVertexIndex[ n * 2 + i * 2 + 1 ] = (WORD) ( n + ( i + 1 ) % CIRCLE_VERTEX_COUNT );
+		pInstance->pSphereVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
+		pInstance->pSphereVertexIndex[ n * 2 + i * 2 + 1 ] = (WORD) ( n + ( i + 1 ) % CIRCLE_VERTEX_COUNT );
 	}
 
-	SphereCount++;
+	pInstance->SphereCount++;
 
 #endif // _DEBUG || DEBUG
 }
@@ -206,18 +212,14 @@ void DebugCollisionModule::BatchDrawSphere( const ShapeSphere *Sphere )
 //	Cuboid
 //-------------------------------------
 
-// 頂点 インデックス
-DebugVertex* DebugCollisionModule::pCuboidVertex;
-WORD* DebugCollisionModule::pCuboidVertexIndex;
-
 void DebugCollisionModule::Cuboid_BatchBegin( void )
 {
 #if defined(_DEBUG) || defined(DEBUG)
 
-	CuboidCount = 0;
+	pInstance->CuboidCount = 0;
 
-	pCuboidVertexBuffer->Lock( 0, 0, (void**) &pCuboidVertex, 0 );
-	pCuboidIndexBuffer->Lock( 0, 0, (void**) &pCuboidVertexIndex, 0 );
+	pInstance->pCuboidVertexBuffer->Lock( 0, 0, (void**) &pInstance->pCuboidVertex, 0 );
+	pInstance->pCuboidIndexBuffer->Lock( 0, 0, (void**) &pInstance->pCuboidVertexIndex, 0 );
 
 #endif // _DEBUG || DEBUG
 }
@@ -232,14 +234,14 @@ void DebugCollisionModule::Cuboid_BatchRun( void )
 	D3DXMatrixIdentity( &mtxTransform );
 	pDevice->SetTransform( D3DTS_WORLD, &mtxTransform );
 
-	pCuboidVertexBuffer->Unlock();
-	pCuboidIndexBuffer->Unlock();
+	pInstance->pCuboidVertexBuffer->Unlock();
+	pInstance->pCuboidIndexBuffer->Unlock();
 
 	pDevice->SetTexture( 0, NULL );
 	pDevice->SetFVF( FVF_DEBUG_VERTEX );
-	pDevice->SetStreamSource( 0, pCuboidVertexBuffer, 0, sizeof( DebugVertex ) );
-	pDevice->SetIndices( pCuboidIndexBuffer );
-	pDevice->DrawIndexedPrimitive( D3DPT_LINELIST, 0, 0, CUBOID_VERTEX_COUNT * CuboidCount, 0, CuboidCount * CUBOID_EDGE_COUNT );
+	pDevice->SetStreamSource( 0, pInstance->pCuboidVertexBuffer, 0, sizeof( DebugVertex ) );
+	pDevice->SetIndices( pInstance->pCuboidIndexBuffer );
+	pDevice->DrawIndexedPrimitive( D3DPT_LINELIST, 0, 0, CUBOID_VERTEX_COUNT * pInstance->CuboidCount, 0, pInstance->CuboidCount * CUBOID_EDGE_COUNT );
 
 
 #endif // _DEBUG || DEBUG
@@ -267,57 +269,57 @@ void DebugCollisionModule::BatchDrawCuboid( const ShapeOBB* pCuboid )
 		{ -AbsLocalX - AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color }
 	};
 
-	int Margin = CUBOID_VERTEX_COUNT * CuboidCount;
+	int Margin = CUBOID_VERTEX_COUNT * pInstance->CuboidCount;
 
-	pCuboidVertex[ Margin + 0 ] = CuboidVertex[ 0 ];
-	pCuboidVertex[ Margin + 1 ] = CuboidVertex[ 1 ];
-	pCuboidVertex[ Margin + 2 ] = CuboidVertex[ 2 ];
-	pCuboidVertex[ Margin + 3 ] = CuboidVertex[ 3 ];
-	pCuboidVertex[ Margin + 4 ] = CuboidVertex[ 4 ];
-	pCuboidVertex[ Margin + 5 ] = CuboidVertex[ 5 ];
-	pCuboidVertex[ Margin + 6 ] = CuboidVertex[ 6 ];
-	pCuboidVertex[ Margin + 7 ] = CuboidVertex[ 7 ];
+	pInstance->pCuboidVertex[ Margin + 0 ] = CuboidVertex[ 0 ];
+	pInstance->pCuboidVertex[ Margin + 1 ] = CuboidVertex[ 1 ];
+	pInstance->pCuboidVertex[ Margin + 2 ] = CuboidVertex[ 2 ];
+	pInstance->pCuboidVertex[ Margin + 3 ] = CuboidVertex[ 3 ];
+	pInstance->pCuboidVertex[ Margin + 4 ] = CuboidVertex[ 4 ];
+	pInstance->pCuboidVertex[ Margin + 5 ] = CuboidVertex[ 5 ];
+	pInstance->pCuboidVertex[ Margin + 6 ] = CuboidVertex[ 6 ];
+	pInstance->pCuboidVertex[ Margin + 7 ] = CuboidVertex[ 7 ];
 
-	int IndexMargin = CUBOID_EDGE_COUNT * 2 * CuboidCount;
+	int IndexMargin = CUBOID_EDGE_COUNT * 2 * pInstance->CuboidCount;
 	// x軸 平行の辺
-	pCuboidVertexIndex[ IndexMargin +  0 ] = (WORD) ( Margin + 1 );
-	pCuboidVertexIndex[ IndexMargin +  1 ] = (WORD) ( Margin + 0 );
+	pInstance->pCuboidVertexIndex[ IndexMargin +  0 ] = (WORD) ( Margin + 1 );
+	pInstance->pCuboidVertexIndex[ IndexMargin +  1 ] = (WORD) ( Margin + 0 );
 
-	pCuboidVertexIndex[ IndexMargin +  2 ] = (WORD) ( Margin + 4 );
-	pCuboidVertexIndex[ IndexMargin +  3 ] = (WORD) ( Margin + 5 );
+	pInstance->pCuboidVertexIndex[ IndexMargin +  2 ] = (WORD) ( Margin + 4 );
+	pInstance->pCuboidVertexIndex[ IndexMargin +  3 ] = (WORD) ( Margin + 5 );
 
-	pCuboidVertexIndex[ IndexMargin +  4 ] = (WORD) ( Margin + 6 );
-	pCuboidVertexIndex[ IndexMargin +  5 ] = (WORD) ( Margin + 7 );
+	pInstance->pCuboidVertexIndex[ IndexMargin +  4 ] = (WORD) ( Margin + 6 );
+	pInstance->pCuboidVertexIndex[ IndexMargin +  5 ] = (WORD) ( Margin + 7 );
 
-	pCuboidVertexIndex[ IndexMargin +  6 ] = (WORD) ( Margin + 3 );
-	pCuboidVertexIndex[ IndexMargin +  7 ] = (WORD) ( Margin + 2 );
+	pInstance->pCuboidVertexIndex[ IndexMargin +  6 ] = (WORD) ( Margin + 3 );
+	pInstance->pCuboidVertexIndex[ IndexMargin +  7 ] = (WORD) ( Margin + 2 );
 
 	// y軸 平行
-	pCuboidVertexIndex[ IndexMargin +  8 ] = (WORD) ( Margin + 0 );
-	pCuboidVertexIndex[ IndexMargin +  9 ] = (WORD) ( Margin + 2 );
+	pInstance->pCuboidVertexIndex[ IndexMargin +  8 ] = (WORD) ( Margin + 0 );
+	pInstance->pCuboidVertexIndex[ IndexMargin +  9 ] = (WORD) ( Margin + 2 );
 
-	pCuboidVertexIndex[ IndexMargin + 10 ] = (WORD) ( Margin + 1 );
-	pCuboidVertexIndex[ IndexMargin + 11 ] = (WORD) ( Margin + 3 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 10 ] = (WORD) ( Margin + 1 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 11 ] = (WORD) ( Margin + 3 );
 	
-	pCuboidVertexIndex[ IndexMargin + 12 ] = (WORD) ( Margin + 4 );
-	pCuboidVertexIndex[ IndexMargin + 13 ] = (WORD) ( Margin + 6 );
+	pInstance->pInstance->pCuboidVertexIndex[ IndexMargin + 12 ] = (WORD) ( Margin + 4 );
+	pInstance->pInstance->pCuboidVertexIndex[ IndexMargin + 13 ] = (WORD) ( Margin + 6 );
 	
-	pCuboidVertexIndex[ IndexMargin + 14 ] = (WORD) ( Margin + 5 );
-	pCuboidVertexIndex[ IndexMargin + 15 ] = (WORD) ( Margin + 7 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 14 ] = (WORD) ( Margin + 5 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 15 ] = (WORD) ( Margin + 7 );
 	
 	// z軸平行
-	pCuboidVertexIndex[ IndexMargin + 16 ] = (WORD) ( Margin + 5 );
-	pCuboidVertexIndex[ IndexMargin + 17 ] = (WORD) ( Margin + 0 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 16 ] = (WORD) ( Margin + 5 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 17 ] = (WORD) ( Margin + 0 );
 	
-	pCuboidVertexIndex[ IndexMargin + 18 ] = (WORD) ( Margin + 4 );
-	pCuboidVertexIndex[ IndexMargin + 19 ] = (WORD) ( Margin + 1 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 18 ] = (WORD) ( Margin + 4 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 19 ] = (WORD) ( Margin + 1 );
 	
-	pCuboidVertexIndex[ IndexMargin + 20 ] = (WORD) ( Margin + 6 );
-	pCuboidVertexIndex[ IndexMargin + 21 ] = (WORD) ( Margin + 3 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 20 ] = (WORD) ( Margin + 6 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 21 ] = (WORD) ( Margin + 3 );
 	
-	pCuboidVertexIndex[ IndexMargin + 22 ] = (WORD) ( Margin + 7 );
-	pCuboidVertexIndex[ IndexMargin + 23 ] = (WORD) ( Margin + 2 );
-	CuboidCount++;
+	pInstance->pCuboidVertexIndex[ IndexMargin + 22 ] = (WORD) ( Margin + 7 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 23 ] = (WORD) ( Margin + 2 );
+	pInstance->CuboidCount++;
 
 #endif // _DEBUG || DEBUG 
 }
