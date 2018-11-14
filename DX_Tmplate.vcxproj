@@ -113,7 +113,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Source;$(SolutionDir)Source\cTeam;$(SolutionDir)Engine\Class;$(SolutionDir)Engine\Internal;$(SolutionDir)Engine\System;$(SolutionDir)Engine\Geometry;$(SolutionDir)Engine\UnImplemented;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Source;$(SolutionDir)Source\TestSpace;$(SolutionDir)Source\cTeam;$(SolutionDir)Engine\Class;$(SolutionDir)Engine\Internal;$(SolutionDir)Engine\System;$(SolutionDir)Engine\Geometry;$(SolutionDir)Engine\UnImplemented;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,7 +150,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Source;$(SolutionDir)Source\cTeam;$(SolutionDir)Engine\Class;$(SolutionDir)Engine\Internal;$(SolutionDir)Engine\System;$(SolutionDir)Engine\Geometry;$(SolutionDir)Engine\UnImplemented;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Source;$(SolutionDir)Source\TestSpace;$(SolutionDir)Source\cTeam;$(SolutionDir)Engine\Class;$(SolutionDir)Engine\Internal;$(SolutionDir)Engine\System;$(SolutionDir)Engine\Geometry;$(SolutionDir)Engine\UnImplemented;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -217,6 +217,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Screwdrop.cpp" />
+    <ClCompile Include="Source\TestSpace\TestSpace.cpp" />
     <ClCompile Include="TestObj.cpp">
       <SubType>
       </SubType>
@@ -280,6 +281,7 @@
     <ClInclude Include="Source\cTeam\CTeamProt.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Screwdrop.h" />
+    <ClInclude Include="Source\TestSpace\TestSpace.h" />
     <ClInclude Include="TestObj.h">
       <SubType>
       </SubType>

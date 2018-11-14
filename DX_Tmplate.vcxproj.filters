@@ -82,6 +82,12 @@
     <Filter Include="ソース ファイル\Assets\Stage">
       <UniqueIdentifier>{fe1f42b3-42ef-405b-9eaf-0ba35f1a0365}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Assets\TestSpace">
+      <UniqueIdentifier>{205b653a-b4db-46af-a2bf-b673ef759fb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\TestSpace">
+      <UniqueIdentifier>{58861568-7107-449e-ada2-7e6e99aa052d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Class\CGameObject.cpp">
@@ -207,17 +213,20 @@
     <ClCompile Include="Engine\System\WinSock.cpp">
       <Filter>ソース ファイル\Engine\System\WinSock</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Class\CCollisionShape.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Geometry\Debug_Collision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClCompile>
     <ClCompile Include="TestObj.cpp">
       <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TestSpace\TestSpace.cpp">
+      <Filter>ソース ファイル\Assets\TestSpace</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Geometry\Debug_Collision.cpp">
+      <Filter>ソース ファイル\Engine\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Class\CCollisionShape.cpp">
+      <Filter>ソース ファイル\Engine\Class</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -347,17 +356,20 @@
     <ClInclude Include="Engine\System\resource1.h">
       <Filter>リソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Class\CCollisionShape.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Geometry\Debug_Collision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClInclude>
     <ClInclude Include="TestObj.h">
       <Filter>ヘッダー ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestSpace\TestSpace.h">
+      <Filter>ヘッダー ファイル\TestSpace</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Class\CCollisionShape.h">
+      <Filter>ヘッダー ファイル\Engine\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Geometry\Debug_Collision.h">
+      <Filter>ヘッダー ファイル\Engine\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
