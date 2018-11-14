@@ -150,7 +150,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+<<<<<<< HEAD
       <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Source;$(SolutionDir)Source\TestSpace;$(SolutionDir)Source\cTeam;$(SolutionDir)Engine\Class;$(SolutionDir)Engine\Internal;$(SolutionDir)Engine\System;$(SolutionDir)Engine\Geometry;$(SolutionDir)Engine\UnImplemented;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>$(SolutionDir)Source\TestSpace;$(SolutionDir);$(SolutionDir)Source;$(SolutionDir)Source\cTeam;$(SolutionDir)Engine\Class;$(SolutionDir)Engine\Internal;$(SolutionDir)Engine\System;$(SolutionDir)Engine\Geometry;$(SolutionDir)Engine\UnImplemented;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> 60d9779bcd1180d39b57ac438de2291ae7af0aa8
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -218,10 +222,13 @@
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Screwdrop.cpp" />
     <ClCompile Include="Source\TestSpace\TestSpace.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="TestObj.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+=======
+>>>>>>> 60d9779bcd1180d39b57ac438de2291ae7af0aa8
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEnemy.h">
@@ -282,10 +289,13 @@
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Screwdrop.h" />
     <ClInclude Include="Source\TestSpace\TestSpace.h" />
+<<<<<<< HEAD
     <ClInclude Include="TestObj.h">
       <SubType>
       </SubType>
     </ClInclude>
+=======
+>>>>>>> 60d9779bcd1180d39b57ac438de2291ae7af0aa8
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\System\Dualshock4.def" />

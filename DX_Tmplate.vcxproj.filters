@@ -198,9 +198,6 @@
     <ClCompile Include="CEnemy.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="Source\cTeam\CTeamProt.cpp">
-      <Filter>ソース ファイル\Assets</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Screwdrop.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
@@ -216,7 +213,7 @@
     <ClCompile Include="Ground.cpp">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="TestObj.cpp">
+    <ClCompile Include="Source\cTeam\CTeamProt.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
     <ClCompile Include="Source\TestSpace\TestSpace.cpp">
@@ -359,8 +356,8 @@
     <ClInclude Include="Ground.h">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="TestObj.h">
-      <Filter>ヘッダー ファイル\Assets</Filter>
+    <ClInclude Include="Source\TestSpace\TestSpace.h">
+      <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClInclude>
     <ClInclude Include="Source\TestSpace\TestSpace.h">
       <Filter>ヘッダー ファイル\TestSpace</Filter>

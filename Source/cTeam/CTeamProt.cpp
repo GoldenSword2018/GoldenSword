@@ -17,11 +17,12 @@
 #include"CCoreObject.h"
 #include"CBodyObject.h"
 #include"CCamera.h"
+<<<<<<< HEAD
 #include "Debug_Collision.h"
 
 #include "TestSpace.h"
 //===============================================
-//	ƒOƒ[ƒoƒ‹•Ï”
+//	ï¿½Oï¿½ï¿½ï¿½[ï¿½oï¿½ï¿½ï¿½Ïï¿½
 //===============================================
 static Camera g_Camera;	
 static Camera g_Camera1;
@@ -29,11 +30,61 @@ static Camera g_Camera2;
 static Camera g_Camera3;
 static float movez=-5.0f;
 
-//“·‘Ì
+=======
+
+// Test
+#include "Debug_Collision.h"
+//===============================================
+//	ï¿½Oï¿½ï¿½ï¿½[ï¿½oï¿½ï¿½ï¿½Ïï¿½
+//===============================================
+static Camera g_Camera;
+static Camera g_Camera1;
+static Camera g_Camera2;
+static Camera g_Camera3;
+static float movez = -5.0f;
+
+class tmp : public GameObject
+{
+public:
+	ShapeOBB ColShape;
+public:
+	tmp(Transform* pTransform, Texture* pTexture)
+		:GameObject(pTransform, pTexture),
+		ColShape(&transform.Position, &D3DXVECTOR3(0.0f, 0.0f, 0.0f), &D3DXVECTOR3(10.0f, 10.0f, 10.0f))
+	{
+
+	}
+public:
+	void Hit() {}
+	void Render()
+	{
+		DebugCollisionModule::Cuboid_BatchBegin();
+		DebugCollisionModule::BatchDrawCuboid(&ColShape);
+		DebugCollisionModule::Cuboid_BatchRun();
+	}
+};
+static tmp Test
+(
+	&Transform
+	(
+		D3DXVECTOR3(0.0f, 0.0f, -3.0f),
+		D3DXVECTOR3(1.0f, 1.0f, 1.0f),
+		D3DXVECTOR3(0.0f, 0.0f, 0.0f)
+	),
+	&Texture
+	(
+		EroTexture1,
+		{ 0,0 },
+		{ 0,0 }
+	)
+
+);
+>>>>>>> 60d9779bcd1180d39b57ac438de2291ae7af0aa8
+//ï¿½ï¿½ï¿½ï¿½
 static BodyObject Body_07(
 	&Transform
 	(
-		D3DXVECTOR3(0.0f, 0.0f + 3.0f, movez-1.0f),
+		D3DXVECTOR3(0.0f, 0.0f + 3.0f, movez - 1.0f),
 		D3DXVECTOR3(8.0f, 8.0f, 0.1f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 255, 255, 255)
@@ -45,18 +96,18 @@ static BodyObject Body_07(
 		{ 0,0 }
 	)
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_11(
 	&Transform
 	(
-		D3DXVECTOR3(-3.0f, 3.0f+3.0f, 0.0f+movez),
+		D3DXVECTOR3(-3.0f, 3.0f + 3.0f, 0.0f + movez),
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_12(
 	&Transform
 	(
@@ -67,7 +118,7 @@ static ArmorObject Armor_7_12(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_13(
 	&Transform
 	(
@@ -78,7 +129,7 @@ static ArmorObject Armor_7_13(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_14(
 	&Transform
 	(
@@ -89,7 +140,7 @@ static ArmorObject Armor_7_14(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_21(
 	&Transform
 	(
@@ -100,7 +151,7 @@ static ArmorObject Armor_7_21(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_22(
 	&Transform
 	(
@@ -111,7 +162,7 @@ static ArmorObject Armor_7_22(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_23(
 	&Transform
 	(
@@ -122,7 +173,7 @@ static ArmorObject Armor_7_23(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_24(
 	&Transform
 	(
@@ -133,7 +184,7 @@ static ArmorObject Armor_7_24(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_31(
 	&Transform
 	(
@@ -144,7 +195,7 @@ static ArmorObject Armor_7_31(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_32(
 	&Transform
 	(
@@ -155,7 +206,7 @@ static ArmorObject Armor_7_32(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_33(
 	&Transform
 	(
@@ -166,7 +217,7 @@ static ArmorObject Armor_7_33(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_34(
 	&Transform
 	(
@@ -177,7 +228,7 @@ static ArmorObject Armor_7_34(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_41(
 	&Transform
 	(
@@ -188,7 +239,7 @@ static ArmorObject Armor_7_41(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_42(
 	&Transform
 	(
@@ -199,7 +250,7 @@ static ArmorObject Armor_7_42(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_43(
 	&Transform
 	(
@@ -210,7 +261,7 @@ static ArmorObject Armor_7_43(
 	),
 	RADIALLY
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_7_44(
 	&Transform
 	(
@@ -222,12 +273,16 @@ static ArmorObject Armor_7_44(
 	RADIALLY
 );
 
-//ƒlƒW
+//ï¿½lï¿½W
 static CoreObject Screw_07
 (
 	&Transform
 	(
+<<<<<<< HEAD
 		D3DXVECTOR3(0.0f,3.0f, 1.0f + movez),
+=======
+		D3DXVECTOR3(0.0f, 3.0f, 1.0f + movez),
+>>>>>>> 60d9779bcd1180d39b57ac438de2291ae7af0aa8
 		D3DXVECTOR3(1.0f, 1.0f, 1.5f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(100, 100, 100, 255)
@@ -240,11 +295,15 @@ static CoreObject Screw_07
 	)
 );
 
-//“·‘Ì
+//ï¿½ï¿½ï¿½ï¿½
 static BodyObject Body_08(
 	&Transform
 	(
+<<<<<<< HEAD
 		D3DXVECTOR3(0.0f, 0.0f + 3.0f, 5.0f*movez-1.0f),
+=======
+		D3DXVECTOR3(0.0f, 0.0f + 3.0f, 5.0f*movez - 1.0f),
+>>>>>>> 60d9779bcd1180d39b57ac438de2291ae7af0aa8
 		D3DXVECTOR3(8.0f, 8.0f, 0.1f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 255, 255, 255)
@@ -256,7 +315,7 @@ static BodyObject Body_08(
 		{ 0,0 }
 	)
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_11(
 	&Transform
 	(
@@ -267,7 +326,7 @@ static ArmorObject Armor_8_11(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_12(
 	&Transform
 	(
@@ -278,29 +337,29 @@ static ArmorObject Armor_8_12(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_13(
 	&Transform
 	(
-		D3DXVECTOR3(1.0f, 3.0f + 3.0f, 0.0f + 5* movez),
+		D3DXVECTOR3(1.0f, 3.0f + 3.0f, 0.0f + 5 * movez),
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(0, 0, 255, 255)
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_14(
 	&Transform
 	(
-		D3DXVECTOR3(3.0f, 3.0f + 3.0f, 0.0f+ 5 * movez),
+		D3DXVECTOR3(3.0f, 3.0f + 3.0f, 0.0f + 5 * movez),
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_21(
 	&Transform
 	(
@@ -311,7 +370,7 @@ static ArmorObject Armor_8_21(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_22(
 	&Transform
 	(
@@ -322,7 +381,7 @@ static ArmorObject Armor_8_22(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_23(
 	&Transform
 	(
@@ -333,7 +392,7 @@ static ArmorObject Armor_8_23(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_24(
 	&Transform
 	(
@@ -344,7 +403,7 @@ static ArmorObject Armor_8_24(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_31(
 	&Transform
 	(
@@ -355,7 +414,7 @@ static ArmorObject Armor_8_31(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_32(
 	&Transform
 	(
@@ -366,7 +425,7 @@ static ArmorObject Armor_8_32(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_33(
 	&Transform
 	(
@@ -377,7 +436,7 @@ static ArmorObject Armor_8_33(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_34(
 	&Transform
 	(
@@ -388,18 +447,18 @@ static ArmorObject Armor_8_34(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_41(
 	&Transform
 	(
-		D3DXVECTOR3(-3.0f, -3.0f + 3.0f, 0.0f+5 * movez),
+		D3DXVECTOR3(-3.0f, -3.0f + 3.0f, 0.0f + 5 * movez),
 		D3DXVECTOR3(2.0f, 2.0f, 2.0f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 0, 0, 255)
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_42(
 	&Transform
 	(
@@ -410,7 +469,7 @@ static ArmorObject Armor_8_42(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_43(
 	&Transform
 	(
@@ -421,7 +480,7 @@ static ArmorObject Armor_8_43(
 	),
 	FALL
 );
-//ƒA[ƒ}[
+//ï¿½Aï¿½[ï¿½}ï¿½[
 static ArmorObject Armor_8_44(
 	&Transform
 	(
@@ -433,7 +492,7 @@ static ArmorObject Armor_8_44(
 	FALL
 );
 
-//ƒlƒW
+//ï¿½lï¿½W
 static CoreObject Screw_08
 (
 	&Transform
@@ -451,53 +510,53 @@ static CoreObject Screw_08
 	)
 );
 //===============================================
-//	ŠÖ”
+//	ï¿½Öï¿½
 //===============================================
 
 //-------------------------------------
-//	‰Šú‰»
+//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //-------------------------------------
 void CTeamProt_Initialize()
 {
 
 	Screw_07.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_1);
 
-	Screw_07.Set(&Armor_7_11, &Body_07);//ƒlƒW‚É“·‘Ì‚ÆƒA[ƒ}[‚ğİ’è
-	Screw_07.Set(&Armor_7_12);			//ƒlƒW‚Ì“·‘Ì‚ÍŒˆ‚Ü‚Á‚Ä‚¢‚é‚Ì‚ÅAƒA[ƒ}[‚¾‚¯İ’è
-	Screw_07.Set(&Armor_7_13);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_14);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_21);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_22);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_23);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_24);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_31);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_32);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_33);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_34);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_41);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_42);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_43);			//ƒA[ƒ}[İ’è
-	Screw_07.Set(&Armor_7_44);			//ƒA[ƒ}[İ’è
-//	Screw_07.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_1);
+	Screw_07.Set(&Armor_7_11, &Body_07);//ï¿½lï¿½Wï¿½É“ï¿½ï¿½Ì‚ÆƒAï¿½[ï¿½}ï¿½[ï¿½ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_12);			//ï¿½lï¿½Wï¿½Ì“ï¿½ï¿½Ì‚ÍŒï¿½ï¿½Ü‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ì‚ÅAï¿½Aï¿½[ï¿½}ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_13);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_14);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_21);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_22);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_23);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_24);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_31);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_32);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_33);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_34);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_41);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_42);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_43);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set(&Armor_7_44);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_07.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_1);
 
 	Screw_08.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_0);
 
-	Screw_08.Set(&Armor_8_11, &Body_07);//ƒlƒW‚É“·‘Ì‚ÆƒA[ƒ}[‚ğİ’è
-	Screw_08.Set(&Armor_8_12);			//ƒlƒW‚Ì“·‘Ì‚ÍŒˆ‚Ü‚Á‚Ä‚¢‚é‚Ì‚ÅAƒA[ƒ}[‚¾‚¯İ’è
-	Screw_08.Set(&Armor_8_13);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_14);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_21);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_22);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_23);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_24);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_31);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_32);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_33);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_34);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_41);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_42);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_43);			//ƒA[ƒ}[İ’è
-	Screw_08.Set(&Armor_8_44);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_11, &Body_07);//ï¿½lï¿½Wï¿½É“ï¿½ï¿½Ì‚ÆƒAï¿½[ï¿½}ï¿½[ï¿½ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_12);			//ï¿½lï¿½Wï¿½Ì“ï¿½ï¿½Ì‚ÍŒï¿½ï¿½Ü‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ì‚ÅAï¿½Aï¿½[ï¿½}ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_13);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_14);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_21);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_22);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_23);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_24);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_31);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_32);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_33);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_34);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_41);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_42);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_43);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_44);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
 
 	DebugCollisionModule::Init();
 
@@ -509,18 +568,17 @@ void CTeamProt_Initialize()
 }
 
 //-------------------------------------
-//	XV
+//	ï¿½Xï¿½V
 //-------------------------------------
 void CTeamProt_Update()
 {
 	GameObject::g_Update();
-
 	g_Camera.Update();
 
 }
 
 //-------------------------------------
-//	•`‰æ
+//	ï¿½`ï¿½ï¿½
 //-------------------------------------
 void CTeamProt_Render()
 {
@@ -532,12 +590,11 @@ void CTeamProt_Render()
 	//Grid_Render();
 
 	Camera::Begin();
-	
 
 }
 
 //-------------------------------------
-//	I—¹
+//	ï¿½Iï¿½ï¿½
 //-------------------------------------
 void CTeamProt_Finalize()
 {
