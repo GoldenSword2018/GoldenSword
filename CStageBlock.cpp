@@ -21,25 +21,18 @@
 //===============================================
 //	マクロ定義		define
 //===============================================
-#define FVF_VERTEX3D	( D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1 )		// 構造体STAGE_BLOCK_VERTEXのFVFフラグ
-#define NUM_VERTEX		(24)
+
 
 //===============================================
 //	構造体宣言	struct
 //===============================================
-typedef struct STAGE_BLOCK_VERTEX_tag
-{
-	D3DXVECTOR3 Position;			// 頂点座標
-	D3DXVECTOR3 Normal;				// 法線ベクトル
-	D3DCOLOR Color;					// 頂点色
-	D3DXVECTOR2 TexCoord;			// テクスチャ座標
-}STAGE_BLOCK_VERTEX;
 
 //===============================================
 //	グローバル変数	global
 //===============================================
+
 // 頂点リスト
-STAGE_BLOCK_VERTEX g_StageVertex[] = {
+const StageBlockVertex g_StageVertex[] = {
 	{ D3DXVECTOR3(-0.5f, 0.5f, 0.5f),	D3DXVECTOR3(0.0f, 1.0f, 0.0f),	D3DCOLOR_RGBA(255, 255, 255, 255),	D3DXVECTOR2(0.0f / 6, 0.0f) }, // 上面
 	{ D3DXVECTOR3(0.5f , 0.5f, 0.5f),	D3DXVECTOR3(0.0f, 1.0f, 0.0f),	D3DCOLOR_RGBA(255, 255, 255, 255),	D3DXVECTOR2(1.0f / 6, 0.0f) },
 	{ D3DXVECTOR3(-0.5f, 0.5f, -0.5f),	D3DXVECTOR3(0.0f, 1.0f, 0.0f),	D3DCOLOR_RGBA(255, 255, 255, 255),	D3DXVECTOR2(0.0f / 6, 1.0f) },
@@ -71,51 +64,70 @@ STAGE_BLOCK_VERTEX g_StageVertex[] = {
 	{ D3DXVECTOR3(0.5f , -0.5f, 0.5f),	D3DXVECTOR3(0.0f, -1.0f, 0.0f),	D3DCOLOR_RGBA(255, 255, 255, 255),	D3DXVECTOR2((1.0f + 5.0f) / 6, 1.0f) },
 };
 
-static LPDIRECT3DVERTEXBUFFER9 g_pVertexBuffer = NULL;		// 頂点バッファ
-static LPDIRECT3DINDEXBUFFER9 g_pIndexBuffer = NULL;		// インデックスバッファ
-
-static STAGE_BLOCK_VERTEX *g_pVertex = NULL;
-static WORD *g_pVertexIndex = NULL;
-
-
-//===============================================
-//	関数	function
-//===============================================
-
-
-//-------------------------------------
-//	初期化
-//-------------------------------------
-void StageBlock_Initialize()
-{
-	LPDIRECT3DDEVICE9 pDevice = System_GetDevice();
-	pDevice->CreateVertexBuffer(sizeof(STAGE_BLOCK_VERTEX) * NUM_VERTEX, D3DUSAGE_WRITEONLY, FVF_VERTEX3D, D3DPOOL_MANAGED, &g_pVertexBuffer, NULL);
-	pDevice->CreateIndexBuffer(sizeof(WORD) * NUM_VERTEX * 3 / 2, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &g_pIndexBuffer, NULL);
-	g_pVertexBuffer->Lock(0, 0, (void **)&g_pVertex, 0);
-	g_pIndexBuffer->Lock(0, 0, (void **)&g_pVertexIndex, 0);
-
-	for (int i = 0; i < NUM_VERTEX; i++)
-	{
-		g_pVertex[i] = g_StageVertex[i];
-	}
-
-	int Num_Face = NUM_VERTEX / 4;
-	for (int i = 0; i < Num_Face; i++)
-	{
-		g_pVertexIndex[i * 6 + 0] = (WORD)i * 4 + 0;
-		g_pVertexIndex[i * 6 + 1] = (WORD)i * 4 + 1;
-		g_pVertexIndex[i * 6 + 2] = (WORD)i * 4 + 2;
-		g_pVertexIndex[i * 6 + 3] = (WORD)i * 4 + 1;
-		g_pVertexIndex[i * 6 + 4] = (WORD)i * 4 + 3;
-		g_pVertexIndex[i * 6 + 5] = (WORD)i * 4 + 2;
-	}
-	g_pVertexBuffer->Unlock();
-	g_pIndexBuffer->Unlock();
-}
 
 //===============================================
 //	StageBlockクラス		class
 //===============================================
+
+//-------------------------------------
+//	静的メンバ変数の初期化	static
+//-------------------------------------
+LPDIRECT3DVERTEXBUFFER9 StageBlock::pVertexBuffer = NULL;
+LPDIRECT3DINDEXBUFFER9 StageBlock::pIndexBuffer = NULL;
+
+StageBlockVertex *StageBlock::pVertex = NULL;
+WORD *StageBlock::pVertexIndex = NULL;
+
+//-------------------------------------
+//	初期化（頂点バッファ、インデックスバッファの確保）
+//-------------------------------------
+void StageBlock::Initialize()
+{
+	if (pVertexBuffer || pIndexBuffer)
+		return;
+
+	LPDIRECT3DDEVICE9 pDevice = System_GetDevice();
+	pDevice->CreateVertexBuffer(sizeof(StageBlockVertex) * NUM_STAGE_VERTEX, D3DUSAGE_WRITEONLY, FVF_STAGE_BLOCK_VERTEX, D3DPOOL_MANAGED, &pVertexBuffer, NULL);
+	pDevice->CreateIndexBuffer(sizeof(WORD) * NUM_STAGE_VERTEX * 3 / 2, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &pIndexBuffer, NULL);
+	pVertexBuffer->Lock(0, 0, (void **)&pVertex, 0);
+	pIndexBuffer->Lock(0, 0, (void **)&pVertexIndex, 0);
+
+	for (int i = 0; i < NUM_STAGE_VERTEX; i++)
+	{
+		pVertex[i] = g_StageVertex[i];
+	}
+
+	int Num_Face = NUM_STAGE_VERTEX / 4;
+	for (int i = 0; i < Num_Face; i++)
+	{
+		pVertexIndex[i * 6 + 0] = (WORD)i * 4 + 0;
+		pVertexIndex[i * 6 + 1] = (WORD)i * 4 + 1;
+		pVertexIndex[i * 6 + 2] = (WORD)i * 4 + 2;
+		pVertexIndex[i * 6 + 3] = (WORD)i * 4 + 1;
+		pVertexIndex[i * 6 + 4] = (WORD)i * 4 + 3;
+		pVertexIndex[i * 6 + 5] = (WORD)i * 4 + 2;
+	}
+	pVertexBuffer->Unlock();
+	pIndexBuffer->Unlock();
+}
+
+//-------------------------------------
+//	終了処理（頂点バッファ、インデックスバッファの解放）
+//-------------------------------------
+void StageBlock::Finalize()
+{
+	if (pVertexBuffer)
+	{
+		pVertexBuffer->Release();
+		pVertexBuffer = NULL;
+	}
+	if (pIndexBuffer)
+	{
+		pIndexBuffer->Release();
+		pIndexBuffer = NULL;
+	}
+}
+
 
 //-------------------------------------
 //	コンストラクタ
@@ -143,7 +155,8 @@ void StageBlock::Render()
 
 	pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
 	pDevice->SetTexture(0, pTexture);
-	pDevice->SetStreamSource(0, g_pVertexBuffer, 0, sizeof(STAGE_BLOCK_VERTEX));
-	pDevice->SetIndices(g_pIndexBuffer);
-	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, NUM_VERTEX, 0, NUM_VERTEX * 2 / 4);
+	pDevice->SetFVF(FVF_STAGE_BLOCK_VERTEX);
+	pDevice->SetStreamSource(0, pVertexBuffer, 0, sizeof(StageBlockVertex));
+	pDevice->SetIndices(pIndexBuffer);
+	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, NUM_STAGE_VERTEX, 0, NUM_STAGE_VERTEX * 2 / 4);
 }
