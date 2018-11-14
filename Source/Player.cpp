@@ -14,8 +14,11 @@
 #include"Player.h"
 
 #include"Bullet.h"
+#include"CGameObject.h"
 //Class
 
+// Debug用
+#include "Debug_Collision.h"
 //===============================================
 //	マクロ定義
 //===============================================
@@ -99,7 +102,15 @@ void PlayerCamera::Update()
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward) :GameObject(pTransform, &Texture()), ColShape(&pTransform->Position,1.0f)
+Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward) 
+:
+	GameObject(pTransform, &Texture()), 
+	ColShape
+	( 
+		&transform.Position, 
+		&D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), 
+		&D3DXVECTOR3( 1.0f, 5.0f, 1.0f )
+	)
 {
 	this->Forward = *pForward;
 	float AngleY = 0.0f;
@@ -112,6 +123,8 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward) :GameObject(pTransf
 	vecRight.y = 0.0f;
 	D3DXVec3Normalize(&vecRight, &vecRight);
 	this->Right = vecRight;
+
+	this->Set_Parts();
 }
 
 //-------------------------------------
@@ -119,7 +132,27 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward) :GameObject(pTransf
 //-------------------------------------
 void Player::Set_Parts()
 {
-	Head.transform = Transform();
+	//プレイヤーと親子関係を作る
+	Head.Set_Parent(this);
+	Body.Set_Parent(this);
+	LeftArm.Set_Parent(this);
+	RightArm.Set_Parent(this);
+	LeftLeg.Set_Parent(this);
+	RightLeg.Set_Parent(this);
+
+	//
+	Head.transform.Position = D3DXVECTOR3(0.0f,2.0f,0.0f);
+
+	//
+	Body.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
+
+	//
+	LeftArm.transform.Position = D3DXVECTOR3(-2.0f,1.0f,0.0f);
+	LeftArm.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
+
+	//
+	RightArm.transform.Position = D3DXVECTOR3(2.0f,1.0f,0.0f);
+	RightArm.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
 }
 
 //-------------------------------------
@@ -155,6 +188,7 @@ void Player::Update()
 void Player::Render()
 {
 	XModel_Render(GetMeshData(BulletIndex), CalWorldMtx());
+	DebugCollisionModule::BatchDrawCuboid( &ColShape );
 }
 
 

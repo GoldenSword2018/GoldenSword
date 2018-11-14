@@ -82,6 +82,9 @@
     <Filter Include="ソース ファイル\Assets\Stage">
       <UniqueIdentifier>{fe1f42b3-42ef-405b-9eaf-0ba35f1a0365}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Assets\TestSpace">
+      <UniqueIdentifier>{00ba7703-2001-41e8-8024-80773a0bf54f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Class\CGameObject.cpp">
@@ -192,9 +195,6 @@
     <ClCompile Include="CEnemy.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="Source\cTeam\CTeamProt.cpp">
-      <Filter>ソース ファイル\Assets</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Screwdrop.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
@@ -218,6 +218,12 @@
     </ClCompile>
     <ClCompile Include="CStageBlock.cpp">
       <Filter>ソース ファイル\Assets\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\cTeam\CTeamProt.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TestSpace\TestSpace.cpp">
+      <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -358,6 +364,9 @@
     </ClInclude>
     <ClInclude Include="CStageBlock.h">
       <Filter>ソース ファイル\Assets\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestSpace\TestSpace.h">
+      <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

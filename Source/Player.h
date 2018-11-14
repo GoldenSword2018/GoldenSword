@@ -58,9 +58,10 @@ private:
 	float AngleY;						// Y軸周りの回転角（視点の左右方向角度）
 	float AngleX;						// X軸周りの回転角（視点の仰角俯角）
 	float g_OldAngleX;
-	ShapeSphere ColShape;
+	ShapeOBB ColShape;
 	
 public:
+	//各部位
 	BodyObject Head;
 	BodyObject Body;
 	BodyObject LeftArm;
