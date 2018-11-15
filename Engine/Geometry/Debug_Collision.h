@@ -1,4 +1,5 @@
-﻿//
+﻿
+//
 //	Debug_Circle.h
 //		USER:YU NISHIMAKI		DATE:2018/10/18
 //===============================================
@@ -37,13 +38,13 @@ public: // 関数
 	/*
 	static void BatchRun( void ); // ここの実装わかりません
 	*/
-/*
- * スフィア用
- */
+	/*
+	* スフィア用
+	*/
 
 private:
-	 LPDIRECT3DVERTEXBUFFER9 pSphereVertexBuffer;		// 頂点バッファ
-	 LPDIRECT3DINDEXBUFFER9 pSphereIndexBuffer;		// インデックスバッファ
+	LPDIRECT3DVERTEXBUFFER9 pSphereVertexBuffer;		// 頂点バッファ
+	LPDIRECT3DINDEXBUFFER9 pSphereIndexBuffer;		// インデックスバッファ
 public: // バッチ処理 将来的にprivateメンバにする
 	static void Sphere_BatchBegin( void );
 	static void Sphere_BatchRun( void );
@@ -54,7 +55,7 @@ private:
 public: // 座標登録
 	static void BatchDrawSphere( const ShapeSphere* Sphere );
 
-// キューブ用 _-----------------------------------------------------------------------------------------------NOT YET!>
+	// キューブ用 _-----------------------------------------------------------------------------------------------NOT YET!>
 private:
 	LPDIRECT3DVERTEXBUFFER9 pCuboidVertexBuffer;		// 頂点バッファ
 	LPDIRECT3DINDEXBUFFER9 pCuboidIndexBuffer;		// インデックスバッファ

@@ -39,13 +39,13 @@
 DebugCollisionModule* DebugCollisionModule::pInstance = NULL;
 
 
-/* 
- * デストラクタ
- */
+/*
+* デストラクタ
+*/
 DebugCollisionModule::~DebugCollisionModule()
 {
 #if defined(_DEBUG) || defined(DEBUG)
-	
+
 	Finalize();
 	delete pInstance;
 
@@ -53,8 +53,8 @@ DebugCollisionModule::~DebugCollisionModule()
 }
 
 /*
- * 関数
- */
+* 関数
+*/
 void DebugCollisionModule::Init( void )
 {
 #if defined(_DEBUG) || defined(DEBUG)
@@ -122,8 +122,8 @@ void DebugCollisionModule::Finalize( void )
 
 
 /*
- * 描画開始 : 終了
- */
+* 描画開始 : 終了
+*/
 void DebugCollisionModule::Sphere_BatchBegin( void )
 {
 #if defined(_DEBUG) || defined(DEBUG)
@@ -159,8 +159,8 @@ void DebugCollisionModule::Sphere_BatchRun( void )
 
 
 /*
- * Bufferへの座標登録関数
- */
+* Bufferへの座標登録関数
+*/
 void DebugCollisionModule::BatchDrawSphere( const ShapeSphere *Sphere )
 {
 #if defined(_DEBUG) || defined(DEBUG)
@@ -247,8 +247,8 @@ void DebugCollisionModule::Cuboid_BatchRun( void )
 #endif // _DEBUG || DEBUG
 }
 /*
- * Bufferへの座標登録関数
- */
+* Bufferへの座標登録関数
+*/
 void DebugCollisionModule::BatchDrawCuboid( const ShapeOBB* pCuboid )
 {
 #if defined(_DEBUG) || defined(DEBUG)
@@ -259,13 +259,13 @@ void DebugCollisionModule::BatchDrawCuboid( const ShapeOBB* pCuboid )
 	DebugVertex CuboidVertex[] =
 	{
 		{ -AbsLocalX + AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
-		{  AbsLocalX + AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{ AbsLocalX + AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
 		{ -AbsLocalX - AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
-		{  AbsLocalX - AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{ AbsLocalX - AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
 
-		{  AbsLocalX + AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{ AbsLocalX + AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
 		{ -AbsLocalX + AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
-		{  AbsLocalX - AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{ AbsLocalX - AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
 		{ -AbsLocalX - AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color }
 	};
 
@@ -282,45 +282,44 @@ void DebugCollisionModule::BatchDrawCuboid( const ShapeOBB* pCuboid )
 
 	int IndexMargin = CUBOID_EDGE_COUNT * 2 * pInstance->CuboidCount;
 	// x軸 平行の辺
-	pInstance->pCuboidVertexIndex[ IndexMargin +  0 ] = (WORD) ( Margin + 1 );
-	pInstance->pCuboidVertexIndex[ IndexMargin +  1 ] = (WORD) ( Margin + 0 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 0 ] = (WORD) ( Margin + 1 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 1 ] = (WORD) ( Margin + 0 );
 
-	pInstance->pCuboidVertexIndex[ IndexMargin +  2 ] = (WORD) ( Margin + 4 );
-	pInstance->pCuboidVertexIndex[ IndexMargin +  3 ] = (WORD) ( Margin + 5 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 2 ] = (WORD) ( Margin + 4 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 3 ] = (WORD) ( Margin + 5 );
 
-	pInstance->pCuboidVertexIndex[ IndexMargin +  4 ] = (WORD) ( Margin + 6 );
-	pInstance->pCuboidVertexIndex[ IndexMargin +  5 ] = (WORD) ( Margin + 7 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 4 ] = (WORD) ( Margin + 6 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 5 ] = (WORD) ( Margin + 7 );
 
-	pInstance->pCuboidVertexIndex[ IndexMargin +  6 ] = (WORD) ( Margin + 3 );
-	pInstance->pCuboidVertexIndex[ IndexMargin +  7 ] = (WORD) ( Margin + 2 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 6 ] = (WORD) ( Margin + 3 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 7 ] = (WORD) ( Margin + 2 );
 
 	// y軸 平行
-	pInstance->pCuboidVertexIndex[ IndexMargin +  8 ] = (WORD) ( Margin + 0 );
-	pInstance->pCuboidVertexIndex[ IndexMargin +  9 ] = (WORD) ( Margin + 2 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 8 ] = (WORD) ( Margin + 0 );
+	pInstance->pCuboidVertexIndex[ IndexMargin + 9 ] = (WORD) ( Margin + 2 );
 
 	pInstance->pCuboidVertexIndex[ IndexMargin + 10 ] = (WORD) ( Margin + 1 );
 	pInstance->pCuboidVertexIndex[ IndexMargin + 11 ] = (WORD) ( Margin + 3 );
-	
+
 	pInstance->pInstance->pCuboidVertexIndex[ IndexMargin + 12 ] = (WORD) ( Margin + 4 );
 	pInstance->pInstance->pCuboidVertexIndex[ IndexMargin + 13 ] = (WORD) ( Margin + 6 );
-	
+
 	pInstance->pCuboidVertexIndex[ IndexMargin + 14 ] = (WORD) ( Margin + 5 );
 	pInstance->pCuboidVertexIndex[ IndexMargin + 15 ] = (WORD) ( Margin + 7 );
-	
+
 	// z軸平行
 	pInstance->pCuboidVertexIndex[ IndexMargin + 16 ] = (WORD) ( Margin + 5 );
 	pInstance->pCuboidVertexIndex[ IndexMargin + 17 ] = (WORD) ( Margin + 0 );
-	
+
 	pInstance->pCuboidVertexIndex[ IndexMargin + 18 ] = (WORD) ( Margin + 4 );
 	pInstance->pCuboidVertexIndex[ IndexMargin + 19 ] = (WORD) ( Margin + 1 );
-	
+
 	pInstance->pCuboidVertexIndex[ IndexMargin + 20 ] = (WORD) ( Margin + 6 );
 	pInstance->pCuboidVertexIndex[ IndexMargin + 21 ] = (WORD) ( Margin + 3 );
-	
+
 	pInstance->pCuboidVertexIndex[ IndexMargin + 22 ] = (WORD) ( Margin + 7 );
 	pInstance->pCuboidVertexIndex[ IndexMargin + 23 ] = (WORD) ( Margin + 2 );
 	pInstance->CuboidCount++;
 
 #endif // _DEBUG || DEBUG 
 }
-

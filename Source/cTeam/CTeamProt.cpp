@@ -17,25 +17,11 @@
 #include"CCoreObject.h"
 #include"CBodyObject.h"
 #include"CCamera.h"
-<<<<<<< HEAD
-#include "Debug_Collision.h"
-
-#include "TestSpace.h"
-//===============================================
-//	ï¿½Oï¿½ï¿½ï¿½[ï¿½oï¿½ï¿½ï¿½Ïï¿½
-//===============================================
-static Camera g_Camera;	
-static Camera g_Camera1;
-static Camera g_Camera2;
-static Camera g_Camera3;
-static float movez=-5.0f;
-
-=======
 
 // Test
 #include "Debug_Collision.h"
 //===============================================
-//	ï¿½Oï¿½ï¿½ï¿½[ï¿½oï¿½ï¿½ï¿½Ïï¿½
+//	ƒOƒ[ƒoƒ‹•Ï”
 //===============================================
 static Camera g_Camera;
 static Camera g_Camera1;
@@ -79,8 +65,7 @@ static tmp Test
 	)
 
 );
->>>>>>> 60d9779bcd1180d39b57ac438de2291ae7af0aa8
-//ï¿½ï¿½ï¿½ï¿½
+//“·‘Ì
 static BodyObject Body_07(
 	&Transform
 	(
@@ -96,7 +81,7 @@ static BodyObject Body_07(
 		{ 0,0 }
 	)
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_11(
 	&Transform
 	(
@@ -107,7 +92,7 @@ static ArmorObject Armor_7_11(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_12(
 	&Transform
 	(
@@ -118,7 +103,7 @@ static ArmorObject Armor_7_12(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_13(
 	&Transform
 	(
@@ -129,7 +114,7 @@ static ArmorObject Armor_7_13(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_14(
 	&Transform
 	(
@@ -140,7 +125,7 @@ static ArmorObject Armor_7_14(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_21(
 	&Transform
 	(
@@ -151,7 +136,7 @@ static ArmorObject Armor_7_21(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_22(
 	&Transform
 	(
@@ -162,7 +147,7 @@ static ArmorObject Armor_7_22(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_23(
 	&Transform
 	(
@@ -173,7 +158,7 @@ static ArmorObject Armor_7_23(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_24(
 	&Transform
 	(
@@ -184,7 +169,7 @@ static ArmorObject Armor_7_24(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_31(
 	&Transform
 	(
@@ -195,7 +180,7 @@ static ArmorObject Armor_7_31(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_32(
 	&Transform
 	(
@@ -206,7 +191,7 @@ static ArmorObject Armor_7_32(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_33(
 	&Transform
 	(
@@ -217,7 +202,7 @@ static ArmorObject Armor_7_33(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_34(
 	&Transform
 	(
@@ -228,7 +213,7 @@ static ArmorObject Armor_7_34(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_41(
 	&Transform
 	(
@@ -239,7 +224,7 @@ static ArmorObject Armor_7_41(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_42(
 	&Transform
 	(
@@ -250,7 +235,7 @@ static ArmorObject Armor_7_42(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_43(
 	&Transform
 	(
@@ -261,7 +246,7 @@ static ArmorObject Armor_7_43(
 	),
 	RADIALLY
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_7_44(
 	&Transform
 	(
@@ -273,16 +258,12 @@ static ArmorObject Armor_7_44(
 	RADIALLY
 );
 
-//ï¿½lï¿½W
+//ƒlƒW
 static CoreObject Screw_07
 (
 	&Transform
 	(
-<<<<<<< HEAD
-		D3DXVECTOR3(0.0f,3.0f, 1.0f + movez),
-=======
 		D3DXVECTOR3(0.0f, 3.0f, 1.0f + movez),
->>>>>>> 60d9779bcd1180d39b57ac438de2291ae7af0aa8
 		D3DXVECTOR3(1.0f, 1.0f, 1.5f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(100, 100, 100, 255)
@@ -295,15 +276,11 @@ static CoreObject Screw_07
 	)
 );
 
-//ï¿½ï¿½ï¿½ï¿½
+//“·‘Ì
 static BodyObject Body_08(
 	&Transform
 	(
-<<<<<<< HEAD
-		D3DXVECTOR3(0.0f, 0.0f + 3.0f, 5.0f*movez-1.0f),
-=======
 		D3DXVECTOR3(0.0f, 0.0f + 3.0f, 5.0f*movez - 1.0f),
->>>>>>> 60d9779bcd1180d39b57ac438de2291ae7af0aa8
 		D3DXVECTOR3(8.0f, 8.0f, 0.1f),
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 255, 255, 255)
@@ -315,7 +292,7 @@ static BodyObject Body_08(
 		{ 0,0 }
 	)
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_11(
 	&Transform
 	(
@@ -326,7 +303,7 @@ static ArmorObject Armor_8_11(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_12(
 	&Transform
 	(
@@ -337,7 +314,7 @@ static ArmorObject Armor_8_12(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_13(
 	&Transform
 	(
@@ -348,7 +325,7 @@ static ArmorObject Armor_8_13(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_14(
 	&Transform
 	(
@@ -359,7 +336,7 @@ static ArmorObject Armor_8_14(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_21(
 	&Transform
 	(
@@ -370,7 +347,7 @@ static ArmorObject Armor_8_21(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_22(
 	&Transform
 	(
@@ -381,7 +358,7 @@ static ArmorObject Armor_8_22(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_23(
 	&Transform
 	(
@@ -392,7 +369,7 @@ static ArmorObject Armor_8_23(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_24(
 	&Transform
 	(
@@ -403,7 +380,7 @@ static ArmorObject Armor_8_24(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_31(
 	&Transform
 	(
@@ -414,7 +391,7 @@ static ArmorObject Armor_8_31(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_32(
 	&Transform
 	(
@@ -425,7 +402,7 @@ static ArmorObject Armor_8_32(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_33(
 	&Transform
 	(
@@ -436,7 +413,7 @@ static ArmorObject Armor_8_33(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_34(
 	&Transform
 	(
@@ -447,7 +424,7 @@ static ArmorObject Armor_8_34(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_41(
 	&Transform
 	(
@@ -458,7 +435,7 @@ static ArmorObject Armor_8_41(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_42(
 	&Transform
 	(
@@ -469,7 +446,7 @@ static ArmorObject Armor_8_42(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_43(
 	&Transform
 	(
@@ -480,7 +457,7 @@ static ArmorObject Armor_8_43(
 	),
 	FALL
 );
-//ï¿½Aï¿½[ï¿½}ï¿½[
+//ƒA[ƒ}[
 static ArmorObject Armor_8_44(
 	&Transform
 	(
@@ -492,7 +469,7 @@ static ArmorObject Armor_8_44(
 	FALL
 );
 
-//ï¿½lï¿½W
+//ƒlƒW
 static CoreObject Screw_08
 (
 	&Transform
@@ -510,53 +487,53 @@ static CoreObject Screw_08
 	)
 );
 //===============================================
-//	ï¿½Öï¿½
+//	ŠÖ”
 //===============================================
 
 //-------------------------------------
-//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//	‰Šú‰»
 //-------------------------------------
 void CTeamProt_Initialize()
 {
 
 	Screw_07.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_1);
 
-	Screw_07.Set(&Armor_7_11, &Body_07);//ï¿½lï¿½Wï¿½É“ï¿½ï¿½Ì‚ÆƒAï¿½[ï¿½}ï¿½[ï¿½ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_12);			//ï¿½lï¿½Wï¿½Ì“ï¿½ï¿½Ì‚ÍŒï¿½ï¿½Ü‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ì‚ÅAï¿½Aï¿½[ï¿½}ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_13);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_14);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_21);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_22);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_23);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_24);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_31);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_32);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_33);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_34);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_41);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_42);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_43);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set(&Armor_7_44);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_07.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_1);
+	Screw_07.Set(&Armor_7_11, &Body_07);//ƒlƒW‚É“·‘Ì‚ÆƒA[ƒ}[‚ğİ’è
+	Screw_07.Set(&Armor_7_12);			//ƒlƒW‚Ì“·‘Ì‚ÍŒˆ‚Ü‚Á‚Ä‚¢‚é‚Ì‚ÅAƒA[ƒ}[‚¾‚¯İ’è
+	Screw_07.Set(&Armor_7_13);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_14);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_21);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_22);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_23);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_24);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_31);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_32);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_33);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_34);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_41);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_42);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_43);			//ƒA[ƒ}[İ’è
+	Screw_07.Set(&Armor_7_44);			//ƒA[ƒ}[İ’è
+										//	Screw_07.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_1);
 
 	Screw_08.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_0);
 
-	Screw_08.Set(&Armor_8_11, &Body_07);//ï¿½lï¿½Wï¿½É“ï¿½ï¿½Ì‚ÆƒAï¿½[ï¿½}ï¿½[ï¿½ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_12);			//ï¿½lï¿½Wï¿½Ì“ï¿½ï¿½Ì‚ÍŒï¿½ï¿½Ü‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ì‚ÅAï¿½Aï¿½[ï¿½}ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_13);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_14);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_21);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_22);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_23);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_24);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_31);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_32);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_33);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_34);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_41);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_42);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_43);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
-	Screw_08.Set(&Armor_8_44);			//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½İ’ï¿½
+	Screw_08.Set(&Armor_8_11, &Body_07);//ƒlƒW‚É“·‘Ì‚ÆƒA[ƒ}[‚ğİ’è
+	Screw_08.Set(&Armor_8_12);			//ƒlƒW‚Ì“·‘Ì‚ÍŒˆ‚Ü‚Á‚Ä‚¢‚é‚Ì‚ÅAƒA[ƒ}[‚¾‚¯İ’è
+	Screw_08.Set(&Armor_8_13);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_14);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_21);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_22);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_23);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_24);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_31);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_32);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_33);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_34);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_41);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_42);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_43);			//ƒA[ƒ}[İ’è
+	Screw_08.Set(&Armor_8_44);			//ƒA[ƒ}[İ’è
 
 	DebugCollisionModule::Init();
 
@@ -568,7 +545,7 @@ void CTeamProt_Initialize()
 }
 
 //-------------------------------------
-//	ï¿½Xï¿½V
+//	XV
 //-------------------------------------
 void CTeamProt_Update()
 {
@@ -578,7 +555,7 @@ void CTeamProt_Update()
 }
 
 //-------------------------------------
-//	ï¿½`ï¿½ï¿½
+//	•`‰æ
 //-------------------------------------
 void CTeamProt_Render()
 {
@@ -589,12 +566,13 @@ void CTeamProt_Render()
 	DebugCollisionModule::Cuboid_BatchRun();
 	//Grid_Render();
 
-	Camera::Begin();
+	//Camera::Begin();
+
 
 }
 
 //-------------------------------------
-//	ï¿½Iï¿½ï¿½
+//	I—¹
 //-------------------------------------
 void CTeamProt_Finalize()
 {
