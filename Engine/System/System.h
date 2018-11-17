@@ -36,7 +36,7 @@
 
 #define DEBUG_KEY_ENABLE	//デバッグキーの有効
 
-//#define DISABLE_SCREEN_SEGMENTATION //画面分割を無効化
+#define DISABLE_SCREEN_SEGMENTATION //画面分割を無効化
 
 //===============================================
 //	メイン関数

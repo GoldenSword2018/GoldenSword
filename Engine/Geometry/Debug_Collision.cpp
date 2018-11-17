@@ -2,6 +2,12 @@
 //	DebuCircle.cpp
 //		Author:YU NISHIMAKI		DATE:2018/10/18
 //===============================================
+//	変更者 Changed By
+//		Name: Yuto Hashimoto	DATE:2018/11/13
+//  用意するバッファ領域の数を訂正.
+//  CuboidはColorメンバを用いて色付けするように変更.
+//
+//-----------------------------------------------
 #include<d3dx9.h>
 #include"System.h"
 #include"Debug_Collision.h"
