@@ -26,48 +26,46 @@ class DebugCollisionModule
 {
 
 private:
-	DebugCollisionModule() {}
+	DebugCollisionModule();
 	DebugCollisionModule( const DebugCollisionModule& DCM );
 	~DebugCollisionModule();
 private: // instance 
 	static DebugCollisionModule* pInstance;
 public: // 関数
-	static void Init( void );
 	static DebugCollisionModule* GetInstance( void );
+	void BatchBegin( void ); // 描画対象の登録処理開始
+	void BatchRun( void ); // 登録の終了,及び描画
 	void Finalize( void );
 	/*
 	static void BatchRun( void ); // ここの実装わかりません
 	*/
-	/*
-	* スフィア用
-	*/
-
+// Sphere用
 private:
 	LPDIRECT3DVERTEXBUFFER9 pSphereVertexBuffer;		// 頂点バッファ
 	LPDIRECT3DINDEXBUFFER9 pSphereIndexBuffer;		// インデックスバッファ
 public: // バッチ処理 将来的にprivateメンバにする
-	static void Sphere_BatchBegin( void );
-	static void Sphere_BatchRun( void );
+	void Sphere_BatchBegin( void );
+	void Sphere_BatchRun( void );
 private:
 	int SphereCount;
 	DebugVertex* pSphereVertex;
 	WORD* pSphereVertexIndex;
 public: // 座標登録
-	static void BatchDrawSphere( const ShapeSphere* Sphere );
+	void BatchDraw( const ShapeSphere* Sphere );
 
-	// キューブ用 _-----------------------------------------------------------------------------------------------NOT YET!>
+// Cuboid用 _
 private:
 	LPDIRECT3DVERTEXBUFFER9 pCuboidVertexBuffer;		// 頂点バッファ
 	LPDIRECT3DINDEXBUFFER9 pCuboidIndexBuffer;		// インデックスバッファ
 public: // バッチ処理
-	static void Cuboid_BatchBegin( void );
-	static void Cuboid_BatchRun( void );
+	void Cuboid_BatchBegin( void );
+	void Cuboid_BatchRun( void );
 private:
 	int CuboidCount;
 	DebugVertex* pCuboidVertex;
 	WORD*  pCuboidVertexIndex;
 public: // 座標登録
-	static void BatchDrawCuboid( const ShapeOBB* pCuboid );
+	void BatchDraw( const ShapeOBB* pCuboid );
 
 };
 

@@ -29,42 +29,6 @@ static Camera g_Camera2;
 static Camera g_Camera3;
 static float movez = -5.0f;
 
-class tmp : public GameObject
-{
-public:
-	ShapeOBB ColShape;
-public:
-	tmp(Transform* pTransform, Texture* pTexture)
-		:GameObject(pTransform, pTexture),
-		ColShape(&transform.Position, &D3DXVECTOR3(0.0f, 0.0f, 0.0f), &D3DXVECTOR3(10.0f, 10.0f, 10.0f))
-	{
-
-	}
-public:
-	void Hit() {}
-	void Render()
-	{
-		DebugCollisionModule::Cuboid_BatchBegin();
-		DebugCollisionModule::BatchDrawCuboid(&ColShape);
-		DebugCollisionModule::Cuboid_BatchRun();
-	}
-};
-static tmp Test
-(
-	&Transform
-	(
-		D3DXVECTOR3(0.0f, 0.0f, -3.0f),
-		D3DXVECTOR3(1.0f, 1.0f, 1.0f),
-		D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-	),
-	&Texture
-	(
-		EroTexture1,
-		{ 0,0 },
-		{ 0,0 }
-	)
-
-);
 //胴体
 static BodyObject Body_07(
 	&Transform
@@ -535,8 +499,6 @@ void CTeamProt_Initialize()
 	Screw_08.Set(&Armor_8_43);			//アーマー設定
 	Screw_08.Set(&Armor_8_44);			//アーマー設定
 
-	DebugCollisionModule::Init();
-
 	Grid_Initialize();
 	g_Camera.Set_Main(0);
 	g_Camera1.Set_Main(1);
@@ -559,11 +521,9 @@ void CTeamProt_Update()
 //-------------------------------------
 void CTeamProt_Render()
 {
-	DebugCollisionModule::Sphere_BatchBegin();
-	DebugCollisionModule::Cuboid_BatchBegin();
+	DebugCollisionModule::GetInstance()->BatchBegin();
 	GameObject::g_Render();
-	DebugCollisionModule::Sphere_BatchRun();
-	DebugCollisionModule::Cuboid_BatchRun();
+	DebugCollisionModule::GetInstance()->BatchRun();
 	//Grid_Render();
 
 	//Camera::Begin();
