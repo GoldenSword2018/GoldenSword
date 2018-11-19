@@ -222,9 +222,6 @@
     <ClCompile Include="Engine\Geometry\Debug_Collision.cpp">
       <Filter>ソース ファイル\Engine\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TestSpace\TestObj.cpp">
-      <Filter>ソース ファイル\Assets\TestSpace</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Internal\Component.h">
@@ -364,9 +361,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Geometry\Debug_Collision.h">
       <Filter>ヘッダー ファイル\Engine\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TestSpace\TestObj.h">
-      <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
