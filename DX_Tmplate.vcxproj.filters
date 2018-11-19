@@ -207,12 +207,6 @@
     <ClCompile Include="Engine\System\WinSock.cpp">
       <Filter>ソース ファイル\Engine\System\WinSock</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Class\CCollisionShape.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Geometry\Debug_Collision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClCompile>
@@ -359,20 +353,12 @@
     <ClInclude Include="Engine\System\resource1.h">
       <Filter>リソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Class\CCollisionShape.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Geometry\Debug_Collision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Source\TestSpace\TestSpace.h">
       <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClInclude>
-<<<<<<< HEAD
-=======
     <ClInclude Include="Engine\Class\CCollisionShape.h">
       <Filter>ヘッダー ファイル\Engine\Class</Filter>
     </ClInclude>
@@ -382,7 +368,6 @@
     <ClInclude Include="Source\TestSpace\TestObj.h">
       <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClInclude>
->>>>>>> 559f4104471985f0bd33edfcde34fa119c37766f
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\System\Dualshock4.def">
