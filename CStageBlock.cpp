@@ -132,7 +132,12 @@ void StageBlock::Finalize()
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-StageBlock::StageBlock(Transform* pTransform, int TextureIndex) :GameObject(pTransform)
+StageBlock::StageBlock(Transform* pTransform, int TextureIndex) :ArmorObject(pTransform, FALL)
+{
+	pTexture = Texture_GetTexture(TextureIndex);
+}
+
+StageBlock::StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGING_TYPE type) : ArmorObject(pTransform, type)
 {
 	pTexture = Texture_GetTexture(TextureIndex);
 }

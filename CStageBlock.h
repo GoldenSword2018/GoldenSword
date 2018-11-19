@@ -19,6 +19,7 @@
 
 //Class
 #include"CGameObject.h"
+#include"CArmorObject.h"
 
 //================================================
 //	マクロ定義	define
@@ -57,7 +58,7 @@ typedef struct StageBlockVertex_tag
 //-------------------------------------
 //	StageBlockクラス
 //-------------------------------------
-class StageBlock:public GameObject
+class StageBlock:public ArmorObject
 {
 private:
 	LPDIRECT3DTEXTURE9 pTexture;
@@ -68,9 +69,12 @@ private:
 	static StageBlockVertex *pVertex;
 	static WORD *pVertexIndex;
 public:
+	// コンストラクタ
+	StageBlock(Transform *pTransform, int TextureIndex);
+	StageBlock::StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGING_TYPE type);
+
 	static void Initialize();								// 初期化(頂点バッファ、インデックスバッファの確保)
 	static void Finalize();									// 終了処理(頂点バッファ、インデックスバッファの解放)
-	StageBlock(Transform *pTransform, int TextureIndex);
 	void Render();
 };
 
