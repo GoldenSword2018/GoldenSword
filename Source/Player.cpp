@@ -187,10 +187,9 @@ void Player::Update()
 //-------------------------------------
 void Player::Render()
 {
-	XModel_Render(GetMeshData(BulletIndex), CalWorldMtx());
-	DebugCollisionModule::BatchDrawCuboid( &ColShape );
+	XModel_Render( GetMeshData( BulletIndex ), CalWorldMtx() );
+	ColShape.DebugDraw();
 }
-
 
 //-------------------------------------
 //	ˆÚ“®

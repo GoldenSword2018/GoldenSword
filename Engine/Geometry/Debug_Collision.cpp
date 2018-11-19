@@ -38,35 +38,8 @@
 
 DebugCollisionModule* DebugCollisionModule::pInstance = NULL;
 
-// Sphere用バッファ
-int DebugCollisionModule::SphereCount = 0;
- LPDIRECT3DVERTEXBUFFER9 DebugCollisionModule::pSphereVertexBuffer;		// 頂点バッファ
- LPDIRECT3DINDEXBUFFER9 DebugCollisionModule::pSphereIndexBuffer;		// インデックスバッファ
-// Cuboid用バッファ 
- int DebugCollisionModule::CuboidCount = 0;
- LPDIRECT3DVERTEXBUFFER9 DebugCollisionModule::pCuboidVertexBuffer;
- LPDIRECT3DINDEXBUFFER9 DebugCollisionModule::pCuboidIndexBuffer;
-/* 
- * デストラクタ
- */
-DebugCollisionModule::~DebugCollisionModule()
+DebugCollisionModule::DebugCollisionModule()
 {
-#if defined(_DEBUG) || defined(DEBUG)
-	
-	Finalize();
-	delete pInstance;
-
-#endif // _DEBUG || DEBUG
-}
-
-/*
- * 関数
- */
-void DebugCollisionModule::Init( void )
-{
-#if defined(_DEBUG) || defined(DEBUG)
-
-	pInstance = new DebugCollisionModule;
 	LPDIRECT3DDEVICE9 pDevice = System_GetDevice();
 
 	// 球用のバッファ確保
@@ -78,11 +51,15 @@ void DebugCollisionModule::Init( void )
 	// Cuboid用のバッファ確保
 	pDevice->CreateVertexBuffer( sizeof( DebugVertex ) * CUBOID_VERTEX_COUNT * CUBOID_DRAW_MAX, D3DUSAGE_WRITEONLY, FVF_DEBUG_VERTEX, D3DPOOL_MANAGED, &pCuboidVertexBuffer, NULL );
 	pDevice->CreateIndexBuffer( sizeof( WORD ) * CUBOID_EDGE_COUNT * CUBOID_POINT_COUNT_PER_EDGE * CUBOID_DRAW_MAX, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &pCuboidIndexBuffer, NULL );
-
-#endif // _DEBUG || DEBUG
+	CuboidCount = 0;
 }
-void DebugCollisionModule::Finalize( void )
+/*
+* デストラクタ
+*/
+DebugCollisionModule::~DebugCollisionModule()
 {
+#if defined(_DEBUG) || defined(DEBUG)
+
 	if( pSphereIndexBuffer )
 	{
 		pSphereIndexBuffer->Release();
@@ -105,15 +82,50 @@ void DebugCollisionModule::Finalize( void )
 		pCuboidIndexBuffer->Release();
 		pCuboidIndexBuffer = NULL;
 	}
-	MessageBox( NULL, "DELETE", "ok ", MB_OK );
+#endif // _DEBUG || DEBUG
+}
+
+/*
+ * 関数
+ */
+
+DebugCollisionModule* DebugCollisionModule::GetInstance( void )
+{
+#if defined(_DEBUG) || defined(DEBUG)
+	if( !DebugCollisionModule::pInstance )
+	{
+		pInstance = new DebugCollisionModule;
+	}
+
+	return pInstance;
+#endif // _DEBUG || DEBUG
+}
+void DebugCollisionModule::Finalize( void )
+{
+#if defined(_DEBUG) || defined(DEBUG)
+	delete pInstance;
+#endif // _DEBUG || DEBUG
+}
+
+/*
+ * 描画対象の登録
+ */
+void DebugCollisionModule::BatchBegin( void )
+{
+	Sphere_BatchBegin();
+	Cuboid_BatchBegin();
+}
+
+void DebugCollisionModule::BatchRun( void )
+{
+	Sphere_BatchRun();
+	Cuboid_BatchRun();
 }
 
 //-------------------------------------
 //	Sphere
 //-------------------------------------
 
-DebugVertex* DebugCollisionModule::pSphereVertex;
-WORD* DebugCollisionModule::pSphereVertexIndex;
 
 /*
  * 描画開始 : 終了
@@ -153,9 +165,9 @@ void DebugCollisionModule::Sphere_BatchRun( void )
 
 
 /*
- * Bufferへの座標登録関数
- */
-void DebugCollisionModule::BatchDrawSphere( const ShapeSphere *Sphere )
+* Bufferへの座標登録関数
+*/
+void DebugCollisionModule::BatchDraw( const ShapeSphere *Sphere )
 {
 #if defined(_DEBUG) || defined(DEBUG)
 
@@ -206,10 +218,6 @@ void DebugCollisionModule::BatchDrawSphere( const ShapeSphere *Sphere )
 //	Cuboid
 //-------------------------------------
 
-// 頂点 インデックス
-DebugVertex* DebugCollisionModule::pCuboidVertex;
-WORD* DebugCollisionModule::pCuboidVertexIndex;
-
 void DebugCollisionModule::Cuboid_BatchBegin( void )
 {
 #if defined(_DEBUG) || defined(DEBUG)
@@ -245,9 +253,9 @@ void DebugCollisionModule::Cuboid_BatchRun( void )
 #endif // _DEBUG || DEBUG
 }
 /*
- * Bufferへの座標登録関数
- */
-void DebugCollisionModule::BatchDrawCuboid( const ShapeOBB* pCuboid )
+* Bufferへの座標登録関数
+*/
+void DebugCollisionModule::BatchDraw( const ShapeOBB* pCuboid )
 {
 #if defined(_DEBUG) || defined(DEBUG)
 	D3DXVECTOR3 AbsLocalX = pCuboid->NormalDirect[ 1 ] * pCuboid->Length[ 1 ];
@@ -257,13 +265,13 @@ void DebugCollisionModule::BatchDrawCuboid( const ShapeOBB* pCuboid )
 	DebugVertex CuboidVertex[] =
 	{
 		{ -AbsLocalX + AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
-		{  AbsLocalX + AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{ AbsLocalX + AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
 		{ -AbsLocalX - AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
-		{  AbsLocalX - AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{ AbsLocalX - AbsLocalY - AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
 
-		{  AbsLocalX + AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{ AbsLocalX + AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
 		{ -AbsLocalX + AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
-		{  AbsLocalX - AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
+		{ AbsLocalX - AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color },
 		{ -AbsLocalX - AbsLocalY + AbsLocalZ + pCuboid->GetEffectivePos(), pCuboid->Color }
 	};
 
@@ -280,45 +288,44 @@ void DebugCollisionModule::BatchDrawCuboid( const ShapeOBB* pCuboid )
 
 	int IndexMargin = CUBOID_EDGE_COUNT * 2 * CuboidCount;
 	// x軸 平行の辺
-	pCuboidVertexIndex[ IndexMargin +  0 ] = (WORD) ( Margin + 1 );
-	pCuboidVertexIndex[ IndexMargin +  1 ] = (WORD) ( Margin + 0 );
+	pCuboidVertexIndex[ IndexMargin + 0 ] = (WORD) ( Margin + 1 );
+	pCuboidVertexIndex[ IndexMargin + 1 ] = (WORD) ( Margin + 0 );
 
-	pCuboidVertexIndex[ IndexMargin +  2 ] = (WORD) ( Margin + 4 );
-	pCuboidVertexIndex[ IndexMargin +  3 ] = (WORD) ( Margin + 5 );
+	pCuboidVertexIndex[ IndexMargin + 2 ] = (WORD) ( Margin + 4 );
+	pCuboidVertexIndex[ IndexMargin + 3 ] = (WORD) ( Margin + 5 );
 
-	pCuboidVertexIndex[ IndexMargin +  4 ] = (WORD) ( Margin + 6 );
-	pCuboidVertexIndex[ IndexMargin +  5 ] = (WORD) ( Margin + 7 );
+	pCuboidVertexIndex[ IndexMargin + 4 ] = (WORD) ( Margin + 6 );
+	pCuboidVertexIndex[ IndexMargin + 5 ] = (WORD) ( Margin + 7 );
 
-	pCuboidVertexIndex[ IndexMargin +  6 ] = (WORD) ( Margin + 3 );
-	pCuboidVertexIndex[ IndexMargin +  7 ] = (WORD) ( Margin + 2 );
+	pCuboidVertexIndex[ IndexMargin + 6 ] = (WORD) ( Margin + 3 );
+	pCuboidVertexIndex[ IndexMargin + 7 ] = (WORD) ( Margin + 2 );
 
 	// y軸 平行
-	pCuboidVertexIndex[ IndexMargin +  8 ] = (WORD) ( Margin + 0 );
-	pCuboidVertexIndex[ IndexMargin +  9 ] = (WORD) ( Margin + 2 );
+	pCuboidVertexIndex[ IndexMargin + 8 ] = (WORD) ( Margin + 0 );
+	pCuboidVertexIndex[ IndexMargin + 9 ] = (WORD) ( Margin + 2 );
 
 	pCuboidVertexIndex[ IndexMargin + 10 ] = (WORD) ( Margin + 1 );
 	pCuboidVertexIndex[ IndexMargin + 11 ] = (WORD) ( Margin + 3 );
-	
+
 	pCuboidVertexIndex[ IndexMargin + 12 ] = (WORD) ( Margin + 4 );
 	pCuboidVertexIndex[ IndexMargin + 13 ] = (WORD) ( Margin + 6 );
-	
+
 	pCuboidVertexIndex[ IndexMargin + 14 ] = (WORD) ( Margin + 5 );
 	pCuboidVertexIndex[ IndexMargin + 15 ] = (WORD) ( Margin + 7 );
-	
+
 	// z軸平行
 	pCuboidVertexIndex[ IndexMargin + 16 ] = (WORD) ( Margin + 5 );
 	pCuboidVertexIndex[ IndexMargin + 17 ] = (WORD) ( Margin + 0 );
-	
+
 	pCuboidVertexIndex[ IndexMargin + 18 ] = (WORD) ( Margin + 4 );
 	pCuboidVertexIndex[ IndexMargin + 19 ] = (WORD) ( Margin + 1 );
-	
+
 	pCuboidVertexIndex[ IndexMargin + 20 ] = (WORD) ( Margin + 6 );
 	pCuboidVertexIndex[ IndexMargin + 21 ] = (WORD) ( Margin + 3 );
-	
+
 	pCuboidVertexIndex[ IndexMargin + 22 ] = (WORD) ( Margin + 7 );
 	pCuboidVertexIndex[ IndexMargin + 23 ] = (WORD) ( Margin + 2 );
 	CuboidCount++;
 
 #endif // _DEBUG || DEBUG 
 }
-
