@@ -8,6 +8,22 @@
 #include<d3dx9.h>
 #include"TestSpace.h"
 
+
+#include "TestObj.h"
+
+
+static TestObj tmp
+(
+	&Transform
+	(
+		D3DXVECTOR3( 0.0f, 10.0f, 0.0f ),
+		D3DXVECTOR3( 1.0f, 1.0f, 1.0f ),
+		D3DXVECTOR3( 0.0f, 0.0f, 0.0f )
+	)
+);
+
+static TestEnvObj tmpEnv;
+
 //èâä˙âª
 void TestSpace_Initialize() 
 {
@@ -18,6 +34,14 @@ void TestSpace_Initialize()
 void TestSpace_UpdateBegin() 
 {
 
+	if( Collision::OBBVsOBB( tmp.ColShape, tmpEnv.ColShape ) )
+	{
+		tmp.isOnGround = true;
+	}
+	else
+	{
+		tmp.isOnGround = false;
+	}
 };
 
 //ï`âÊ
@@ -37,3 +61,4 @@ void TestSpace_Finalize()
 {
 
 };
+
