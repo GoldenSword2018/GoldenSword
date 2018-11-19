@@ -32,10 +32,14 @@
 //===============================================
 //	グローバル変数
 //===============================================
-Player Player01(&Transform(D3DXVECTOR3(0.0f, 0.0f, -10.0f),
-	D3DXVECTOR3(1.0f, 1.0f, 1.0f),
-	D3DXVECTOR3(0.0f, 0.0f, 0.0f),
-	D3DCOLOR_RGBA(255, 255, 255, 255)),
+Player Player01(
+	&Transform
+	(
+		D3DXVECTOR3(0.0f, 0.0f, -10.0f),
+		D3DXVECTOR3(1.0f, 1.0f, 1.0f),
+		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
+		D3DCOLOR_RGBA(255, 255, 255, 255)
+	),
 	&D3DXVECTOR3(0.0f, 0.0f, 1.0f)
 );
 
@@ -96,7 +100,7 @@ void PlayerCamera::Update()
 }
 
 //===============================================
-//	PlayerCamera クラス
+//	Player クラス
 //===============================================
 
 //-------------------------------------
@@ -113,9 +117,11 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	)
 {
 	this->Forward = *pForward;
-	float AngleY = 0.0f;
-	float AngleX = 0.0f;
-	float g_OldAngleX = 0.0f;
+	this->AngleY = 0.0f;
+	this->AngleX = 0.0f;
+	this->RotY = 0.0f;
+	this->RotAxis = 0.0f;
+	this->g_OldAngleX = 0.0f;
 	D3DXVECTOR3 vecRight = this->Forward;
 	D3DXMATRIX mtxRotationY;
 	D3DXMatrixRotationY(&mtxRotationY, (-D3DX_PI / 2));
@@ -141,18 +147,28 @@ void Player::Set_Parts()
 	RightLeg.Set_Parent(this);
 
 	//
-	Head.transform.Position = D3DXVECTOR3(0.0f,2.0f,0.0f);
+	Head.transform.Position = D3DXVECTOR3(0.0f,1.4f,0.0f);
+	Head.transform.Scale = D3DXVECTOR3(0.8f,0.8f,0.8f);
 
 	//
+	Body.transform.Position = D3DXVECTOR3(0.0f,-0.0f,0.0f);
 	Body.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
 
 	//
-	LeftArm.transform.Position = D3DXVECTOR3(-2.0f,1.0f,0.0f);
-	LeftArm.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
+	LeftArm.transform.Position = D3DXVECTOR3(-0.9f,-0.2f,0.0f);
+	LeftArm.transform.Scale = D3DXVECTOR3(0.5f,2.0f,0.5f);
 
 	//
-	RightArm.transform.Position = D3DXVECTOR3(2.0f,1.0f,0.0f);
-	RightArm.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
+	RightArm.transform.Position = D3DXVECTOR3(0.9f,-0.2f,0.0f);
+	RightArm.transform.Scale = D3DXVECTOR3(0.5f,2.0f,0.5f);
+
+	//
+	LeftLeg.transform.Position = D3DXVECTOR3(-0.2f,-2.0f,0.0f);
+	LeftLeg.transform.Scale = D3DXVECTOR3(0.5f,2.0f,0.5f);
+
+	//
+	RightLeg.transform.Position = D3DXVECTOR3(0.2f,-2.0f,0.0f);
+	RightLeg.transform.Scale = D3DXVECTOR3(0.5f,2.0f,0.5f);
 }
 
 //-------------------------------------
@@ -161,8 +177,17 @@ void Player::Set_Parts()
 void Player::Update()
 {
 	this->Camera.Update();
-	SetPosition(this->Camera.position);
+	//プレイヤー位置
+	D3DXVECTOR3 Posiotion = this->Camera.position;
+	Posiotion += this->Camera.right * 3.0f;
+	Posiotion += this->transform.forward * 5.0f;
+	Posiotion.y = this->transform.Position.y;
+
+	SetPosition(Posiotion);
 	SetForward(this->Camera.forward);
+	this->transform.Rotation.y = this->RotY;
+
+	CalWorldMtx();
 
 #if !defined(DISABLE_JOYCON) && !defined(DISABLE_GAMEPAD)
 	Move();
@@ -187,7 +212,7 @@ void Player::Update()
 //-------------------------------------
 void Player::Render()
 {
-	XModel_Render( GetMeshData( BulletIndex ), CalWorldMtx() );
+	//XModel_Render( GetMeshData( BulletIndex ), CalWorldMtx() );
 	ColShape.DebugDraw();
 }
 
@@ -206,6 +231,7 @@ void Player::Move()
 	vecDirMove *= PLAYER_MOVE_SPEED;															// 移動速度を設定
 
 	this->transform.Position += this->Forward * vecDirMove.z + this->Right * vecDirMove.x;		// プレイヤー座標に加算して反映
+
 
 }
 
@@ -292,7 +318,15 @@ void Player::ResetAngle()
 //-------------------------------------
 void Player::Fire()
 {
-	Bullet_Create(this->transform.Position, this->Forward, Bullet::NORMAL);
+	//わからねぇ！！！
+	D3DXVECTOR3 look;
+	D3DXVECTOR3 at = this->Camera.at;
+	float x = atan2f((at.z - this->transform.Position.z),(at.x - this->transform.Position.x));
+	look.z = sinf(x);
+	look.x = cosf(x);
+	look.y = this->Camera.forward.y;
+
+	Bullet_Create(this->transform.Position, look, Bullet::NORMAL);
 }
 
 //-------------------------------------
@@ -309,12 +343,13 @@ D3DXMATRIX Player::CalWorldMtx()
 	vecDirGround.y = 0.0f;
 	D3DXVec3Normalize(&vecDirGround, &vecDirGround);
 
-	float RotY = atan2f(vecDirGround.x, vecDirGround.z);
-	float RotAxis = acosf(D3DXVec3Dot(&this->Forward, &vecDirGround));
+	RotY = atan2f(vecDirGround.x, vecDirGround.z);
+	RotAxis = acosf(D3DXVec3Dot(&this->Forward, &vecDirGround));
 	D3DXMatrixRotationY(&mtxRotationY, RotY);
 	D3DXMatrixRotationAxis(&mtxRotationAxis, &this->Right, RotAxis);
 
 	D3DXMatrixTranslation(&mtxTranslation, this->transform.Position.x, this->transform.Position.y, this->transform.Position.z);
 	mtxWorld = mtxRotationY * mtxRotationAxis * mtxTranslation;
+
 	return mtxWorld;
 }

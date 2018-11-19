@@ -40,7 +40,7 @@ class PlayerCamera:public Camera
 private:
 
 public:
-	
+
 	void Initialize();
 	void Update();
 };
@@ -55,10 +55,14 @@ public:
 private:
 	D3DXVECTOR3 Forward;
 	D3DXVECTOR3 Right;
+
 	float AngleY;						// Y軸周りの回転角（視点の左右方向角度）
 	float AngleX;						// X軸周りの回転角（視点の仰角俯角）
 	float g_OldAngleX;
 	ShapeOBB ColShape;
+
+	float RotY;
+	float RotAxis;
 	
 public:
 	//各部位
