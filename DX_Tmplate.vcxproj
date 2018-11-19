@@ -217,6 +217,10 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Screwdrop.cpp" />
+    <ClCompile Include="source\TestSpace\CCollisionChecker.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Source\TestSpace\TestObj.cpp" />
     <ClCompile Include="Source\TestSpace\TestSpace.cpp" />
   </ItemGroup>
@@ -278,10 +282,15 @@
     <ClInclude Include="Source\cTeam\CTeamProt.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Screwdrop.h" />
+    <ClInclude Include="source\TestSpace\CCollisionChecker.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Source\TestSpace\TestObj.h" />
     <ClInclude Include="Source\TestSpace\TestSpace.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Engine\System\Dualshock4.def" />
   </ItemGroup>
   <ItemGroup>

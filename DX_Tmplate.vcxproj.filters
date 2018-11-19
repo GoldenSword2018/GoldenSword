@@ -225,6 +225,9 @@
     <ClCompile Include="Source\TestSpace\TestObj.cpp">
       <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClCompile>
+    <ClCompile Include="source\TestSpace\CCollisionChecker.cpp">
+      <Filter>ソース ファイル\Assets\TestSpace</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Internal\Component.h">
@@ -368,11 +371,15 @@
     <ClInclude Include="Source\TestSpace\TestObj.h">
       <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClInclude>
+    <ClInclude Include="source\TestSpace\CCollisionChecker.h">
+      <Filter>ソース ファイル\Assets\TestSpace</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\System\Dualshock4.def">
       <Filter>ヘッダー ファイル\Engine\System\InputDevice</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Engine\System\SecondWindow_Resource.rc">
