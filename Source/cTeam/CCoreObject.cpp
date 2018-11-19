@@ -15,6 +15,8 @@
 
 #include "Debug_Collision.h"
 
+// 暫定当たり判定機能 ------------------------------------------------------------------------------------------------------------------- TMP!>
+#include "CCollisionChecker.h"
 //===============================================
 //	CoreObject	クラス
 //===============================================
@@ -30,6 +32,7 @@ CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_
 	CorrectSphere(&transform.Position, 1.0f)
 {
 	this->face = face;
+	TmpCollisionChecker::GetInstance()->RegisterCollision_CoreObject( this );
 }
 
 //-------------------------------------
@@ -37,7 +40,7 @@ CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_
 //-------------------------------------
 CoreObject::~CoreObject()
 {
-
+	TmpCollisionChecker::GetInstance()->DeregisterCollision_CoreObject( this );
 }
 
 //-------------------------------------
@@ -91,7 +94,7 @@ void CoreObject::Update()
 		if (Bullet_IsEnable(i))
 		{
 			//引き寄せる	
-			if (Collision::SphereVsSphere(CorrectSphere, Bullet_ColShape(i))&& this->pArmor_Index.size() > 0)
+			if ( CollisionCheck::SphereVsSphere(CorrectSphere, Bullet_ColShape(i))&& this->pArmor_Index.size() > 0)
 			{
 				const D3DXVECTOR3* bullet_face = Bullet_GetBullet(i)->GetFace();
 				D3DXVECTOR3 vec = *(CorrectSphere.pParentPos) - *(Bullet_ColShape(i).pParentPos);		// ネジと弾の中心間ベクトル
@@ -102,9 +105,9 @@ void CoreObject::Update()
 					Bullet_GetBullet(i)->CorrectFace(vec);
 				}
 			}
-
+			/*
 			//ネジ本体の当たり判定
-			if (Collision::SphereVsSphere(ColShape, Bullet_ColShape(i)) && this->pArmor_Index.size() > 0)
+			if ( CollisionCheck::SphereVsSphere(ColShape, Bullet_ColShape(i)) && this->pArmor_Index.size() > 0)
 			{
 				Hit();
 				Bullet_GetBullet(i)->SetFace(face);
@@ -112,6 +115,7 @@ void CoreObject::Update()
 				Screwdrop_Create(*(Bullet_GetBullet(i)->ColSphape.pParentPos),*( CorrectSphere.pParentPos ), Bullet::NORMAL, *Bullet_GetBullet(i)->GetFace());
 				Bullet_GetBullet(i)->DisEnable();
 			}
+			*/
 		}
 	}
 
