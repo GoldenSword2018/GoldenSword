@@ -30,6 +30,7 @@ CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_
 	CorrectSphere(&transform.Position, 1.0f)
 {
 	this->face = face;
+	this->Type = Type;
 }
 
 //-------------------------------------
@@ -188,7 +189,7 @@ void CoreObject::DischargeArmor( float Margin, float Weight, D3DXVECTOR3 AddUnit
 				DelayFrame = Weight + Margin;
 				break;
 			default:
-				//NULL
+				DelayFrame = Weight + Margin; // 仮置きでType1をデフォルトに
 				break;
 		}
 
