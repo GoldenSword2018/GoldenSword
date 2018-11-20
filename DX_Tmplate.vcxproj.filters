@@ -228,7 +228,7 @@
     <ClCompile Include="Source\TestSpace\TestObj.cpp">
       <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClCompile>
-    <ClCompile Include="source\TestSpace\CCollisionChecker.cpp">
+    <ClCompile Include="Source\CCollisionChecker.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
   </ItemGroup>
@@ -377,8 +377,8 @@
     <ClInclude Include="Source\TestSpace\TestObj.h">
       <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClInclude>
-    <ClInclude Include="source\TestSpace\CCollisionChecker.h">
-      <Filter>ソース ファイル\Assets</Filter>
+    <ClInclude Include="Source\CCollisionChecker.h">
+      <Filter>ヘッダー ファイル\Assets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

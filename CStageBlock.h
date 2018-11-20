@@ -21,6 +21,10 @@
 #include"CGameObject.h"
 #include"CArmorObject.h"
 
+
+// 当たり判定
+class ShapeOBB;
+
 //================================================
 //	マクロ定義	define
 //================================================
@@ -75,7 +79,10 @@ public:
 
 	static void Initialize();								// 初期化(頂点バッファ、インデックスバッファの確保)
 	static void Finalize();									// 終了処理(頂点バッファ、インデックスバッファの解放)
+public:
 	void Render();
+	ShapeOBB ColShape;
+
 };
 
 

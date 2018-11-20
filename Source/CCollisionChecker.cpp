@@ -19,6 +19,7 @@
 #include "Bullet.h"
 #include "Player.h"
 #include "CCoreObject.h"
+#include "CStageBlock.h"
 //===============================================
 //	マクロ定義		define
 //===============================================
@@ -52,7 +53,7 @@ TmpCollisionChecker::TmpCollisionChecker()
 	// NULL初期化
 	pPlayer = NULL;
 
-	for( int bi = 0; bi < COLLISION_BULLET_MAX; bi++ )
+	for( int bi = 0; bi < BULLET_MAX; bi++ )
 	{
 		pBulletCollection[ bi ] = NULL;
 	}
@@ -60,6 +61,11 @@ TmpCollisionChecker::TmpCollisionChecker()
 	for( int ci = 0; ci < COLLISION_CORE_MAX; ci++ )
 	{
 		pCoreCollection[ ci ] = NULL;
+	}
+	
+	for( int si = 0; si < COLLISION_STAGEBLOCK_MAX; si++ )
+	{
+		pStageBlock[ si ] = NULL;
 	}
 }
 
@@ -92,7 +98,7 @@ bool TmpCollisionChecker::DeregisterCollision_Player( Player* Collision )
 //-------------------------------------
 bool TmpCollisionChecker::RegisterCollision_Bullet( Bullet* Collision )
 {
-	for( int bi = 0; bi < COLLISION_BULLET_MAX; bi++ )
+	for( int bi = 0; bi < BULLET_MAX; bi++ )
 	{
 		if( pBulletCollection[ bi ] == NULL )
 		{
@@ -108,7 +114,7 @@ bool TmpCollisionChecker::RegisterCollision_Bullet( Bullet* Collision )
 //-------------------------------------
 bool TmpCollisionChecker::DeregisterCollision_Bullet( Bullet* Collision )
 {
-	for( int bi = 0; bi < COLLISION_BULLET_MAX; bi++ )
+	for( int bi = 0; bi < BULLET_MAX; bi++ )
 	{
 		if( pBulletCollection[ bi ] == Collision )
 		{
@@ -136,7 +142,7 @@ bool TmpCollisionChecker::RegisterCollision_CoreObject( CoreObject* Collision )
 }
 
 //-------------------------------------
-//	RegisterCollision_CoreObject コアリストから解除
+//	DeregisterCollision_CoreObject コアリストから解除
 //-------------------------------------
 bool TmpCollisionChecker::DeregisterCollision_CoreObject( CoreObject* Collision )
 {
@@ -151,22 +157,56 @@ bool TmpCollisionChecker::DeregisterCollision_CoreObject( CoreObject* Collision 
 	return false;
 }
 
+
+//-------------------------------------
+//	RegisterCollision_StageBlock 地形リストから解除
+//-------------------------------------
+bool TmpCollisionChecker::RegisterCollision_StageBlock( StageBlock* pNewStageBlock )
+{
+	for( int si = 0; si < COLLISION_STAGEBLOCK_MAX; si++ )
+	{
+		if( pStageBlock[ si ] == NULL )
+		{
+			pStageBlock[ si ] = pNewStageBlock;
+			return true;
+		}
+	}
+	return false;
+}
+
+//-------------------------------------
+//	DeregisterCollision_StageBlock 地形リストから解除
+//-------------------------------------
+bool TmpCollisionChecker::DeregisterCollision_StageBlock( StageBlock* pNewStageBlock )
+{
+	for( int si = 0; si < COLLISION_STAGEBLOCK_MAX; si++ )
+	{
+		if( pStageBlock[ si ] == pNewStageBlock )
+		{
+			pStageBlock[ si ] = NULL;
+			return true;
+		}
+	}
+	return false;
+}
+
 //-------------------------------------
 //	CheckCollision 衝突チェック
 //-------------------------------------
 void TmpCollisionChecker::CheckCollision( void )
 {
 	CheckBulletVsCoreObj();
+	CheckCollisionPlayerVsStageObj();
 }
 
 
 //-------------------------------------
-//	CheckCollisionPlayerVsStageObj 
-//  衝突チェック プレイヤーvsステージオブジェクト
+//	CheckBulletVsCoreObj 
+//  当たり判定チェック 弾vsスコアオブジェクト
 //-------------------------------------
 void TmpCollisionChecker::CheckBulletVsCoreObj( void )
 {
-	for( int bi = 0; bi < COLLISION_BULLET_MAX; bi++ )
+	for( int bi = 0; bi < BULLET_MAX; bi++ )
 	{
 		for( int ci = 0; ci < COLLISION_CORE_MAX; ci++ )
 		{
@@ -175,7 +215,7 @@ void TmpCollisionChecker::CheckBulletVsCoreObj( void )
 				if( CollisionCheck::SphereVsSphere( pBulletCollection[ bi ]->ColSphape, pCoreCollection[ ci ]->ColShape ) )
 				{
 					pCoreCollection[ ci ]->Hit();
-					Bullet_GetBullet( bi )->DisEnable();
+					Bullet_GetBullet( bi )->DisEnable();  // ------------------------------------------------------------------------------------------ここの処理のためにHitした時の処理とかを見直す必要あるのでは CHANGE!>
 				}
 				else
 				{
@@ -190,113 +230,25 @@ void TmpCollisionChecker::CheckBulletVsCoreObj( void )
 	}
 }
 
-//===============================================
-//	Collision Collection
-//===============================================
 
-CollisionCollection* CollisionCollection::pInstance[ ENUM_COLLISION_SIDE_MAX ];
-//-------------------------------------
-//	GetInstance
-//-------------------------------------
-
-CollisionCollection* CollisionCollection::GetInstance( COLLISION_SIDE Idx )
+void TmpCollisionChecker::CheckCollisionPlayerVsStageObj( void )
 {
-	if( !pInstance[ Idx ] )
+	for( int si = 0; si < COLLISION_STAGEBLOCK_MAX; si++ )
 	{
-		pInstance[ Idx ] = new CollisionCollection;
-	}
-	return pInstance[ Idx ];
-}
-
-
-//-------------------------------------
-//	GetIsExist インスタンスが存在するか
-//-------------------------------------
-bool CollisionCollection::GetIsExist( COLLISION_SIDE Idx )
-{
-	if( !pInstance[ Idx ] )
-	{ // インスタンスなし！
-		return false;
-	}
-	return true;
-}
-
-
-//-------------------------------------
-//	RegisterCollision_Bullet 弾リストに登録
-//-------------------------------------
-bool CollisionCollection::RegisterCollision_Bullet( ShapeSphere* Collision )
-{
-	for( int bi = 0; bi < COLLISION_BULLET_MAX; bi++ )
-	{
-		if( pBulletCollection[ bi ] == NULL )
+		if( pStageBlock[ si ] != NULL && pPlayer != NULL )
 		{
-			pBulletCollection[ bi ] = Collision;
-			return true;
+			if( CollisionCheck::OBBVsOBB( pStageBlock[ si ]->ColShape, pPlayer->ColShape ) )
+			{ // Hit
+				pPlayer->ColShape.Color = D3DCOLOR_RGBA( 255, 0, 0, 255 );
+			}
+			else
+			{ // No Hit
+				// null
+			}
+		}
+		else
+		{ // Invalid pointer
+			 // null
 		}
 	}
-	return false;
 }
-
-//-------------------------------------
-//	DeregisterCollison_Bullet 弾リストから解除
-//-------------------------------------
-bool CollisionCollection::DeregisterCollison_Bullet( ShapeSphere* Collision )
-{
-	for( int bi = 0; bi < COLLISION_BULLET_MAX; bi++ )
-	{
-		if( pBulletCollection[ bi ] == Collision )
-		{
-			pBulletCollection[ bi ] = NULL;
-			return true;
-		}
-	}
-	return false;
-}
-
-
-
-//-------------------------------------
-//	RegisterCollision_CoreObject コアリストに登録
-//-------------------------------------
-bool CollisionCollection::RegisterCollision_CoreObject( ShapeSphere* Collision )
-{
-	for( int bi = 0; bi < COLLISION_BULLET_MAX; bi++ )
-	{
-		if( pCoreCollection[ bi ] == Collision )
-		{
-			pCoreCollection[ bi ] = NULL;
-			return true;
-		}
-	}
-	return false;
-}
-
-//-------------------------------------
-//	RegisterCollision_CoreObject コアリストから解除
-//-------------------------------------
-bool CollisionCollection::DeregisterCollision_CoreObject( ShapeSphere* Collision )
-{
-	for( int bi = 0; bi < COLLISION_BULLET_MAX; bi++ )
-	{
-		if( pCoreCollection[ bi ] == Collision )
-		{
-			pCoreCollection[ bi ] = NULL;
-			return true;
-		}
-	}
-	return false;
-}
-
-
-
-//===============================================
-//	Collision Checker
-//===============================================
-
-void CheckCollisionPlayerVsBullet( void )
-{
-
-}
-void CheckCollisionPlayerVsStageObj( void ); // プレイヤー vs 地形 // 名前が微妙
-void CheckCollisionBulletVsStageObj( void );// 弾 vs 地形
