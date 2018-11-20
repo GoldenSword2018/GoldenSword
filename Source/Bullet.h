@@ -60,6 +60,7 @@ public:
 	void SetPos(D3DXVECTOR3 Pos);
 	void SetFace(D3DXVECTOR3 face);
 	void CorrectFace(D3DXVECTOR3 face);
+	void Render() override;
 };
 
 

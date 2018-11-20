@@ -28,6 +28,7 @@
 //===============================================
 //	ÉOÉçÅ[ÉoÉãïœêî
 //===============================================
+
 Bullet g_Bullet[BULLET_MAX];
 float fRoll = 0;
 
@@ -86,6 +87,7 @@ void Bullet_Render()
 			XModel_Render(&g_Bullet[i].BulletMesh);
 		}
 	}
+	
 }
 
 //-------------------------------------
@@ -282,4 +284,9 @@ void Bullet::CorrectFace(D3DXVECTOR3 vec)
 	D3DXVec3Normalize(&newFace, &newFace);
 	SetFace(newFace);
 
+}
+
+void Bullet::Render()
+{
+	return;
 }
