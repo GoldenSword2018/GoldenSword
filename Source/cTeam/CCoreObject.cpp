@@ -129,19 +129,49 @@ void CoreObject::Render()
 	{
 
 		//Xモデルの行列変換
+		D3DXMATRIXA16 mtxBaseTransform;		// 基準変換行列
+		D3DXMATRIXA16 mtxBaseTranslation;
+		D3DXMATRIXA16 mtxBaseRotation;	
+		D3DXMATRIXA16 mtxBaseScaling;	
+
 		D3DXMATRIXA16 mtxWorld;
 		D3DXMATRIXA16 mtxTranslation;
-		D3DXMATRIXA16 mtxTranslation2;
 		D3DXMATRIXA16 mtxRotation;
-		D3DXMATRIXA16 mtxScaling;
+		D3DXMATRIXA16 mtxRotationY;
+		D3DXMATRIXA16 mtxRotationAxis;
+		D3DXVECTOR3 vecFaceGroud;
+		D3DXVECTOR3 vecRight;
 
-		D3DXMatrixTranslation(&mtxTranslation, this->transform.Position.x, this->transform.Position.y, this->transform.Position.z);
-		D3DXMatrixTranslation(&mtxTranslation2, 0.0f, -0.5f, 0.0f);
-		D3DXMatrixRotationY(&mtxRotation, D3DX_PI);
-		D3DXMatrixScaling(&mtxScaling, 0.4f, 0.4f, 0.4f);
+		D3DXMatrixTranslation(&mtxBaseTranslation, 0.0f, -0.5f, 0.0f);	// 原点に平行移動
+		D3DXMatrixRotationY(&mtxBaseRotation, D3DX_PI);					// Y軸周りに半回転して正面に向ける
+		D3DXMatrixScaling(&mtxBaseScaling, 0.4f, 0.4f, 0.4f);			// サイズ調整
+
+		mtxBaseTransform = mtxBaseTranslation * mtxBaseRotation * mtxBaseScaling;	// 基準変換行列の設定
+
+		if (this->face == D3DXVECTOR3(0.0f, 1.0f, 0.0f))
+		{
+			D3DXMatrixRotationX(&mtxRotation, D3DX_PI / 2);
+		}
+		else if (this->face == D3DXVECTOR3(0.0f, -1.0f, 0.0f))
+		{
+			D3DXMatrixRotationX(&mtxRotation, -D3DX_PI / 2);
+		}
+		else
+		{
+			vecFaceGroud = this->face;
+			vecFaceGroud.y = 0.0f;
+			D3DXVec3Normalize(&vecFaceGroud, &vecFaceGroud);
+			vecRight.x = vecFaceGroud.z;
+			vecRight.y = 0.0f;
+			vecRight.z = -vecFaceGroud.x;
+			D3DXMatrixRotationY(&mtxRotationY, atan2f(vecFaceGroud.x, vecFaceGroud.z));
+			D3DXMatrixRotationAxis(&mtxRotationAxis, &vecRight, acosf(D3DXVec3Dot(&this->face, &vecFaceGroud)));
+			mtxRotation = mtxRotationY * mtxRotationAxis;
+		}
+		D3DXMatrixTranslation(&mtxTranslation, this->transform.Position.x, this->transform.Position.y, this->transform.Position.z);		// 平行移動
 
 		//合成
-		mtxWorld = mtxTranslation2*mtxRotation*mtxScaling*mtxTranslation;
+		mtxWorld = mtxBaseTransform * mtxRotation * mtxTranslation;
 		
 		//ネジの描画
 		XModel_Render(GetMeshData(ScrewIndex), mtxWorld);
