@@ -46,14 +46,16 @@ CoreObject::~CoreObject()
 void CoreObject::SetBody(BodyObject* pBodyObject)
 {
 	this->pBodyObject = pBodyObject;
+	this->Set_Parent(this->pBodyObject);
 }
 
 //-------------------------------------
 //	アーマーオブジェクトを登録
 //-------------------------------------
-void CoreObject::Set(ArmorObject* pArmorObject)
+void CoreObject::SetArmor(ArmorObject* pArmorObject)
 {
 	this->pArmor_Index.push_back(pArmorObject);
+	pArmorObject->transform.Set_Parent(&this->transform);
 }
 
 //--------------------------------------
@@ -61,9 +63,8 @@ void CoreObject::Set(ArmorObject* pArmorObject)
 //--------------------------------------
 void CoreObject::Set(ArmorObject* pArmorObject,BodyObject* pBodyObject)
 {
-	this->pArmor_Index.push_back(pArmorObject);
-	this->pBodyObject = pBodyObject;
-	this->Set_Parent(this->pBodyObject);
+	this->SetBody(pBodyObject);
+	this->SetArmor(pArmorObject);
 }
 
 //-------------------------------------
