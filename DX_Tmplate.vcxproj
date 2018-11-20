@@ -165,6 +165,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="CStageBlock.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Engine\Class\CAnimation.cpp" />
     <ClCompile Include="Engine\Class\CCamera.cpp">
       <SubType>
@@ -226,6 +230,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEnemy.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="CStageBlock.h">
       <SubType>
       </SubType>
     </ClInclude>

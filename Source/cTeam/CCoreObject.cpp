@@ -15,16 +15,16 @@
 
 #include "Debug_Collision.h"
 
-// b’è“–‚½‚è”»’è‹@”\ ------------------------------------------------------------------------------------------------------------------- TMP!>
+// ï¿½bï¿½è“–ï¿½ï¿½ï¿½è”»ï¿½ï¿½@ï¿½\ ------------------------------------------------------------------------------------------------------------------- TMP!>
 #include "CCollisionChecker.h"
 //===============================================
-//	CoreObject	ƒNƒ‰ƒX
+//	CoreObject	ï¿½Nï¿½ï¿½ï¿½X
 //===============================================
 
 //-------------------------------------
-//	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//	ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 //-------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Å‚ÌShapeŒnƒNƒ‰ƒX‚Ì‰Šú‰»‚ÍCoreObject©g‚Ìtransform‚ÌƒAƒhƒŒƒX‚ğ—^‚¦‚é‚±‚Æ. ˆø”‚ÌpTransform‚ÍƒRƒ“ƒXƒgƒ‰ƒNƒ^I—¹Œã,”jŠü‚³‚ê‚é.
+// ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^ï¿½Å‚ï¿½Shapeï¿½nï¿½Nï¿½ï¿½ï¿½Xï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½CoreObjectï¿½ï¿½ï¿½gï¿½ï¿½transformï¿½ÌƒAï¿½hï¿½ï¿½ï¿½Xï¿½ï¿½^ï¿½ï¿½ï¿½é‚±ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pTransformï¿½ÍƒRï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^ï¿½Iï¿½ï¿½ï¿½ï¿½,ï¿½jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face) 
 : 
 	GameObject(pTransform, pTexture),
@@ -33,10 +33,11 @@ CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_
 {
 	this->face = face;
 	TmpCollisionChecker::GetInstance()->RegisterCollision_CoreObject( this );
+	this->Type = Type;
 }
 
 //-------------------------------------
-//	ƒfƒXƒgƒ‰ƒNƒ^
+//	ï¿½fï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 //-------------------------------------
 CoreObject::~CoreObject()
 {
@@ -44,7 +45,7 @@ CoreObject::~CoreObject()
 }
 
 //-------------------------------------
-//	“·‘ÌƒIƒuƒWƒFƒNƒg“o˜^
+//	ï¿½ï¿½ï¿½ÌƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½oï¿½^
 //-------------------------------------
 void CoreObject::SetBody(BodyObject* pBodyObject)
 {
@@ -52,7 +53,7 @@ void CoreObject::SetBody(BodyObject* pBodyObject)
 }
 
 //-------------------------------------
-//	ƒA[ƒ}[ƒIƒuƒWƒFƒNƒg‚ğ“o˜^
+//	ï¿½Aï¿½[ï¿½}ï¿½[ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½oï¿½^
 //-------------------------------------
 void CoreObject::Set(ArmorObject* pArmorObject)
 {
@@ -60,7 +61,7 @@ void CoreObject::Set(ArmorObject* pArmorObject)
 }
 
 //--------------------------------------
-//	ƒA[ƒ}[ƒIƒuƒWƒFƒNƒg‚Æ“·‘Ì‚ğ“¯‚É“o˜^
+//	ï¿½Aï¿½[ï¿½}ï¿½[ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Æ“ï¿½ï¿½Ì‚ğ“¯ï¿½ï¿½É“oï¿½^
 //--------------------------------------
 void CoreObject::Set(ArmorObject* pArmorObject,BodyObject* pBodyObject)
 {
@@ -70,7 +71,7 @@ void CoreObject::Set(ArmorObject* pArmorObject,BodyObject* pBodyObject)
 }
 
 //-------------------------------------
-//	’e‚É“–‚½‚Á‚½
+//	ï¿½eï¿½É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //-------------------------------------
 void CoreObject::Hit()
 {
@@ -78,27 +79,27 @@ void CoreObject::Hit()
 
 	if(this->pArmor_Index.size() > 0)
 	{
-		DischargeArmor( 120.0f, 1.0f, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) ); // ‚±‚±ˆø”‚ğƒƒ“ƒo‚É‚µ‚Ä‚Â‚È‚è‚·‚éI -------------------------------------------------------------------------- CAUTION!>
+		DischargeArmor( 120.0f, 1.0f, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) ); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½É‚ï¿½ï¿½Äï¿½ï¿½Â‚È‚è‚·ï¿½ï¿½I -------------------------------------------------------------------------- CAUTION!>
 	}
 }
 
 //-------------------------------------
-//	XVˆ—
+//	ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½
 //-------------------------------------
 void CoreObject::Update()
 {
-	//’e‚Æ‚Ì“–‚½‚è”»’è
+	//ï¿½eï¿½Æ‚Ì“ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½
 	for (int i = 0; i<BULLET_MAX; i++)
 	{
-		//’e‚ª—LŒø
+		//ï¿½eï¿½ï¿½ï¿½Lï¿½ï¿½
 		if (Bullet_IsEnable(i))
 		{
-			//ˆø‚«Šñ‚¹‚é	
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ñ‚¹‚ï¿½	
 			if ( CollisionCheck::SphereVsSphere(CorrectSphere, Bullet_ColShape(i))&& this->pArmor_Index.size() > 0)
 			{
 				const D3DXVECTOR3* bullet_face = Bullet_GetBullet(i)->GetFace();
-				D3DXVECTOR3 vec = *(CorrectSphere.pParentPos) - *(Bullet_ColShape(i).pParentPos);		// ƒlƒW‚Æ’e‚Ì’†SŠÔƒxƒNƒgƒ‹
-				float Angle = acosf(D3DXVec3Dot(bullet_face, &vec));				// ’e‚Ìis•ûŒü‚Ævec‚Ì¬‚·Šp
+				D3DXVECTOR3 vec = *(CorrectSphere.pParentPos) - *(Bullet_ColShape(i).pParentPos);		// ï¿½lï¿½Wï¿½Æ’eï¿½Ì’ï¿½ï¿½Sï¿½Ôƒxï¿½Nï¿½gï¿½ï¿½
+				float Angle = acosf(D3DXVec3Dot(bullet_face, &vec));				// ï¿½eï¿½Ìiï¿½sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vecï¿½Ìï¿½ï¿½ï¿½ï¿½p
 
 				if (Angle <= D3DX_PI / 4 && Angle > 0.0f)
 				{
@@ -106,7 +107,7 @@ void CoreObject::Update()
 				}
 			}
 			/*
-			//ƒlƒW–{‘Ì‚Ì“–‚½‚è”»’è
+			//ï¿½lï¿½Wï¿½{ï¿½Ì‚Ì“ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½
 			if ( CollisionCheck::SphereVsSphere(ColShape, Bullet_ColShape(i)) && this->pArmor_Index.size() > 0)
 			{
 				Hit();
@@ -123,15 +124,15 @@ void CoreObject::Update()
 }
 
 //-------------------------------------
-//	•`‰æ
+//	ï¿½`ï¿½ï¿½
 //-------------------------------------
 void CoreObject::Render()
 {
-	//ƒA[ƒ}[ƒIƒuƒWƒFƒNƒg‚ğ‚Á‚Ä‚¢‚éB
+	//ï¿½Aï¿½[ï¿½}ï¿½[ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½B
 	if (this->pArmor_Index.size() > 0)
 	{
 
-		//Xƒ‚ƒfƒ‹‚Ìs—ñ•ÏŠ·
+		//Xï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ìsï¿½ï¿½ÏŠï¿½
 		D3DXMATRIXA16 mtxWorld;
 		D3DXMATRIXA16 mtxTranslation;
 		D3DXMATRIXA16 mtxTranslation2;
@@ -143,20 +144,20 @@ void CoreObject::Render()
 		D3DXMatrixRotationY(&mtxRotation, D3DX_PI);
 		D3DXMatrixScaling(&mtxScaling, 0.4f, 0.4f, 0.4f);
 
-		//‡¬
+		//ï¿½ï¿½ï¿½ï¿½
 		mtxWorld = mtxTranslation2*mtxRotation*mtxScaling*mtxTranslation;
 		
-		//ƒlƒW‚Ì•`‰æ
+		//ï¿½lï¿½Wï¿½Ì•`ï¿½ï¿½
 		XModel_Render(GetMeshData(ScrewIndex), mtxWorld);
 
-		//“–‚½‚è”»’è‚Ì•`‰æ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½Ì•`ï¿½ï¿½
 		ColShape.DebugDraw();
 		CorrectSphere.DebugDraw();
 	}
 }
 
 //-------------------------------------
-//	ƒlƒW‚ÌŒü‚«‚Ìæ“¾
+//	ï¿½lï¿½Wï¿½ÌŒï¿½ï¿½ï¿½ï¿½Ìæ“¾
 //-------------------------------------
 D3DXVECTOR3 CoreObject::GetFace()
 {
@@ -164,7 +165,7 @@ D3DXVECTOR3 CoreObject::GetFace()
 }
 
 //-------------------------------------
-//	”»’èİ’è
+//	ï¿½ï¿½ï¿½ï¿½İ’ï¿½
 //-------------------------------------
 void CoreObject::Set_JudgeType(CORE_DISCHARGE_JUDGE_TYPE Type)
 {
@@ -172,42 +173,42 @@ void CoreObject::Set_JudgeType(CORE_DISCHARGE_JUDGE_TYPE Type)
 }
 
 //-------------------------------------
-//	ƒA[ƒ}[”ò‚Î‚·
+//	ï¿½Aï¿½[ï¿½}ï¿½[ï¿½ï¿½Î‚ï¿½
 //-------------------------------------
 void CoreObject::DischargeArmor( float Margin, float Weight, D3DXVECTOR3 AddUnitVec, float SpeedRatio )
 {
 	for( int i = 0; i < pArmor_Index.size(); i++ )
 	{
-		// ƒA[ƒ}[”jŠüƒCƒxƒ“ƒg‚Ü‚Å‚Ì’x‰„ƒtƒŒ[ƒ€‚ğZo
+		// ï¿½Aï¿½[ï¿½}ï¿½[ï¿½jï¿½ï¿½ï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½Ü‚Å‚Ì’xï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Zï¿½o
 		float DelayFrame;
 
 		float SquaredDist = D3DXVec3LengthSq( &( pArmor_Index.at( i )->transform.Position - transform.Position ) );
 
 		switch( this->Type )
 		{
-			case CORE_JUDGE_TYPE_0:	//‹——£
+			case CORE_JUDGE_TYPE_0:	//ï¿½ï¿½ï¿½ï¿½
 				DelayFrame = SquaredDist * Weight + Margin;
 				break;
-			case CORE_JUDGE_TYPE_1:	// qArmor‘S‚Äˆê“x‚É
+			case CORE_JUDGE_TYPE_1:	// ï¿½qArmorï¿½Sï¿½Äˆï¿½xï¿½ï¿½
 				DelayFrame = Weight + Margin;
 				break;
 			default:
-				//NULL
+				DelayFrame = Weight + Margin; // ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½ï¿½Type1ï¿½ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ï¿½
 				break;
 		}
 
-		// ‘¬“x‚ğw’è
+		// ï¿½ï¿½ï¿½xï¿½ï¿½wï¿½ï¿½
 		D3DXVECTOR3* pInitSpeed;
 		const ARMOR_DISCHARGING_TYPE Type = pArmor_Index.at( i )->Discharging_Type;
 
 		switch( Type )
 		{
 
-			case FALL:	//‚¸‚ê‚Ä—‚¿‚é
+			case FALL:	//ï¿½ï¿½ï¿½ï¿½Ä—ï¿½ï¿½ï¿½ï¿½ï¿½
 				pInitSpeed = new D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
 				*pInitSpeed += AddUnitVec;
 				break;
-			case RADIALLY: //•úËó‚ÉL‚ª‚é
+			case RADIALLY: //ï¿½ï¿½ï¿½Ëï¿½ÉLï¿½ï¿½ï¿½ï¿½
 				pInitSpeed = new D3DXVECTOR3( pArmor_Index.at( i )->transform.Position - transform.Position );
 				D3DXVec3Normalize( pInitSpeed, pInitSpeed );
 				*pInitSpeed = ( *pInitSpeed + AddUnitVec ) * SpeedRatio;

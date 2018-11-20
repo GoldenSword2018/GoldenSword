@@ -210,6 +210,9 @@
     <ClCompile Include="Ground.cpp">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="CStageBlock.cpp">
+      <Filter>ソース ファイル\Assets\Stage</Filter>
+    </ClCompile>
     <ClCompile Include="Source\cTeam\CTeamProt.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
@@ -357,6 +360,9 @@
       <Filter>リソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
+      <Filter>ソース ファイル\Assets\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="CStageBlock.h">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Source\TestSpace\TestSpace.h">
