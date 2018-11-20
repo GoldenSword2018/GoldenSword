@@ -106,15 +106,30 @@ void PlayerCamera::Update()
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward) 
-:
-	GameObject(pTransform, &Texture()), 
+Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
+	:
+	GameObject(pTransform, &Texture()),
 	ColShape
-	( 
-		&transform.Position, 
-		&D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), 
-		&D3DXVECTOR3( 1.0f, 5.0f, 1.0f )
-	)
+	(
+		&transform.Position,
+		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),
+		&D3DXVECTOR3(1.0f, 5.0f, 1.0f)
+	),
+	//コア
+	Head_Screw(&Transform(D3DCOLOR_RGBA(255,0,0,255))),
+	Body_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	LeftArm_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	RightArm_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	LeftLeg_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	RightLeg_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+
+	//アーマー
+	Head_Armor01(&Transform()),
+	Body_Armor01(&Transform()),
+	LeftArm_Armor01(&Transform()),
+	RightArm_Armor01(&Transform()),
+	LeftLeg_Armor01(&Transform()),
+	RightLeg_Armor01(&Transform())
 {
 	this->Forward = *pForward;
 	this->AngleY = 0.0f;
@@ -169,6 +184,27 @@ void Player::Set_Parts()
 	//
 	RightLeg.transform.Position = D3DXVECTOR3(0.2f,-2.0f,0.0f);
 	RightLeg.transform.Scale = D3DXVECTOR3(0.5f,2.0f,0.5f);
+
+	//コアの登録
+	Head_Screw.SetBody(&Head);
+	Body_Screw.SetBody(&Body);
+	LeftArm_Screw.SetBody(&LeftArm);
+	RightArm_Screw.SetBody(&RightArm);
+	LeftLeg_Screw.SetBody(&LeftLeg);
+	RightLeg_Screw.SetBody(&RightLeg);
+
+	//アーマーの登録
+	Head_Screw.SetArmor(&Head_Armor01);
+	
+	Body_Screw.SetArmor(&Body_Armor01);
+
+	LeftArm_Screw.SetArmor(&LeftArm_Armor01);
+
+	RightArm_Screw.SetArmor(&RightArm_Armor01);
+
+	LeftLeg_Screw.SetArmor(&LeftLeg_Armor01);
+
+	RightLeg_Screw.SetArmor(&RightLeg_Armor01);
 }
 
 //-------------------------------------

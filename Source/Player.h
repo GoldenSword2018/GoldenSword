@@ -15,6 +15,8 @@
 #include"CCamera.h"
 #include"CCollisionShape.h"
 #include"CBodyObject.h"
+#include"CCoreObject.h"
+#include"CArmorObject.h"
 
 //===============================================
 //	Player 構造体
@@ -72,6 +74,29 @@ public:
 	BodyObject RightArm;
 	BodyObject LeftLeg;
 	BodyObject RightLeg;
+
+public:
+	//コア
+	CoreObject Head_Screw;
+	CoreObject Body_Screw;
+	CoreObject LeftArm_Screw;
+	CoreObject RightArm_Screw;
+	CoreObject LeftLeg_Screw;
+	CoreObject RightLeg_Screw;
+
+public:
+	//アーマー
+	ArmorObject Head_Armor01;
+
+	ArmorObject Body_Armor01;
+
+	ArmorObject LeftArm_Armor01;
+
+	ArmorObject RightArm_Armor01;
+
+	ArmorObject LeftLeg_Armor01;
+
+	ArmorObject RightLeg_Armor01;
 
 public:
 	Player(Transform* pTransform, D3DXVECTOR3* pForward);
