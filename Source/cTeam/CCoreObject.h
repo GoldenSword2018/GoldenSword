@@ -50,6 +50,7 @@ public:
 	ShapeSphere CorrectSphere;			//ï‚ê≥ãÖ
 
 public:
+	CoreObject(Transform* pTransform) :CoreObject(&Transform(),&Texture()) {};
 	CoreObject(Transform* pTransform, Texture* pTexture) :CoreObject(pTransform, pTexture, CORE_JUDGE_TYPE_0) {};
 	CoreObject(Transform* pTransform, CORE_DISCHARGE_JUDGE_TYPE Type) :CoreObject(pTransform, &Texture(), Type) {};
 	CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type) :CoreObject(pTransform, pTexture, Type, { 0.0f,0.0f,-1.0f }) {};
@@ -60,7 +61,7 @@ public:
 	void Hit();
 
 	void SetBody(BodyObject* pBodyObject);
-	void Set(ArmorObject* pArmorObject);
+	void SetArmor(ArmorObject* pArmorObject);
 	void Set(ArmorObject* pArmorObject, BodyObject* pBodyObject);
 	void Set_JudgeType(CORE_DISCHARGE_JUDGE_TYPE Type);
 	void Update();

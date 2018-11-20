@@ -49,7 +49,7 @@ public: // 一般関数
 	void Set_DischargingType(ARMOR_DISCHARGING_TYPE Type);
 
 public: // コンストラクタ | デストラクタ
-	ArmorObject(Transform* pTransform) :ArmorObject(pTransform, &Texture()) {};
+	ArmorObject(Transform* pTransform) :ArmorObject(pTransform, &Texture(),FALL) {};
 	ArmorObject(Transform* pTransform, Texture* pTexture) :ArmorObject(pTransform, pTexture, FALL) {};
 	ArmorObject(Transform* pTransform, ARMOR_DISCHARGING_TYPE Type) :ArmorObject(pTransform,&Texture(),Type) {};
 	ArmorObject(Transform* pTransform, Texture* pTexture,ARMOR_DISCHARGING_TYPE Type);
