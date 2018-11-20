@@ -463,41 +463,41 @@ void CTeamProt_Initialize()
 	Screw_07.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_1);
 
 	Screw_07.Set(&Armor_7_11, &Body_07);//ネジに胴体とアーマーを設定
-	Screw_07.Set(&Armor_7_12);			//ネジの胴体は決まっているので、アーマーだけ設定
-	Screw_07.Set(&Armor_7_13);			//アーマー設定
-	Screw_07.Set(&Armor_7_14);			//アーマー設定
-	Screw_07.Set(&Armor_7_21);			//アーマー設定
-	Screw_07.Set(&Armor_7_22);			//アーマー設定
-	Screw_07.Set(&Armor_7_23);			//アーマー設定
-	Screw_07.Set(&Armor_7_24);			//アーマー設定
-	Screw_07.Set(&Armor_7_31);			//アーマー設定
-	Screw_07.Set(&Armor_7_32);			//アーマー設定
-	Screw_07.Set(&Armor_7_33);			//アーマー設定
-	Screw_07.Set(&Armor_7_34);			//アーマー設定
-	Screw_07.Set(&Armor_7_41);			//アーマー設定
-	Screw_07.Set(&Armor_7_42);			//アーマー設定
-	Screw_07.Set(&Armor_7_43);			//アーマー設定
-	Screw_07.Set(&Armor_7_44);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_12);			//ネジの胴体は決まっているので、アーマーだけ設定
+	Screw_07.SetArmor(&Armor_7_13);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_14);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_21);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_22);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_23);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_24);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_31);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_32);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_33);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_34);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_41);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_42);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_43);			//アーマー設定
+	Screw_07.SetArmor(&Armor_7_44);			//アーマー設定
 										//	Screw_07.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_1);
 
 	Screw_08.Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_0);
 
 	Screw_08.Set(&Armor_8_11, &Body_07);//ネジに胴体とアーマーを設定
-	Screw_08.Set(&Armor_8_12);			//ネジの胴体は決まっているので、アーマーだけ設定
-	Screw_08.Set(&Armor_8_13);			//アーマー設定
-	Screw_08.Set(&Armor_8_14);			//アーマー設定
-	Screw_08.Set(&Armor_8_21);			//アーマー設定
-	Screw_08.Set(&Armor_8_22);			//アーマー設定
-	Screw_08.Set(&Armor_8_23);			//アーマー設定
-	Screw_08.Set(&Armor_8_24);			//アーマー設定
-	Screw_08.Set(&Armor_8_31);			//アーマー設定
-	Screw_08.Set(&Armor_8_32);			//アーマー設定
-	Screw_08.Set(&Armor_8_33);			//アーマー設定
-	Screw_08.Set(&Armor_8_34);			//アーマー設定
-	Screw_08.Set(&Armor_8_41);			//アーマー設定
-	Screw_08.Set(&Armor_8_42);			//アーマー設定
-	Screw_08.Set(&Armor_8_43);			//アーマー設定
-	Screw_08.Set(&Armor_8_44);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_12);			//ネジの胴体は決まっているので、アーマーだけ設定
+	Screw_08.SetArmor(&Armor_8_13);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_14);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_21);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_22);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_23);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_24);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_31);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_32);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_33);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_34);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_41);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_42);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_43);			//アーマー設定
+	Screw_08.SetArmor(&Armor_8_44);			//アーマー設定
 
 	Grid_Initialize();
 	g_Camera.Set_Main(0);
