@@ -124,12 +124,12 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	RightLeg_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
 
 	//アーマー
-	Head_Armor01(&Transform()),
-	Body_Armor01(&Transform()),
-	LeftArm_Armor01(&Transform()),
-	RightArm_Armor01(&Transform()),
-	LeftLeg_Armor01(&Transform()),
-	RightLeg_Armor01(&Transform())
+	Head_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	Body_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	LeftArm_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	RightArm_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	LeftLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	RightLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255)))
 {
 	this->Forward = *pForward;
 	this->AngleY = 0.0f;
