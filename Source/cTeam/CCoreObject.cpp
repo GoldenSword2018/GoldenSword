@@ -26,8 +26,8 @@
 CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face) 
 : 
 	GameObject(pTransform, pTexture),
-	ColShape(&transform.Position, 0.5f),
-	CorrectSphere(&transform.Position, 1.0f)
+	ColShape(&transform.WorldPosition, 0.5f),
+	CorrectSphere(&transform.WorldPosition, 1.0f)
 {
 	this->face = face;
 }
@@ -135,14 +135,16 @@ void CoreObject::Render()
 		D3DXMATRIXA16 mtxRotation;
 		D3DXMATRIXA16 mtxScaling;
 
-		D3DXMatrixTranslation(&mtxTranslation, this->transform.Position.x, this->transform.Position.y, this->transform.Position.z);
+		this->transform.Set_WorldPosition();
+		D3DXMatrixTranslation(&mtxTranslation, this->transform.WorldPosition.x, this->transform.WorldPosition.y, this->transform.WorldPosition.z);
 		D3DXMatrixTranslation(&mtxTranslation2, 0.0f, -0.5f, 0.0f);
 		D3DXMatrixRotationY(&mtxRotation, D3DX_PI);
 		D3DXMatrixScaling(&mtxScaling, 0.4f, 0.4f, 0.4f);
-
+		
 		//çáê¨
 		mtxWorld = mtxTranslation2*mtxRotation*mtxScaling*mtxTranslation;
-		
+
+
 		//ÉlÉWÇÃï`âÊ
 		XModel_Render(GetMeshData(ScrewIndex), mtxWorld);
 

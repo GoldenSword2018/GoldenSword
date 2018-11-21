@@ -40,6 +40,11 @@ public :
 	D3DXVECTOR3 Position;	//位置
 	D3DXVECTOR3 Scale;		//サイズ
 	D3DXVECTOR3 Rotation;	//回転
+
+	//ワールド空間の情報	
+	//	pParent->transform.position + this->transform.position;
+	D3DXVECTOR3 WorldPosition;
+
 	D3DCOLOR	Color;		//色
 	
 	//軸方向
@@ -61,9 +66,12 @@ public:
 	//デストラクタ
 	~Transform();
 
+public:
+
 	D3DXMATRIX Convert();					//変換開始
 	void Set_Parent(Transform* pParent);		//親を設定
 	void Release_Parent();					//親と離れる
+	void Set_WorldPosition();
 };
 
 //===============================================

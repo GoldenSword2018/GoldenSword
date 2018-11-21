@@ -40,6 +40,7 @@ Transform::Transform(D3DXVECTOR3 Position, D3DXVECTOR3 Scale, D3DXVECTOR3 Rotati
 	this->Position = Position;
 	this->Scale = Scale;
 	this->Rotation = Rotation;
+	this->WorldPosition = Position;
 	this->Color = Color;
 
 	this->up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -108,6 +109,11 @@ D3DXMATRIX Transform::Convert()
 	{
 		//e‚Ìs—ñ‚ðŒ©‚Ä‚­‚é
 		this->MtxWorld *= this->pParent->Convert();
+		this->WorldPosition = this->pParent->Position + this->Position;
+	}
+	else
+	{
+		this->WorldPosition = this->Position;
 	}
 
 	//•ÏŠ·I—¹
@@ -143,6 +149,19 @@ void Transform::ResetConvert()
 		pIndex.at(i)->bConverted = false;
 	}
 }
+
+void Transform::Set_WorldPosition()
+{
+	if(this->pParent != NULL)
+	{
+		this->WorldPosition = this->pParent->WorldPosition + this->Position;
+	}
+	else
+	{
+		this->WorldPosition = this->Position;
+	}
+}
+
 
 //===============================================
 //	Transform2
