@@ -212,6 +212,7 @@ void Player::Set_Parts()
 //-------------------------------------
 void Player::Update()
 {
+	this->transform.Set_WorldTransform();
 	this->Camera.Update();
 	//プレイヤー位置
 	D3DXVECTOR3 Posiotion = this->Camera.position;

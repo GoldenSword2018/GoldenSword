@@ -44,6 +44,7 @@ public :
 	//ワールド空間の情報	
 	//	pParent->transform.position + this->transform.position;
 	D3DXVECTOR3 WorldPosition;
+	D3DXVECTOR3 WorldRotation;
 
 	D3DCOLOR	Color;		//色
 	
@@ -71,7 +72,7 @@ public:
 	D3DXMATRIX Convert();					//変換開始
 	void Set_Parent(Transform* pParent);		//親を設定
 	void Release_Parent();					//親と離れる
-	void Set_WorldPosition();
+	void Set_WorldTransform();
 };
 
 //===============================================

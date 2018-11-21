@@ -133,16 +133,18 @@ void CoreObject::Render()
 		D3DXMATRIXA16 mtxTranslation;
 		D3DXMATRIXA16 mtxTranslation2;
 		D3DXMATRIXA16 mtxRotation;
+		D3DXMATRIXA16 mtxRotation2;
 		D3DXMATRIXA16 mtxScaling;
 
-		this->transform.Set_WorldPosition();
+		this->transform.Set_WorldTransform();
 		D3DXMatrixTranslation(&mtxTranslation, this->transform.WorldPosition.x, this->transform.WorldPosition.y, this->transform.WorldPosition.z);
 		D3DXMatrixTranslation(&mtxTranslation2, 0.0f, -0.5f, 0.0f);
-		D3DXMatrixRotationY(&mtxRotation, D3DX_PI);
+		//D3DXMatrixRotationY(&mtxRotation, D3DX_PI);
+		D3DXMatrixRotationYawPitchRoll(&mtxRotation2,this->transform.WorldRotation.y,this->transform.WorldRotation.x,this->transform.WorldRotation.z);
 		D3DXMatrixScaling(&mtxScaling, 0.4f, 0.4f, 0.4f);
 		
 		//‡¬
-		mtxWorld = mtxTranslation2*mtxRotation*mtxScaling*mtxTranslation;
+		mtxWorld = (mtxTranslation2*mtxScaling)*mtxTranslation;
 
 
 		//ƒlƒW‚Ì•`‰æ

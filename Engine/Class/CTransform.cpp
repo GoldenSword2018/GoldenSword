@@ -129,6 +129,7 @@ void Transform::Set_Parent(Transform* pParent)
 {
 	this->pParent = pParent;
 	pParent->pChild.push_back(this);
+	this->Set_WorldTransform();
 }
 
 //-------------------------------------
@@ -150,15 +151,17 @@ void Transform::ResetConvert()
 	}
 }
 
-void Transform::Set_WorldPosition()
+void Transform::Set_WorldTransform()
 {
 	if(this->pParent != NULL)
 	{
 		this->WorldPosition = this->pParent->WorldPosition + this->Position;
+		this->WorldRotation = this->pParent->WorldRotation + this->Rotation;
 	}
 	else
 	{
 		this->WorldPosition = this->Position;
+		this->WorldRotation = this->Rotation;
 	}
 }
 
