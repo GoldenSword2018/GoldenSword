@@ -150,7 +150,7 @@ void CoreObject::Render()
 		D3DXMatrixRotationY(&mtxBaseRotation, D3DX_PI);					// Y軸周りに半回転して正面に向ける
 		D3DXMatrixScaling(&mtxBaseScaling, 0.4f, 0.4f, 0.4f);			// サイズ調整
 
-		mtxBaseTransform = mtxBaseTranslation * mtxBaseScaling;	// 基準変換行列の設定
+		mtxBaseTransform = mtxBaseTranslation * mtxBaseRotation * mtxBaseScaling;	// 基準変換行列の設定
 
 		if (this->face == D3DXVECTOR3(0.0f, 1.0f, 0.0f))
 		{

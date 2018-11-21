@@ -104,14 +104,14 @@ void PlayerCamera::Update()
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward) 
-:
-	GameObject(pTransform, &Texture()), 
+Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
+	:
+	GameObject(pTransform, &Texture()),
 	ColShape
-	( 
-		&transform.Position, 
-		&D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), 
-		&D3DXVECTOR3( 1.0f, 5.0f, 1.0f )
+	(
+		&transform.Position,
+		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),
+		&D3DXVECTOR3(1.0f, 5.0f, 1.0f)
 	)
 {
 	this->Forward = *pForward;
@@ -162,6 +162,7 @@ void Player::Set_Parts()
 //-------------------------------------
 void Player::Update()
 {
+	this->Camera.position = this->transform.Position;
 	this->Camera.Update();
 	SetPosition(this->Camera.position);
 	SetForward(this->Camera.forward);

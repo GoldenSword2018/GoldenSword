@@ -31,16 +31,16 @@ typedef struct PLAYER_tag
 //===============================================
 //	クラス
 //===============================================
-
+class Player;
+class PlayerCamera;
 //-------------------------------------
 //	プレイヤーカメラ
 //-------------------------------------
 class PlayerCamera:public Camera
 {
 private:
-
-public:
-	
+//	Player* pParent;
+public:	
 	void Initialize();
 	void Update();
 };
