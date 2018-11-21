@@ -90,12 +90,18 @@ D3DXMATRIX Transform::Convert()
 	D3DXMatrixRotationYawPitchRoll(&MtxRotation,this->Rotation.y,this->Rotation.x,this->Rotation.z);
 
 	//ƒ[ƒJƒ‹•ûŒü
-	D3DXVec3TransformNormal(&this->right,&this->right,&MtxRotation);
+	this->up = D3DXVECTOR3(0.0f,1.0f,0.0f);
+	D3DXVec3TransformNormal(&this->up,&this->up,&MtxRotation);
+	D3DXVec3Normalize(&this->up,&this->up);
+	
+	this->forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 	D3DXVec3TransformNormal(&this->forward,&this->forward,&MtxRotation);
-	D3DXVec3Cross(&this->up,&this->right,&this->forward);
+	D3DXVec3Normalize(&this->forward,&this->forward);
+
+	D3DXVec3Cross(&this->right,&this->up,&this->forward);
 
 	//‡¬
-	this->MtxWorld *= MtxScale * MtxRotation * MtxTransform;
+	this->MtxWorld = MtxScale * MtxRotation * MtxTransform;
 
 	//e‚ª‹‚é
 	if(this->pParent != NULL)

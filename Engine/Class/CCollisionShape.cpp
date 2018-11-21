@@ -110,7 +110,7 @@ ShapeSphere::~ShapeSphere()
 //-------------------------------------
 void ShapeSphere::DebugDraw()
 {
-	DebugCollisionModule::BatchDrawSphere( this );
+	DebugCollisionModule::GetInstance()->BatchDraw( this );
 }
 //===============================================
 //	ShapeOBB クラス
@@ -171,14 +171,14 @@ ShapeOBB::~ShapeOBB()
 //-------------------------------------
 void ShapeOBB::DebugDraw()
 {
-	DebugCollisionModule::BatchDrawCuboid( this );
+	DebugCollisionModule::GetInstance()->BatchDraw( this );
 }
 //===============================================
 //	Collision クラス
 //===============================================
 
 
-bool Collision::SphereVsSphere( ShapeSphere& Sphere0, ShapeSphere& Sphere1 )
+bool CollisionCheck::SphereVsSphere( ShapeSphere& Sphere0, ShapeSphere& Sphere1 )
 {
 	D3DXVECTOR3 vecLength =Sphere1.GetEffectivePos() - Sphere0.GetEffectivePos();
 	float fLength = D3DXVec3LengthSq(&vecLength); // 二つの中心座標の距離
@@ -193,7 +193,7 @@ bool Collision::SphereVsSphere( ShapeSphere& Sphere0, ShapeSphere& Sphere1 )
 	}
 }
 
-bool Collision::OBBVsOBB( ShapeOBB& OBB0, ShapeOBB& OBB1 )
+bool CollisionCheck::OBBVsOBB( ShapeOBB& OBB0, ShapeOBB& OBB1 )
 {
 
 	// 各方向ベクトルの確保
@@ -326,7 +326,7 @@ bool Collision::OBBVsOBB( ShapeOBB& OBB0, ShapeOBB& OBB1 )
 }
 
 // 分離軸に投影された軸成分から投影線分長を算出
-float Collision::LenSegOnSeparateAxis( D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 )
+float CollisionCheck::LenSegOnSeparateAxis( D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 )
 {
 	// 3つの内積の絶対値の和で投影線分長を計算
 	// 分離軸Sepは標準化されていること

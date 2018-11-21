@@ -21,6 +21,10 @@
 #include"CGameObject.h"
 #include"CArmorObject.h"
 
+
+// 当たり判定
+class ShapeOBB;
+
 //================================================
 //	マクロ定義	define
 //================================================
@@ -71,11 +75,14 @@ private:
 public:
 	// コンストラクタ
 	StageBlock(Transform *pTransform, int TextureIndex);
-	StageBlock::StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGING_TYPE type);
+	StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGING_TYPE type);
 
 	static void Initialize();								// 初期化(頂点バッファ、インデックスバッファの確保)
 	static void Finalize();									// 終了処理(頂点バッファ、インデックスバッファの解放)
+public:
 	void Render();
+	ShapeOBB ColShape;
+
 };
 
 

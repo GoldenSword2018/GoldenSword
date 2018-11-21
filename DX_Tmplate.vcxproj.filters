@@ -207,12 +207,6 @@
     <ClCompile Include="Engine\System\WinSock.cpp">
       <Filter>ソース ファイル\Engine\System\WinSock</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Class\CCollisionShape.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Geometry\Debug_Collision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClCompile>
@@ -224,6 +218,15 @@
     </ClCompile>
     <ClCompile Include="Source\TestSpace\TestSpace.cpp">
       <Filter>ソース ファイル\Assets\TestSpace</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Class\CCollisionShape.cpp">
+      <Filter>ソース ファイル\Engine\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Geometry\Debug_Collision.cpp">
+      <Filter>ソース ファイル\Engine\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CCollisionChecker.cpp">
+      <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -353,12 +356,6 @@
     <ClInclude Include="Engine\System\resource1.h">
       <Filter>リソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Class\CCollisionShape.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Geometry\Debug_Collision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClInclude>
@@ -368,11 +365,21 @@
     <ClInclude Include="Source\TestSpace\TestSpace.h">
       <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Class\CCollisionShape.h">
+      <Filter>ヘッダー ファイル\Engine\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Geometry\Debug_Collision.h">
+      <Filter>ヘッダー ファイル\Engine\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CCollisionChecker.h">
+      <Filter>ヘッダー ファイル\Assets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\System\Dualshock4.def">
       <Filter>ヘッダー ファイル\Engine\System\InputDevice</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Engine\System\SecondWindow_Resource.rc">

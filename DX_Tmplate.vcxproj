@@ -214,6 +214,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Source\Bullet.cpp" />
+    <ClCompile Include="Source\CCollisionChecker.cpp" />
     <ClCompile Include="Source\cTeam\CArmorObject.cpp" />
     <ClCompile Include="Source\cTeam\CBodyObject.cpp" />
     <ClCompile Include="Source\cTeam\CCoreObject.cpp" />
@@ -278,6 +279,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Source\Bullet.h" />
+    <ClInclude Include="Source\CCollisionChecker.h" />
     <ClInclude Include="Source\common.h" />
     <ClInclude Include="Source\cTeam\CArmorObject.h" />
     <ClInclude Include="Source\cTeam\CBodyObject.h" />
@@ -288,6 +290,7 @@
     <ClInclude Include="Source\TestSpace\TestSpace.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Engine\System\Dualshock4.def" />
   </ItemGroup>
   <ItemGroup>

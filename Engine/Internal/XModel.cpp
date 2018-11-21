@@ -44,7 +44,7 @@ MeshData g_Mesh[MeshIndexMax]; //メッシュデータリスト
 //-------------------------------------
 //	新しい読み込み 引数にはモデルが入ってるファイルを指定。
 //-------------------------------------
-void NXModel_Load(MeshData *pMesh, char ModelFile[10] , D3DXVECTOR3* pvecPosition)
+void NXModel_Load(MeshData *pMesh, char ModelFile[30] , D3DXVECTOR3* pvecPosition)
 {
 	HRESULT hr;
 	char FilePath[60] = {"\0"};				//検索ファイルパス

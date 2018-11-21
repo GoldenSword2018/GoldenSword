@@ -109,7 +109,7 @@ public:
  * Collsion Class
  */
 
-class Collision
+class CollisionCheck
 {
 private:
 	static float LenSegOnSeparateAxis( D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0 );

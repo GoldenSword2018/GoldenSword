@@ -17,6 +17,7 @@
 
 //class
 #include"CStageBlock.h"
+#include "CCollisionChecker.h"
 
 //===============================================
 //	マクロ定義		define
@@ -132,14 +133,22 @@ void StageBlock::Finalize()
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-StageBlock::StageBlock(Transform* pTransform, int TextureIndex) :ArmorObject(pTransform, FALL)
+StageBlock::StageBlock(Transform* pTransform, int TextureIndex) 
+:
+	ArmorObject(pTransform, FALL),
+	ColShape( &transform.Position, &transform.Rotation, &transform.Scale )
 {
 	pTexture = Texture_GetTexture(TextureIndex);
+	TmpCollisionChecker::GetInstance()->RegisterCollision_StageBlock( this );
 }
 
-StageBlock::StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGING_TYPE type) : ArmorObject(pTransform, type)
+StageBlock::StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGING_TYPE type)
+	: 
+	ArmorObject(pTransform, type),
+	ColShape(&transform.Position, &transform.Rotation, &transform.Scale)
 {
 	pTexture = Texture_GetTexture(TextureIndex);
+	TmpCollisionChecker::GetInstance()->RegisterCollision_StageBlock( this );
 }
 
 //-------------------------------------
