@@ -16,9 +16,10 @@
 #include"Bullet.h"
 #include"CGameObject.h"
 //Class
-
+#include "CCollisionChecker.h"
 // Debug用
 #include "Debug_Collision.h"
+
 //===============================================
 //	マクロ定義
 //===============================================
@@ -50,6 +51,7 @@ void Player_Initialize(void)
 {
 	Player01.Camera.Set_Main(0);
 	Bullet_Initialize();
+	TmpCollisionChecker::GetInstance()->RegisterCollision_Player( &Player01 );
 }
 
 //===============================================
@@ -75,7 +77,7 @@ void Player_Render(void)
 //===============================================
 void Player_Finalize(void)
 {
-
+	TmpCollisionChecker::GetInstance()->DeregisterCollision_Player( &Player01 );
 }
 
 

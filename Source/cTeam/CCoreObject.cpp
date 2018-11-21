@@ -15,6 +15,8 @@
 
 #include "Debug_Collision.h"
 
+// 当たり判定登録 ------------------------------------------------------------------------------------------------------------------- TMP!>
+#include "CCollisionChecker.h"
 //===============================================
 //	CoreObject	クラス
 //===============================================
@@ -23,13 +25,15 @@
 //	コンストラクタ
 //-------------------------------------
 // コンストラクタでのShape系クラスの初期化はCoreObject自身のtransformのアドレスを与えること. 引数のpTransformはコンストラクタ終了後,破棄される.
-CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face) 
+CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face)
 : 
 	GameObject(pTransform, pTexture),
 	ColShape(&transform.WorldPosition, 0.5f),
 	CorrectSphere(&transform.WorldPosition, 1.0f)
 {
 	this->face = face;
+	TmpCollisionChecker::GetInstance()->RegisterCollision_CoreObject( this );
+	this->Type = Type;
 }
 
 //-------------------------------------
@@ -37,7 +41,7 @@ CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_
 //-------------------------------------
 CoreObject::~CoreObject()
 {
-
+	TmpCollisionChecker::GetInstance()->DeregisterCollision_CoreObject( this );
 }
 
 //-------------------------------------
@@ -92,7 +96,7 @@ void CoreObject::Update()
 		if (Bullet_IsEnable(i))
 		{
 			//引き寄せる	
-			if (Collision::SphereVsSphere(CorrectSphere, Bullet_ColShape(i))&& this->pArmor_Index.size() > 0)
+			if ( CollisionCheck::SphereVsSphere(CorrectSphere, Bullet_ColShape(i))&& this->pArmor_Index.size() > 0)
 			{
 				const D3DXVECTOR3* bullet_face = Bullet_GetBullet(i)->GetFace();
 				D3DXVECTOR3 vec = *(CorrectSphere.pParentPos) - *(Bullet_ColShape(i).pParentPos);		// ネジと弾の中心間ベクトル
@@ -103,9 +107,9 @@ void CoreObject::Update()
 					Bullet_GetBullet(i)->CorrectFace(vec);
 				}
 			}
-
+			/*
 			//ネジ本体の当たり判定
-			if (Collision::SphereVsSphere(ColShape, Bullet_ColShape(i)) && this->pArmor_Index.size() > 0)
+			if ( CollisionCheck::SphereVsSphere(ColShape, Bullet_ColShape(i)) && this->pArmor_Index.size() > 0)
 			{
 				Hit();
 				Bullet_GetBullet(i)->SetFace(face);
@@ -113,6 +117,7 @@ void CoreObject::Update()
 				Screwdrop_Create(*(Bullet_GetBullet(i)->ColSphape.pParentPos),*( CorrectSphere.pParentPos ), Bullet::NORMAL, *Bullet_GetBullet(i)->GetFace());
 				Bullet_GetBullet(i)->DisEnable();
 			}
+			*/
 		}
 	}
 
@@ -129,10 +134,15 @@ void CoreObject::Render()
 	{
 
 		//Xモデルの行列変換
+		D3DXMATRIXA16 mtxBaseTransform;		// 基準変換行列
+		D3DXMATRIXA16 mtxBaseTranslation;
+		D3DXMATRIXA16 mtxBaseRotation;	
+		D3DXMATRIXA16 mtxBaseScaling;	
+
 		D3DXMATRIXA16 mtxWorld;
 		D3DXMATRIXA16 mtxTranslation;
-		D3DXMATRIXA16 mtxTranslation2;
 		D3DXMATRIXA16 mtxRotation;
+<<<<<<< HEAD
 		D3DXMATRIXA16 mtxRotation2;
 		D3DXMATRIXA16 mtxScaling;
 
@@ -142,6 +152,43 @@ void CoreObject::Render()
 		//D3DXMatrixRotationY(&mtxRotation, D3DX_PI);
 		D3DXMatrixRotationYawPitchRoll(&mtxRotation2,this->transform.WorldRotation.y,this->transform.WorldRotation.x,this->transform.WorldRotation.z);
 		D3DXMatrixScaling(&mtxScaling, 0.4f, 0.4f, 0.4f);
+=======
+		D3DXMATRIXA16 mtxRotationY;
+		D3DXMATRIXA16 mtxRotationAxis;
+		D3DXVECTOR3 vecFaceGroud;
+		D3DXVECTOR3 vecRight;
+
+		D3DXMatrixTranslation(&mtxBaseTranslation, 0.0f, -0.5f, 0.0f);	// 原点に平行移動
+		D3DXMatrixRotationY(&mtxBaseRotation, D3DX_PI);					// Y軸周りに半回転して正面に向ける
+		D3DXMatrixScaling(&mtxBaseScaling, 0.4f, 0.4f, 0.4f);			// サイズ調整
+
+		mtxBaseTransform = mtxBaseTranslation * mtxBaseScaling;	// 基準変換行列の設定
+
+		if (this->face == D3DXVECTOR3(0.0f, 1.0f, 0.0f))
+		{
+			D3DXMatrixRotationX(&mtxRotation, -D3DX_PI / 2);
+		}
+		else if (this->face == D3DXVECTOR3(0.0f, -1.0f, 0.0f))
+		{
+			D3DXMatrixRotationX(&mtxRotation, D3DX_PI / 2);
+		}
+		else
+		{
+			vecFaceGroud = this->face;
+			vecFaceGroud.y = 0.0f;
+			D3DXVec3Normalize(&vecFaceGroud, &vecFaceGroud);
+			vecRight.x = vecFaceGroud.z;
+			vecRight.y = 0.0f;
+			vecRight.z = -vecFaceGroud.x;
+			D3DXMatrixRotationY(&mtxRotationY, atan2f(vecFaceGroud.x, vecFaceGroud.z));
+			D3DXMatrixRotationAxis(&mtxRotationAxis, &vecRight, acosf(D3DXVec3Dot(&this->face, &vecFaceGroud)));
+			mtxRotation = mtxRotationY * mtxRotationAxis;
+		}
+		D3DXMatrixTranslation(&mtxTranslation, this->transform.Position.x, this->transform.Position.y, this->transform.Position.z);		// 平行移動
+
+		//合成
+		mtxWorld = mtxBaseTransform * mtxRotation * mtxTranslation;
+>>>>>>> origin/Nishimaki
 		
 		//合成
 		mtxWorld = (mtxTranslation2*mtxScaling)*mtxTranslation;
@@ -193,7 +240,7 @@ void CoreObject::DischargeArmor( float Margin, float Weight, D3DXVECTOR3 AddUnit
 				DelayFrame = Weight + Margin;
 				break;
 			default:
-				//NULL
+				DelayFrame = Weight + Margin; // 仮置きでType1をデフォルトに
 				break;
 		}
 

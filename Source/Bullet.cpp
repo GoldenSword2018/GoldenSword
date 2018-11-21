@@ -12,6 +12,11 @@
 #include "common.h"
 #include "System.h"
 
+
+
+// 暫定当たり判定機能 ------------------------------------------------------------------------------------------------------------------- TMP!>
+#include "CCollisionChecker.h"
+
 //===============================================
 //	マクロ定義
 //===============================================
@@ -240,6 +245,7 @@ void Bullet::SetBullet(D3DXVECTOR3 position, D3DXVECTOR3 face, TYPE type)
 	this->face = face;
 	this->type = type;
 	this->IsEnable = true;
+	TmpCollisionChecker::GetInstance()->RegisterCollision_Bullet( this );
 }
 
 //-------------------------------------
@@ -248,6 +254,7 @@ void Bullet::SetBullet(D3DXVECTOR3 position, D3DXVECTOR3 face, TYPE type)
 void Bullet::DisEnable()
 {
 	this->IsEnable = false;
+	TmpCollisionChecker::GetInstance()->DeregisterCollision_Bullet( this );
 }
 
 //-------------------------------------

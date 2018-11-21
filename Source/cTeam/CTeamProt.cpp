@@ -17,9 +17,9 @@
 #include"CCoreObject.h"
 #include"CBodyObject.h"
 #include"CCamera.h"
+#include "CCollisionChecker.h" // 当たり判定
+#include "Debug_Collision.h" // 当たり判定デバッグ描画
 
-// Test
-#include "Debug_Collision.h"
 //===============================================
 //	グローバル変数
 //===============================================
@@ -512,6 +512,9 @@ void CTeamProt_Initialize()
 void CTeamProt_Update()
 {
 	GameObject::g_Update();
+
+	TmpCollisionChecker::GetInstance()->CheckCollision();
+
 	g_Camera.Update();
 
 }
