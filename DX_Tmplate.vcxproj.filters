@@ -210,6 +210,9 @@
     <ClCompile Include="Ground.cpp">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="CStageBlock.cpp">
+      <Filter>ソース ファイル\Assets\Stage</Filter>
+    </ClCompile>
     <ClCompile Include="Source\cTeam\CTeamProt.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
@@ -222,7 +225,7 @@
     <ClCompile Include="Engine\Geometry\Debug_Collision.cpp">
       <Filter>ソース ファイル\Engine\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Bullet.cpp">
+    <ClCompile Include="Source\CCollisionChecker.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
   </ItemGroup>
@@ -356,6 +359,9 @@
     <ClInclude Include="Ground.h">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClInclude>
+    <ClInclude Include="CStageBlock.h">
+      <Filter>ソース ファイル\Assets\Stage</Filter>
+    </ClInclude>
     <ClInclude Include="Source\TestSpace\TestSpace.h">
       <Filter>ソース ファイル\Assets\TestSpace</Filter>
     </ClInclude>
@@ -365,7 +371,7 @@
     <ClInclude Include="Engine\Geometry\Debug_Collision.h">
       <Filter>ヘッダー ファイル\Engine\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Bullet.h">
+    <ClInclude Include="Source\CCollisionChecker.h">
       <Filter>ヘッダー ファイル\Assets</Filter>
     </ClInclude>
   </ItemGroup>
@@ -373,6 +379,7 @@
     <None Include="Engine\System\Dualshock4.def">
       <Filter>ヘッダー ファイル\Engine\System\InputDevice</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Engine\System\SecondWindow_Resource.rc">
