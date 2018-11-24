@@ -51,11 +51,12 @@ void TestSpace_Initialize()
 		D3DXVECTOR3(0.0f, -1.0f, 0.0f)
 		);
 //	g_pScrew->Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_0);
-
+	/*
 	for (int i = 0; i < 100; i++)
 	{
 		g_pScrew->Set(g_ppStageBlocks[i]);
 	}
+	*/
 };
 
 //‘OXV

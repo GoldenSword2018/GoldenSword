@@ -163,6 +163,13 @@ void Player::Set_Parts()
 	LeftLeg.Set_Parent(this);
 	RightLeg.Set_Parent(this);
 
+	Head_Screw.Set_Parent(this);
+	Body_Screw.Set_Parent(this);
+	LeftArm_Screw.Set_Parent(this);
+	RightArm_Screw.Set_Parent(this);
+	LeftLeg_Screw.Set_Parent(this);
+	RightLeg_Screw.Set_Parent(this);
+
 	//
 	Head.transform.Position = D3DXVECTOR3(0.0f,1.4f,0.0f);
 	Head.transform.Scale = D3DXVECTOR3(0.8f,0.8f,0.8f);
@@ -226,6 +233,20 @@ void Player::Update()
 	SetForward(this->Camera.forward);
 	this->transform.Rotation.y = this->RotY;
 
+	D3DXVECTOR3 face = this->Forward;
+	face.y = 0.0f;
+	Head_Screw.face = face;
+	Body_Screw.face = face;
+	LeftArm_Screw.face = face;
+	RightArm_Screw.face = face;
+	LeftLeg_Screw.face = face;
+	RightLeg_Screw.face = face;
+
+	Head_Screw.transform.Rotation.y = AngleY;
+	Body_Screw.transform.Rotation.y = AngleY;
+	LeftArm_Screw.transform.Rotation.y = AngleY;
+
+
 	CalWorldMtx();
 
 #if !defined(DISABLE_JOYCON) && !defined(DISABLE_GAMEPAD)
@@ -270,6 +291,7 @@ void Player::Move()
 	vecDirMove *= PLAYER_MOVE_SPEED;															// 移動速度を設定
 
 	this->transform.Position += this->Forward * vecDirMove.z + this->Right * vecDirMove.x;		// プレイヤー座標に加算して反映
+
 
 
 }

@@ -142,7 +142,7 @@ void CoreObject::Render()
 		D3DXMATRIXA16 mtxWorld;
 		D3DXMATRIXA16 mtxTranslation;
 		D3DXMATRIXA16 mtxRotation;
-<<<<<<< HEAD
+		/*
 		D3DXMATRIXA16 mtxRotation2;
 		D3DXMATRIXA16 mtxScaling;
 
@@ -152,7 +152,13 @@ void CoreObject::Render()
 		//D3DXMatrixRotationY(&mtxRotation, D3DX_PI);
 		D3DXMatrixRotationYawPitchRoll(&mtxRotation2,this->transform.WorldRotation.y,this->transform.WorldRotation.x,this->transform.WorldRotation.z);
 		D3DXMatrixScaling(&mtxScaling, 0.4f, 0.4f, 0.4f);
-=======
+		
+
+		//合成
+		mtxWorld = (mtxTranslation2*mtxScaling)*mtxTranslation;
+		*/
+
+
 		D3DXMATRIXA16 mtxRotationY;
 		D3DXMATRIXA16 mtxRotationAxis;
 		D3DXVECTOR3 vecFaceGroud;
@@ -162,7 +168,7 @@ void CoreObject::Render()
 		D3DXMatrixRotationY(&mtxBaseRotation, D3DX_PI);					// Y軸周りに半回転して正面に向ける
 		D3DXMatrixScaling(&mtxBaseScaling, 0.4f, 0.4f, 0.4f);			// サイズ調整
 
-		mtxBaseTransform = mtxBaseTranslation * mtxBaseScaling;	// 基準変換行列の設定
+		mtxBaseTransform = mtxBaseTranslation * mtxBaseRotation * mtxBaseScaling;	// 基準変換行列の設定
 
 		if (this->face == D3DXVECTOR3(0.0f, 1.0f, 0.0f))
 		{
@@ -184,15 +190,12 @@ void CoreObject::Render()
 			D3DXMatrixRotationAxis(&mtxRotationAxis, &vecRight, acosf(D3DXVec3Dot(&this->face, &vecFaceGroud)));
 			mtxRotation = mtxRotationY * mtxRotationAxis;
 		}
-		D3DXMatrixTranslation(&mtxTranslation, this->transform.Position.x, this->transform.Position.y, this->transform.Position.z);		// 平行移動
+
+		this->transform.Set_WorldTransform();
+		D3DXMatrixTranslation(&mtxTranslation, this->transform.WorldPosition.x, this->transform.WorldPosition.y, this->transform.WorldPosition.z);		// 平行移動
 
 		//合成
 		mtxWorld = mtxBaseTransform * mtxRotation * mtxTranslation;
->>>>>>> origin/Nishimaki
-		
-		//合成
-		mtxWorld = (mtxTranslation2*mtxScaling)*mtxTranslation;
-
 
 		//ネジの描画
 		XModel_Render(GetMeshData(ScrewIndex), mtxWorld);

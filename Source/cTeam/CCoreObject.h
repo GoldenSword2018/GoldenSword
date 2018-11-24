@@ -42,10 +42,11 @@ private:
 	BodyObject*	pBodyObject;			//ボディオブジェクト
 	
 	CORE_DISCHARGE_JUDGE_TYPE Type;		//飛び方判定タイプ
-	D3DXVECTOR3 face;					//飛ぶ向き
+	
 
 public:
 	bool bHit;							//当たった
+	D3DXVECTOR3 face;					//ネジ向き
 	ShapeSphere ColShape;				//ネジ自身
 	ShapeSphere CorrectSphere;			//補正球
 
