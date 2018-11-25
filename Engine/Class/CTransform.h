@@ -29,9 +29,10 @@ public:
 class Transform
 {
 private:
-	bool bConverted;			//•ÏŠ·‚µ‚½‚©
+	
 	static std::vector<Transform*> pIndex;
 public :
+	bool bConverted;			//•ÏŠ·‚µ‚½‚©
 	Transform* pParent;		//e
 	std::vector<Transform*> pChild;	//q
 	D3DXMATRIX MtxWorld;		//•ÏŠ·‚µ‚½s—ñ
