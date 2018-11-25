@@ -191,7 +191,12 @@ void CoreObject::Render()
 			mtxRotation = mtxRotationY * mtxRotationAxis;
 		}
 
+
 		this->transform.Set_WorldTransform();
+		D3DXMATRIX MtxRotation;
+		D3DXMatrixRotationYawPitchRoll(&MtxRotation, this->transform.WorldRotation.y, this->transform.WorldRotation.x, this->transform.WorldRotation.z);
+		D3DXVec3TransformNormal(&this->transform.WorldPosition, &this->transform.WorldPosition,&MtxRotation);
+
 		D3DXMatrixTranslation(&mtxTranslation, this->transform.WorldPosition.x, this->transform.WorldPosition.y, this->transform.WorldPosition.z);		// •½sˆÚ“®
 
 		//‡¬

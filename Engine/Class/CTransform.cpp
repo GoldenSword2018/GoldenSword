@@ -155,6 +155,7 @@ void Transform::Set_WorldTransform()
 {
 	if(this->pParent != NULL)
 	{
+		this->pParent->Set_WorldTransform();
 		this->WorldPosition = this->pParent->WorldPosition + this->Position;
 		this->WorldRotation = this->pParent->WorldRotation + this->Rotation;
 	}

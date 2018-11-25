@@ -68,6 +68,7 @@ public:
 	void Update();
 	void Render();
 	D3DXVECTOR3 GetFace();
+	void Set_Rotate();
 
 	void DischargeArmor( float MarginFrame, float WeightToDelay, D3DXVECTOR3 AdditionalUnitVector, float SpeedRatio = 1.0f ); // Dist^2 * Weight = DelayFrame
 
