@@ -200,7 +200,7 @@ void CoreObject::Render()
 		D3DXMatrixTranslation(&mtxTranslation, this->transform.WorldPosition.x, this->transform.WorldPosition.y, this->transform.WorldPosition.z);		// •½sˆÚ“®
 
 		//‡¬
-		mtxWorld = mtxBaseTransform * mtxRotation * mtxTranslation;
+		this->transform.MtxWorld = mtxWorld = mtxBaseTransform * mtxRotation * mtxTranslation;
 
 		//ƒlƒW‚Ì•`‰æ
 		XModel_Render(GetMeshData(ScrewIndex), mtxWorld);
