@@ -73,6 +73,9 @@ private:
 	static StageBlockVertex *pVertex;
 	static WORD *pVertexIndex;
 public:
+	StageBlock* pPrev;
+	StageBlock* pNext;
+public:
 	// コンストラクタ
 	StageBlock(Transform *pTransform, int TextureIndex);
 	StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGING_TYPE type);
