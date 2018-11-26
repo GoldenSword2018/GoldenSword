@@ -19,7 +19,6 @@ public:
 	BodyObject() :BodyObject(&Transform(), &Texture()) {};
 	BodyObject(Transform* pTransform) :BodyObject(pTransform, &Texture()) {};
 	BodyObject(Transform* pTransform, Texture* pTexture);
-
 };
 
 #endif // !CBODYOBJECT_H

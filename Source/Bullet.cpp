@@ -147,12 +147,14 @@ Bullet* Bullet_GetBullet(int index)
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-Bullet::Bullet():ColSphape(&this->BulletMesh.vecPosition,0.5f)
+Bullet::Bullet()
+	:
+	ColSphape(&this->transform,0.5f)
 {
 	IsEnable = false;
 }
 
-Bullet::Bullet(Transform* pTransform, Texture* pTexture):GameObject(pTransform,pTexture),ColSphape(&pTransform->Position,0.5f)
+Bullet::Bullet(Transform* pTransform, Texture* pTexture):GameObject(pTransform,pTexture),ColSphape(&transform,0.5f)
 {
 	type = NORMAL;
 	Bullet();

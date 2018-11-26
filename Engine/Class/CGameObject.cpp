@@ -38,6 +38,8 @@ void GameObject::Set_Parent(GameObject* pParent)
 	this->transform.Set_Parent(&this->pParent->transform);
 }
 
+
+
 //------------------------------------
 //	XVˆ—
 //------------------------------------

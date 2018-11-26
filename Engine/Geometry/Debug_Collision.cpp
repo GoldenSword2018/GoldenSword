@@ -172,14 +172,15 @@ void DebugCollisionModule::BatchDraw( const ShapeSphere *Sphere )
 #if defined(_DEBUG) || defined(DEBUG)
 
 	int n = SphereCount * CIRCLE_VERTEX_COUNT;
+	D3DXVECTOR3 Pos = Sphere->GetEffectivePos();
 
 	const float s = D3DX_PI * 2 / CIRCLE_VERTEX_COUNT;
 
 	for( int i = 0; i < CIRCLE_VERTEX_COUNT; i++ )
 	{
-		pSphereVertex[ n + i ].position.x = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->x;
-		pSphereVertex[ n + i ].position.y = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->y;
-		pSphereVertex[ n + i ].position.z = Sphere->pParentPos->z;
+		pSphereVertex[ n + i ].position.x = (float) cos( i * s ) * Sphere->Radius + Pos.x;
+		pSphereVertex[ n + i ].position.y = (float) sin( i * s ) * Sphere->Radius + Pos.y;
+		pSphereVertex[ n + i ].position.z = Pos.z;
 		pSphereVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
 
 		pSphereVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
@@ -189,9 +190,9 @@ void DebugCollisionModule::BatchDraw( const ShapeSphere *Sphere )
 	n += CIRCLE_VERTEX_COUNT;
 	for( int i = 0; i < CIRCLE_VERTEX_COUNT; i++ )
 	{
-		pSphereVertex[ n + i ].position.x = Sphere->pParentPos->x;
-		pSphereVertex[ n + i ].position.y = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->y;
-		pSphereVertex[ n + i ].position.z = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->z;
+		pSphereVertex[ n + i ].position.x = Pos.x;
+		pSphereVertex[ n + i ].position.y = (float) cos( i * s ) * Sphere->Radius + Pos.y;
+		pSphereVertex[ n + i ].position.z = (float) sin( i * s ) * Sphere->Radius + Pos.z;
 		pSphereVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
 
 		pSphereVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
@@ -200,9 +201,9 @@ void DebugCollisionModule::BatchDraw( const ShapeSphere *Sphere )
 	n += CIRCLE_VERTEX_COUNT;
 	for( int i = 0; i < CIRCLE_VERTEX_COUNT; i++ )
 	{
-		pSphereVertex[ n + i ].position.x = (float) sin( i * s ) * Sphere->Radius + Sphere->pParentPos->x;
-		pSphereVertex[ n + i ].position.y = Sphere->pParentPos->y;
-		pSphereVertex[ n + i ].position.z = (float) cos( i * s ) * Sphere->Radius + Sphere->pParentPos->z;
+		pSphereVertex[ n + i ].position.x = (float) sin( i * s ) * Sphere->Radius + Pos.x;
+		pSphereVertex[ n + i ].position.y = Pos.y;
+		pSphereVertex[ n + i ].position.z = (float) cos( i * s ) * Sphere->Radius + Pos.z;
 		pSphereVertex[ n + i ].color = D3DCOLOR_RGBA( 0, 255, 0, 255 );
 
 		pSphereVertexIndex[ n * 2 + i * 2 ] = (WORD) ( n + i );
