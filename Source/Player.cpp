@@ -104,12 +104,7 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	GameObject(pTransform, &Texture()),
 	ColShape
 	(
-<<<<<<< HEAD
-
-		&transform.Position,
-=======
 		&transform,
->>>>>>> fd2f8f729303d78faeabea1f887a90e56cf92506
 		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		&D3DXVECTOR3(1.0f, 5.0f, 1.0f)
 	),
