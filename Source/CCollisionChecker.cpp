@@ -257,9 +257,9 @@ void TmpCollisionChecker::CheckCollisionPlayerVsStageObj( void )
 
 void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable)
 {
-	float diffX = (pShapeStable->pParentPos->x - pShapeMovable->pParentPos->x);		// X座標差分
-	float diffY = (pShapeStable->pParentPos->y - pShapeMovable->pParentPos->y);		// Y座標差分
-	float diffZ = (pShapeStable->pParentPos->z - pShapeMovable->pParentPos->z);		// Z座標差分
+	float diffX = (pShapeStable->pParentTransform->Position.x - pShapeMovable->pParentTransform->Position.x);		// X座標差分
+	float diffY = (pShapeStable->pParentTransform->Position.y - pShapeMovable->pParentTransform->Position.y);		// Y座標差分
+	float diffZ = (pShapeStable->pParentTransform->Position.z - pShapeMovable->pParentTransform->Position.z);		// Z座標差分
 
 	float absX = fabs(diffX);														// X差分絶対値
 	float absY = fabs(diffY);														// Y差分絶対値
@@ -277,12 +277,12 @@ void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable)
 			if (diffZ >= 0)
 			{
 				// 固定物が奥側にある
-				pShapeMovable->pParentPos->z = pShapeStable->pParentPos->z - (pShapeStable->Length[0] + pShapeMovable->Length[0]);
+				pShapeMovable->pParentTransform->Position.z = pShapeStable->pParentTransform->Position.z - (pShapeStable->Length[0] + pShapeMovable->Length[0]);
 			}
 			else
 			{
 				// 固定物が手前側にある
-				pShapeMovable->pParentPos->z = pShapeStable->pParentPos->z + (pShapeStable->Length[0] + pShapeMovable->Length[0]);
+				pShapeMovable->pParentTransform->Position.z = pShapeStable->pParentTransform->Position.z + (pShapeStable->Length[0] + pShapeMovable->Length[0]);
 			}
 		}
 		else
@@ -291,12 +291,12 @@ void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable)
 			if (diffY >= 0)
 			{
 				// 固定物が上側にある
-				pShapeMovable->pParentPos->y = pShapeStable->pParentPos->y - (pShapeStable->Length[2] + pShapeMovable->Length[2]);
+				pShapeMovable->pParentTransform->Position.y = pShapeStable->pParentTransform->Position.y - (pShapeStable->Length[2] + pShapeMovable->Length[2]);
 			}
 			else
 			{
 				// 固定物が下側にある
-				pShapeMovable->pParentPos->y = pShapeStable->pParentPos->y + (pShapeStable->Length[2] + pShapeMovable->Length[2]);
+				pShapeMovable->pParentTransform->Position.y = pShapeStable->pParentTransform->Position.y + (pShapeStable->Length[2] + pShapeMovable->Length[2]);
 			}
 		}
 	}
@@ -308,12 +308,12 @@ void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable)
 			if (diffZ >= 0)
 			{
 				// 固定物が奥側にある
-				pShapeMovable->pParentPos->z = pShapeStable->pParentPos->z - (pShapeStable->Length[0] + pShapeMovable->Length[0]);
+				pShapeMovable->pParentTransform->Position.z = pShapeStable->pParentTransform->Position.z - (pShapeStable->Length[0] + pShapeMovable->Length[0]);
 			}
 			else
 			{
 				// 固定物が手前側にある
-				pShapeMovable->pParentPos->z = pShapeStable->pParentPos->z + (pShapeStable->Length[0] + pShapeMovable->Length[0]);
+				pShapeMovable->pParentTransform->Position.z = pShapeStable->pParentTransform->Position.z + (pShapeStable->Length[0] + pShapeMovable->Length[0]);
 			}
 		}
 		else
@@ -322,12 +322,12 @@ void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable)
 			if (diffX >= 0)
 			{
 				// 固定物が右側にある
-				pShapeMovable->pParentPos->x = pShapeStable->pParentPos->x - (pShapeStable->Length[1] + pShapeMovable->Length[1]);
+				pShapeMovable->pParentTransform->Position.x = pShapeStable->pParentTransform->Position.x - (pShapeStable->Length[1] + pShapeMovable->Length[1]);
 			}
 			else
 			{
 				// 固定物が左側にある
-				pShapeMovable->pParentPos->x = pShapeStable->pParentPos->x + (pShapeStable->Length[1] + pShapeMovable->Length[1]);
+				pShapeMovable->pParentTransform->Position.x = pShapeStable->pParentTransform->Position.x + (pShapeStable->Length[1] + pShapeMovable->Length[1]);
 			}
 		}
 	}

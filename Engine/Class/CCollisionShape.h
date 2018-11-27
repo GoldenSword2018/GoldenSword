@@ -71,7 +71,6 @@ public:
 	virtual ~Shape();
 public:
 	Transform* pParentTransform;
-	D3DXVECTOR3* pParentPos; // 持ち主の位置ポインタ ( オブジェクト中央を想定 ) // これプライベートにする？
 	D3DXVECTOR3	GapPos; // 持ち主との位置の補正（オブジェクト中央からずらす）
 	D3DCOLOR	Color;
 public:
@@ -99,9 +98,10 @@ class ShapeOBB : public Shape
 {
 public:
 	D3DXVECTOR3 NormalDirect[ 3 ]; // 0:前, 1:右, 2: 上 単位ベクトル
+	float Length[3];// 0:奥行, 1:幅, 2:高さ それぞれの半分
 private:
 	ShapeOBB() {}
-	float Length[ 3 ];// 0:奥行, 1:幅, 2:高さ それぞれの半分
+	
 public:
 	ShapeOBB( Transform* pParentTransform, D3DXVECTOR3* pRadian, D3DXVECTOR3* Length,D3DXVECTOR3* pGapPos = &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
 	~ShapeOBB();

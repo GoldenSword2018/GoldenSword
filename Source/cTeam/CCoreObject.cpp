@@ -99,7 +99,7 @@ void CoreObject::Update()
 			if ( CollisionCheck::SphereVsSphere(CorrectSphere, Bullet_ColShape(i))&& this->pArmor_Index.size() > 0)
 			{
 				const D3DXVECTOR3* bullet_face = Bullet_GetBullet(i)->GetFace();
-				D3DXVECTOR3 vec = *(CorrectSphere.pParentPos) - *(Bullet_ColShape(i).pParentPos);		// ネジと弾の中心間ベクトル
+				D3DXVECTOR3 vec = (CorrectSphere.pParentTransform->Position) - (Bullet_ColShape(i).pParentTransform->Position);		// ネジと弾の中心間ベクトル
 				float Angle = acosf(D3DXVec3Dot(bullet_face, &vec));				// 弾の進行方向とvecの成す角
 
 				if (Angle <= D3DX_PI / 4 && Angle > 0.0f)
