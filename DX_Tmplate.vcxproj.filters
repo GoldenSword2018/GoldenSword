@@ -228,6 +228,9 @@
     <ClCompile Include="Source\CCollisionChecker.cpp">
       <Filter>ソース ファイル\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="CStageBlockList.cpp">
+      <Filter>ソース ファイル\Assets\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Internal\Component.h">
@@ -373,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="Source\CCollisionChecker.h">
       <Filter>ヘッダー ファイル\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="CStageBlockList.h">
+      <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
