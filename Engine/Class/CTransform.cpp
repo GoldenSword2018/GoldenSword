@@ -165,12 +165,12 @@ void Transform::Set_WorldTransform()
 		this->WorldRotation = this->Rotation;
 	}
 }
-
+/* ============== 不出来な子 ==================================================================================== */
 D3DXVECTOR3 Transform::GetWorldPosision( void )
 {
 	if( this->pParent != NULL )
 	{
-		D3DXVECTOR3 WorldPos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
+		D3DXVECTOR3 WorldPos;
 		D3DXVec3TransformCoord( &WorldPos, &this->Position, &this->GetWorldMatrix() );
 		return WorldPos;
 	}
@@ -179,53 +179,8 @@ D3DXVECTOR3 Transform::GetWorldPosision( void )
 		return this->Position;
 	}
 }
-D3DXVECTOR3 Transform::GetWorldRotation( void )
-{
-	if( this->pParent != NULL )
-	{
-		return this->pParent->GetWorldRotation() + this->Rotation;
-	}
-	else
-	{
-		return this->Rotation;
-	}
-}
+/* ============== 不出来な子 終わり============================================================================== */
 
-void Transform::GetLocalUpForwardRight( D3DXVECTOR3* pUp, D3DXVECTOR3* pForward, D3DXVECTOR3* pRight )
-{
-
-	D3DXMATRIX MtxRotation;
-	D3DXMatrixRotationYawPitchRoll( &MtxRotation, this->Rotation.y, this->Rotation.x, this->Rotation.z );
-
-	//ローカル方向
-	this->up = D3DXVECTOR3( 0.0f, 1.0f, 0.0f );
-	D3DXVec3TransformNormal( &this->up, &this->up, &MtxRotation );
-	D3DXVec3Normalize( &this->up, &this->up );
-
-	this->forward = D3DXVECTOR3( 0.0f, 0.0f, 1.0f );
-	D3DXVec3TransformNormal( &this->forward, &this->forward, &MtxRotation );
-	D3DXVec3Normalize( &this->forward, &this->forward );
-
-	D3DXVec3Cross( &this->right, &this->up, &this->forward );
-}
-
-void Transform::GetWorldUpForwardRight( D3DXVECTOR3* pUp, D3DXVECTOR3* pForward, D3DXVECTOR3* pRight )
-{
-	D3DXMATRIX MtxRotation;
-	D3DXVECTOR3 WorldRotatation = GetWorldRotation();
-	D3DXMatrixRotationYawPitchRoll( &MtxRotation, WorldRotatation.y, WorldRotatation.x, WorldRotatation.z );
-
-	//ローカル方向
-	*pUp = D3DXVECTOR3( 0.0f, 1.0f, 0.0f );
-	D3DXVec3TransformNormal( pUp, pUp, &MtxRotation );
-	D3DXVec3Normalize( pUp, pUp );
-
-	*pRight = D3DXVECTOR3( 0.0f, 0.0f, 1.0f );
-	D3DXVec3TransformNormal( pForward, pForward, &MtxRotation );
-	D3DXVec3Normalize( pForward, pForward );
-
-	D3DXVec3Cross(  pRight, pUp, pForward );
-}
 
 D3DXMATRIX Transform::GetWorldMatrix( void )
 {

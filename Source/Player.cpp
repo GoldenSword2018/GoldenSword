@@ -199,15 +199,10 @@ void Player::Set_Parts()
 
 	//コアへアーマーの登録
 	Head_Screw.SetArmor(&Head_Armor01);
-	
 	Body_Screw.SetArmor(&Body_Armor01);
-
 	LeftArm_Screw.SetArmor(&LeftArm_Armor01);
-
 	RightArm_Screw.SetArmor(&RightArm_Armor01);
-
 	LeftLeg_Screw.SetArmor(&LeftLeg_Armor01);
-
 	RightLeg_Screw.SetArmor(&RightLeg_Armor01);
 }
 
