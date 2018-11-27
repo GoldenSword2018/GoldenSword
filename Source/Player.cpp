@@ -21,16 +21,6 @@
 #include "Debug_Collision.h"
 
 //===============================================
-//	マクロ定義
-//===============================================
-#define PLAYER_MOVE_SPEED		(0.1f)				// プレイヤー移動速度
-#define WAIT_ANGLER_VEROCITY	(100.0f * 24.0f)	// 角速度補正値
-#define WAIT_ROT_Y				(40)				// 視点左右回転速度補正値
-
-#define DISTANCE_TO_AT			(5.0f)				// 注視点までの距離
-#define LIMIT_CAMERA_ELEVATION	(80.0f)				// カメラの仰俯角の限界値
-
-//===============================================
 //	グローバル変数
 //===============================================
 Player Player01(
@@ -90,7 +80,7 @@ void Player_Finalize(void)
 //-------------------------------------
 void PlayerCamera::Initialize()
 {
-
+	
 }
 
 //-------------------------------------
@@ -98,6 +88,7 @@ void PlayerCamera::Initialize()
 //-------------------------------------
 void PlayerCamera::Update()
 {
+	this->atDistance = 3.0f;
 	Camera::Update();
 }
 
@@ -113,6 +104,7 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	GameObject(pTransform, &Texture()),
 	ColShape
 	(
+
 		&transform.Position,
 		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		&D3DXVECTOR3(1.0f, 5.0f, 1.0f)
@@ -220,16 +212,12 @@ void Player::Set_Parts()
 //	更新
 //-------------------------------------
 void Player::Update()
-{
-	this->transform.Set_WorldTransform();
+{	
 	this->Camera.Update();
-	//プレイヤー位置
-	D3DXVECTOR3 Posiotion = this->Camera.position;
-	Posiotion += this->Camera.right * 3.0f;
-	Posiotion += this->transform.forward * 5.0f;
-	Posiotion.y = this->transform.Position.y;
+	this->transform.Set_WorldTransform();				//WorldPositionを算出
+	this->transform.WorldPosition.y = 0.0f;				//高さを固定
 
-	SetPosition(Posiotion);
+	
 	SetForward(this->Camera.forward);
 	this->transform.Rotation.y = this->RotY;
 
@@ -249,6 +237,28 @@ void Player::Update()
 
 	CalWorldMtx();
 
+	if (Keyboard_IsPress(DIK_W))
+	{
+		this->transform.Position += this->transform.forward * PLAYER_MOVE_SPEED;
+	}
+
+	if(Keyboard_IsPress(DIK_S))
+	{
+		this->transform.Position -= this->transform.forward * PLAYER_MOVE_SPEED;
+	}
+
+	if (Keyboard_IsPress(DIK_A))
+	{
+		this->transform.Position -= this->transform.right * PLAYER_MOVE_SPEED;
+	}
+
+	if (Keyboard_IsPress(DIK_D))
+	{
+		this->transform.Position += this->transform.right * PLAYER_MOVE_SPEED;
+	}
+
+
+
 #if !defined(DISABLE_JOYCON) && !defined(DISABLE_GAMEPAD)
 	Move();
 	Rotation();
@@ -263,6 +273,11 @@ void Player::Update()
 	{
 		Fire();
 	}
+
+	SetPosition(this->transform.Position);
+	this->Camera.at = this->transform.WorldPosition;	//注視点をプレイヤーに
+	this->Camera.at.y += 2.0f;
+	this->Camera.Position = this->Camera.at - this->Forward * this->Camera.atDistance;		//カメラ位置を決める
 
 }
 
@@ -288,11 +303,10 @@ void Player::Move()
 	vecDirMove.z = -(float)JoyconInput_GetLeftStickY();											// Joy-Conのスティック入力を取得
 	D3DXVec3Normalize(&vecDirMove, &vecDirMove);												// vecDirの単位ベクトル化
 
+
 	vecDirMove *= PLAYER_MOVE_SPEED;															// 移動速度を設定
 
 	this->transform.Position += this->Forward * vecDirMove.z + this->Right * vecDirMove.x;		// プレイヤー座標に加算して反映
-
-
 
 }
 
@@ -340,7 +354,7 @@ void Player::Rotation()
 	this->Forward = vecDirForward;														// 完成した視点方向ベクトルをプレイヤー視点方向に適用
 	this->Right = vecDirRight;															// 完成した視点方向ベクトルをプレイヤー視点方向に適用
 
-	this->Camera.position = this->transform.Position;									// カメラ位置をプレイヤー座標に同期
+	this->Camera.Position = this->transform.Position;									// カメラ位置をプレイヤー座標に同期
 	this->Camera.forward = this->Forward;												// カメラ方向をプレイヤーの向きに同期
 	this->Camera.right = this->Right;
 	this->Camera.at = this->transform.Position + this->Forward * DISTANCE_TO_AT;		// カメラ注視点をプレイヤー座標とプレイヤー視点方向から算出
@@ -380,13 +394,7 @@ void Player::ResetAngle()
 void Player::Fire()
 {
 	//わからねぇ！！！
-	D3DXVECTOR3 look;
-	D3DXVECTOR3 at = this->Camera.at;
-	float x = atan2f((at.z - this->transform.Position.z),(at.x - this->transform.Position.x));
-	look.z = sinf(x);
-	look.x = cosf(x);
-	look.y = this->Camera.forward.y;
-
+	D3DXVECTOR3 look = this->Forward;
 	Bullet_Create(this->transform.Position, look, Bullet::NORMAL);
 }
 

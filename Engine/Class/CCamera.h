@@ -59,32 +59,15 @@
 class ACamera
 {
 public:
+	static ACamera* pMainCamera[CAMERA_COUNT];
 
 public:
-
-};
-
-
-//-------------------------------------
-//	Camera　クラス
-//-------------------------------------
-class Camera
-{
-public:
-	static Camera* Get_Main();
-	static bool Begin();		//描画開始
-	static bool Begin(int num);
-
-private:
-	static Camera* MainCamera;				//メインカメラ
-	static Camera* MainCamera1;				//サブカメラ
-	static Camera* MainCamera2;
-	static Camera* MainCamera3;
+	static ACamera* Get_Main(int ScreenNum);
+	static bool Begin(int ScreenNum);
 
 public:
-	D3DXVECTOR3 position;		//位置
-	float Speed;				//移動速度
-
+	D3DXMATRIX MtxView;			//View行列
+	D3DXVECTOR3 Position;
 	D3DXVECTOR3 at;				//注視点
 	D3DXVECTOR3 up;				//カメラ上
 	D3DXVECTOR3 forward;		//カメラ前
@@ -93,15 +76,32 @@ public:
 	float fov;					//画角
 
 public:
+	ACamera(D3DXVECTOR3 Position,D3DXVECTOR3 At,float atDistance,float fov);
+	~ACamera();
+
+public:
+	void Set_Main(int ScreenNum);
+
+public:
+	virtual void Update() = 0;
+
+};
+
+
+//-------------------------------------
+//	Camera　クラス
+//-------------------------------------
+class Camera :public ACamera
+{
+public:
+	float Speed;				//移動速度
+
+public:
 	Camera() :Camera(CAMERA_POS, CAMERA_AT, CAMERA_ATDISTANCE, CAMERA_FOV) {};
 	Camera(D3DXVECTOR3 Position) : Camera(Position, CAMERA_AT, CAMERA_ATDISTANCE, CAMERA_FOV) {};
 	Camera(D3DXVECTOR3 Position, D3DXVECTOR3 At, float AtDistance, float fov);
 
 public:
-	void Set_Main();			//メインカメラに設定
-	void Set_Main(int Num);		//メインカメラ変更
-public:
-	virtual void Initialize();	//初期化
 	virtual void Update();		//更新
 };
 
