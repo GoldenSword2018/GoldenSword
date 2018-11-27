@@ -149,8 +149,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 #else
 			Transform::ResetConvert();
 			g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BG_COLOR, 1.0f, 0);
-			Camera::Begin(0);
 			Main_Render();
+			Camera::Begin(0);
 
 #endif
 
@@ -337,6 +337,38 @@ void Device_Update()
 {
 #if defined INPUT_H
 	Input_Update(g_hWnd);
+
+	//カーソルループ
+	if (Mouse_IsRightDown())
+	{
+		POINT MousePos;							//マウスのXY座標
+		GetCursorPos(&MousePos);
+		WINDOWINFO WinInfo;						//ウィンドウ情報
+		GetWindowInfo(g_hWnd, &WinInfo);
+
+		//左
+		if ((UINT)MousePos.x <= WinInfo.rcWindow.left + WinInfo.cxWindowBorders)
+		{
+			SetCursorPos(WinInfo.rcWindow.right - WinInfo.cxWindowBorders, MousePos.y);
+		}
+		//右
+		else if ((UINT)MousePos.x >= WinInfo.rcWindow.right - WinInfo.cxWindowBorders)
+		{
+			SetCursorPos(WinInfo.rcWindow.left + WinInfo.cxWindowBorders, MousePos.y);
+		}
+
+		//上
+		if ((UINT)MousePos.y <= WinInfo.rcWindow.top + WinInfo.cyWindowBorders)
+		{
+			SetCursorPos(MousePos.x, WinInfo.rcWindow.bottom - WinInfo.cyWindowBorders);
+		}
+		//下
+		else if ((UINT)MousePos.y >= WinInfo.rcWindow.bottom - WinInfo.cyWindowBorders)
+		{
+			SetCursorPos(MousePos.x, WinInfo.rcWindow.top + WinInfo.cyWindowBorders);
+		}
+	}
+
 #endif // INPUT_H
 
 }

@@ -29,9 +29,10 @@ public:
 class Transform
 {
 private:
-	bool bConverted;			//変換したか
+	
 	static std::vector<Transform*> pIndex;
 public :
+	bool bConverted;			//変換したか
 	Transform* pParent;		//親
 	std::vector<Transform*> pChild;	//子
 	D3DXMATRIX MtxWorld;		//変換した行列
@@ -40,6 +41,12 @@ public :
 	D3DXVECTOR3 Position;	//位置
 	D3DXVECTOR3 Scale;		//サイズ
 	D3DXVECTOR3 Rotation;	//回転
+
+	//ワールド空間の情報	
+	//	pParent->transform.position + this->transform.position;
+	D3DXVECTOR3 WorldPosition;
+	D3DXVECTOR3 WorldRotation;
+
 	D3DCOLOR	Color;		//色
 	
 	//軸方向
@@ -54,15 +61,19 @@ public:
 	
 	//コンストラクタ
 	Transform() :Transform({ 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f }, D3DCOLOR_RGBA(255, 255, 255, 255)){};
+	Transform(D3DCOLOR Color) :Transform({ 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f }, Color) {};
 	Transform(D3DXVECTOR3 Position, D3DXVECTOR3 Scale, D3DXVECTOR3 Rotation) :Transform(Position, Scale, Rotation, D3DCOLOR_RGBA(255, 255, 255, 255)) {};
 	Transform(D3DXVECTOR3 Position, D3DXVECTOR3 Scale, D3DXVECTOR3 Rotation, D3DCOLOR Color);
 
 	//デストラクタ
 	~Transform();
 
+public:
+
 	D3DXMATRIX Convert();					//変換開始
 	void Set_Parent(Transform* pParent);		//親を設定
 	void Release_Parent();					//親と離れる
+	void Set_WorldTransform();
 };
 
 //===============================================

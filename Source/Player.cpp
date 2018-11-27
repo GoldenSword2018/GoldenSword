@@ -21,22 +21,16 @@
 #include "Debug_Collision.h"
 
 //===============================================
-//	マクロ定義
-//===============================================
-#define PLAYER_MOVE_SPEED		(0.1f)				// プレイヤー移動速度
-#define WAIT_ANGLER_VEROCITY	(100.0f * 24.0f)	// 角速度補正値
-#define WAIT_ROT_Y				(40)				// 視点左右回転速度補正値
-
-#define DISTANCE_TO_AT			(5.0f)				// 注視点までの距離
-#define LIMIT_CAMERA_ELEVATION	(80.0f)				// カメラの仰俯角の限界値
-
-//===============================================
 //	グローバル変数
 //===============================================
-Player Player01(&Transform(D3DXVECTOR3(0.0f, 0.0f, -10.0f),
-	D3DXVECTOR3(1.0f, 1.0f, 1.0f),
-	D3DXVECTOR3(0.0f, 0.0f, 0.0f),
-	D3DCOLOR_RGBA(255, 255, 255, 255)),
+Player Player01(
+	&Transform
+	(
+		D3DXVECTOR3(0.0f, 0.0f, -10.0f),
+		D3DXVECTOR3(1.0f, 1.0f, 1.0f),
+		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
+		D3DCOLOR_RGBA(255, 255, 255, 255)
+	),
 	&D3DXVECTOR3(0.0f, 0.0f, 1.0f)
 );
 
@@ -86,7 +80,7 @@ void Player_Finalize(void)
 //-------------------------------------
 void PlayerCamera::Initialize()
 {
-
+	
 }
 
 //-------------------------------------
@@ -94,11 +88,12 @@ void PlayerCamera::Initialize()
 //-------------------------------------
 void PlayerCamera::Update()
 {
+	this->atDistance = 3.0f;
 	Camera::Update();
 }
 
 //===============================================
-//	PlayerCamera クラス
+//	Player クラス
 //===============================================
 
 //-------------------------------------
@@ -112,12 +107,29 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 		&transform.Position,
 		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		&D3DXVECTOR3(1.0f, 5.0f, 1.0f)
-	)
+	),
+	//コア
+	Head_Screw(&Transform(D3DCOLOR_RGBA(255,0,0,255))),
+	Body_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	LeftArm_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	RightArm_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	LeftLeg_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	RightLeg_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+
+	//アーマー
+	Head_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	Body_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	LeftArm_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	RightArm_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	LeftLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	RightLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255)))
 {
 	this->Forward = *pForward;
-	float AngleY = 0.0f;
-	float AngleX = 0.0f;
-	float g_OldAngleX = 0.0f;
+	this->AngleY = 0.0f;
+	this->AngleX = 0.0f;
+	this->RotY = 0.0f;
+	this->RotAxis = 0.0f;
+	this->g_OldAngleX = 0.0f;
 	D3DXVECTOR3 vecRight = this->Forward;
 	D3DXMATRIX mtxRotationY;
 	D3DXMatrixRotationY(&mtxRotationY, (-D3DX_PI / 2));
@@ -142,19 +154,57 @@ void Player::Set_Parts()
 	LeftLeg.Set_Parent(this);
 	RightLeg.Set_Parent(this);
 
-	//
-	Head.transform.Position = D3DXVECTOR3(0.0f,2.0f,0.0f);
+	Head_Screw.Set_Parent(this);
+	Body_Screw.Set_Parent(this);
+	LeftArm_Screw.Set_Parent(this);
+	RightArm_Screw.Set_Parent(this);
+	LeftLeg_Screw.Set_Parent(this);
+	RightLeg_Screw.Set_Parent(this);
 
 	//
+	Head.transform.Position = D3DXVECTOR3(0.0f,1.4f,0.0f);
+	Head.transform.Scale = D3DXVECTOR3(0.8f,0.8f,0.8f);
+
+	//
+	Body.transform.Position = D3DXVECTOR3(0.0f,-0.0f,0.0f);
 	Body.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
 
 	//
-	LeftArm.transform.Position = D3DXVECTOR3(-2.0f,1.0f,0.0f);
-	LeftArm.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
+	LeftArm.transform.Position = D3DXVECTOR3(-0.9f,-0.2f,0.0f);
+	LeftArm.transform.Scale = D3DXVECTOR3(0.5f,2.0f,0.5f);
 
 	//
-	RightArm.transform.Position = D3DXVECTOR3(2.0f,1.0f,0.0f);
-	RightArm.transform.Scale = D3DXVECTOR3(1.0f,2.0f,1.0f);
+	RightArm.transform.Position = D3DXVECTOR3(0.9f,-0.2f,0.0f);
+	RightArm.transform.Scale = D3DXVECTOR3(0.5f,2.0f,0.5f);
+
+	//
+	LeftLeg.transform.Position = D3DXVECTOR3(-0.2f,-2.0f,0.0f);
+	LeftLeg.transform.Scale = D3DXVECTOR3(0.5f,2.0f,0.5f);
+
+	//
+	RightLeg.transform.Position = D3DXVECTOR3(0.2f,-2.0f,0.0f);
+	RightLeg.transform.Scale = D3DXVECTOR3(0.5f,2.0f,0.5f);
+
+	//コアの登録
+	Head_Screw.SetBody(&Head);
+	Body_Screw.SetBody(&Body);
+	LeftArm_Screw.SetBody(&LeftArm);
+	RightArm_Screw.SetBody(&RightArm);
+	LeftLeg_Screw.SetBody(&LeftLeg);
+	RightLeg_Screw.SetBody(&RightLeg);
+
+	//アーマーの登録
+	Head_Screw.SetArmor(&Head_Armor01);
+	
+	Body_Screw.SetArmor(&Body_Armor01);
+
+	LeftArm_Screw.SetArmor(&LeftArm_Armor01);
+
+	RightArm_Screw.SetArmor(&RightArm_Armor01);
+
+	LeftLeg_Screw.SetArmor(&LeftLeg_Armor01);
+
+	RightLeg_Screw.SetArmor(&RightLeg_Armor01);
 }
 
 //-------------------------------------
@@ -162,10 +212,52 @@ void Player::Set_Parts()
 //-------------------------------------
 void Player::Update()
 {
-	this->Camera.position = this->transform.Position;
+	this->Camera.Position = this->transform.Position;
 	this->Camera.Update();
-	SetPosition(this->Camera.position);
+	this->transform.Set_WorldTransform();				//WorldPositionを算出
+	this->transform.WorldPosition.y = 0.0f;				//高さを固定
+
+	
 	SetForward(this->Camera.forward);
+	this->transform.Rotation.y = this->RotY;
+
+	D3DXVECTOR3 face = this->Forward;
+	face.y = 0.0f;
+	Head_Screw.face = face;
+	Body_Screw.face = face;
+	LeftArm_Screw.face = face;
+	RightArm_Screw.face = face;
+	LeftLeg_Screw.face = face;
+	RightLeg_Screw.face = face;
+
+	Head_Screw.transform.Rotation.y = AngleY;
+	Body_Screw.transform.Rotation.y = AngleY;
+	LeftArm_Screw.transform.Rotation.y = AngleY;
+
+
+	CalWorldMtx();
+
+	if (Keyboard_IsPress(DIK_W))
+	{
+		this->transform.Position += this->transform.forward * PLAYER_MOVE_SPEED;
+	}
+
+	if(Keyboard_IsPress(DIK_S))
+	{
+		this->transform.Position -= this->transform.forward * PLAYER_MOVE_SPEED;
+	}
+
+	if (Keyboard_IsPress(DIK_A))
+	{
+		this->transform.Position -= this->transform.right * PLAYER_MOVE_SPEED;
+	}
+
+	if (Keyboard_IsPress(DIK_D))
+	{
+		this->transform.Position += this->transform.right * PLAYER_MOVE_SPEED;
+	}
+
+
 
 #if !defined(DISABLE_JOYCON) && !defined(DISABLE_GAMEPAD)
 	Move();
@@ -182,6 +274,11 @@ void Player::Update()
 		Fire();
 	}
 
+	SetPosition(this->transform.Position);
+	this->Camera.at = this->transform.WorldPosition;	//注視点をプレイヤーに
+	this->Camera.at.y += 2.0f;
+	this->Camera.Position = this->Camera.at - this->Forward * this->Camera.atDistance;		//カメラ位置を決める
+
 }
 
 
@@ -190,7 +287,7 @@ void Player::Update()
 //-------------------------------------
 void Player::Render()
 {
-	XModel_Render( GetMeshData( BulletIndex ), CalWorldMtx() );
+	//XModel_Render( GetMeshData( BulletIndex ), CalWorldMtx() );
 	ColShape.DebugDraw();
 }
 
@@ -205,6 +302,7 @@ void Player::Move()
 	vecDirMove.x = (float)JoyconInput_GetLeftStickX();											// Joy-Conのスティック入力を取得
 	vecDirMove.z = -(float)JoyconInput_GetLeftStickY();											// Joy-Conのスティック入力を取得
 	D3DXVec3Normalize(&vecDirMove, &vecDirMove);												// vecDirの単位ベクトル化
+
 
 	vecDirMove *= PLAYER_MOVE_SPEED;															// 移動速度を設定
 
@@ -256,7 +354,7 @@ void Player::Rotation()
 	this->Forward = vecDirForward;														// 完成した視点方向ベクトルをプレイヤー視点方向に適用
 	this->Right = vecDirRight;															// 完成した視点方向ベクトルをプレイヤー視点方向に適用
 
-	this->Camera.position = this->transform.Position;									// カメラ位置をプレイヤー座標に同期
+	this->Camera.Position = this->transform.Position;									// カメラ位置をプレイヤー座標に同期
 	this->Camera.forward = this->Forward;												// カメラ方向をプレイヤーの向きに同期
 	this->Camera.right = this->Right;
 	this->Camera.at = this->transform.Position + this->Forward * DISTANCE_TO_AT;		// カメラ注視点をプレイヤー座標とプレイヤー視点方向から算出
@@ -295,7 +393,9 @@ void Player::ResetAngle()
 //-------------------------------------
 void Player::Fire()
 {
-	Bullet_Create(this->transform.Position, this->Forward, Bullet::NORMAL);
+	//わからねぇ！！！
+	D3DXVECTOR3 look = this->Forward;
+	Bullet_Create(this->transform.Position, look, Bullet::NORMAL);
 }
 
 //-------------------------------------
@@ -312,12 +412,13 @@ D3DXMATRIX Player::CalWorldMtx()
 	vecDirGround.y = 0.0f;
 	D3DXVec3Normalize(&vecDirGround, &vecDirGround);
 
-	float RotY = atan2f(vecDirGround.x, vecDirGround.z);
-	float RotAxis = acosf(D3DXVec3Dot(&this->Forward, &vecDirGround));
+	RotY = atan2f(vecDirGround.x, vecDirGround.z);
+	RotAxis = acosf(D3DXVec3Dot(&this->Forward, &vecDirGround));
 	D3DXMatrixRotationY(&mtxRotationY, RotY);
 	D3DXMatrixRotationAxis(&mtxRotationAxis, &this->Right, RotAxis);
 
 	D3DXMatrixTranslation(&mtxTranslation, this->transform.Position.x, this->transform.Position.y, this->transform.Position.z);
 	mtxWorld = mtxRotationY * mtxRotationAxis * mtxTranslation;
+
 	return mtxWorld;
 }

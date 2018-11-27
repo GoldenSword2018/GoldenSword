@@ -25,25 +25,84 @@
 //===============================================
 //	グローバル変数	global
 //===============================================
-Camera* Camera::MainCamera = NULL;
-Camera* Camera::MainCamera1 = NULL;
-Camera* Camera::MainCamera2 = NULL;
-Camera* Camera::MainCamera3 = NULL;
 
 //===============================================
-//	カメラ		class
+//	ACamera
+//===============================================
+ACamera* ACamera::pMainCamera[CAMERA_COUNT] = {NULL};
+
+//-------------------------------------
+//	Constructor
+//-------------------------------------
+ACamera::ACamera(D3DXVECTOR3 Position,D3DXVECTOR3 At,float atDistance,float fov)
+{
+	this->Position = Position;
+	this->at = At;
+	this->atDistance = atDistance;
+	this->fov = fov;
+	this->up = CAMERA_UP;
+}
+
+//-------------------------------------
+//	Destructor
+//-------------------------------------
+ACamera::~ACamera()
+{
+	
+}
+
+//-------------------------------------
+//	Get_Main
+//-------------------------------------
+ACamera* ACamera::Get_Main(int ScreenNum)
+{
+	return pMainCamera[ScreenNum];
+}
+
+//-------------------------------------
+//	Begin
+//-------------------------------------
+bool ACamera::Begin(int ScreenNum)
+{
+	if (pMainCamera[ScreenNum] == NULL) return false;
+	
+	D3DXMATRIX mtxProjection;		//プロジェクション変換行列
+	D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
+	D3DXMatrixLookAtLH(&pMainCamera[ScreenNum]->MtxView, &pMainCamera[ScreenNum]->Position, &pMainCamera[ScreenNum]->at, &pMainCamera[ScreenNum]->up);	//変換
+																							//カメラの座標を変更（ビュー行列）
+	System_GetDevice()->SetTransform(D3DTS_VIEW, &pMainCamera[ScreenNum]->MtxView);
+	System_GetDevice()->SetTransform(D3DTS_PROJECTION, &mtxProjection);
+
+	return true;
+}
+
+//-------------------------------------
+//	Set_Main(int ScreenNum)
+//-------------------------------------
+void ACamera::Set_Main(int ScreenNum)
+{
+	pMainCamera[ScreenNum] = this;
+}
+
+//-------------------------------------
+//	Update()
+//-------------------------------------	
+void ACamera::Update()
+{
+
+}
+
+//===============================================
+//	Camera	クラス
 //===============================================
 
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
 Camera::Camera(D3DXVECTOR3 Position, D3DXVECTOR3 At,float AtDistance,float fov)
+:
+	ACamera(Position,At,AtDistance,fov)
 {
-	this->position = Position;
-	this->at = At;
-	this->up = CAMERA_UP;
-	this->atDistance = AtDistance;
-	this->fov = fov;
 	this->Speed = CAMERA_INITIALSPEED;
 
 	//前
@@ -56,13 +115,6 @@ Camera::Camera(D3DXVECTOR3 Position, D3DXVECTOR3 At,float AtDistance,float fov)
 	D3DXVec3Normalize(&this->right, &this->right);
 }
 
-//-------------------------------------
-//	初期化
-//-------------------------------------
-void Camera::Initialize()
-{
-	return;
-}
 
 //-------------------------------------
 //	更新
@@ -72,7 +124,7 @@ void Camera::Update()
 	//------------------------------------
 	//	カメラ
 	//------------------------------------
-	this->at = this->forward * this->atDistance + this->position;
+	this->at = this->forward * this->atDistance + this->Position;
 
 	D3DXVECTOR3 front = this->forward;
 	D3DXVECTOR3 right = this->right;
@@ -91,7 +143,7 @@ void Camera::Update()
 			D3DXVec3Cross(&this->up, &this->right, &this->forward);
 		}
 
-		this->position = at - this->forward * this->atDistance;
+		this->Position = at - this->forward * this->atDistance;
 	}
 	else
 	{
@@ -113,152 +165,36 @@ void Camera::Update()
 
 		if (Keyboard_IsPress(DIK_W))
 		{
-			this->position += front * this->Speed;
+			this->Position += front * this->Speed;
 		}
 
 		if (Keyboard_IsPress(DIK_S))
 		{
-			this->position -= front * this->Speed;
+			this->Position -= front * this->Speed;
 		}
 
 		if (Keyboard_IsPress(DIK_A))
 		{
-			this->position += right * this->Speed;
+			this->Position += right * this->Speed;
 		}
 
 		if (Keyboard_IsPress(DIK_D))
 		{
-			this->position -= right * this->Speed;
+			this->Position -= right * this->Speed;
 		}
 
 		if (Keyboard_IsPress(DIK_Q))
 		{
-			this->position.y -= this->Speed;
+			this->Position.y -= this->Speed;
 		}
 
 		if (Keyboard_IsPress(DIK_E))
 		{
-			this->position.y += this->Speed;
+			this->Position.y += this->Speed;
 		}
-		this->position += this->forward * Mouse_IsAccelerationZ() *0.01f;
+		this->Position += this->forward * Mouse_IsAccelerationZ() *0.01f;
 	}
 
 	return;
 }
-
-
-//-------------------------------------
-//	メインカメラに設定
-//-------------------------------------
-void Camera::Set_Main()
-{
-	this->MainCamera = this;
-}
-
-//別々登録
-void Camera::Set_Main(int Num)
-{
-	switch (Num)
-	{
-	case 0:
-		this->MainCamera = this;
-		break;
-	case 1:
-		this->MainCamera1 = this;
-		break;
-	case 2:
-		this->MainCamera2 = this;
-		break;
-	case 3:
-		this->MainCamera3 = this;
-		break;
-	default:
-		this->MainCamera = this;
-		break;
-	}
-}
-
-//-------------------------------------
-//	サブカメラに設定
-//-------------------------------------
-//void Camera::Set_Sub()
-//{
-//	this->SubCamera = this;
-//}
-
-//-------------------------------------
-//	メインカメラ取得
-//-------------------------------------
-Camera* Camera::Get_Main()
-{
-	return Camera::MainCamera;
-}
-
-//-------------------------------------
-//	変換開始
-//-------------------------------------
-bool Camera::Begin()
-{
-	if (MainCamera == NULL) return false;
-
-	//------------------------------------
-	//	ビュー変換行列
-	//------------------------------------
-	D3DXMATRIX mtxView;							//メインビュー変換行列
-	//------------------------------------
-	//	プロジェクション変換行列
-	//------------------------------------
-	D3DXMATRIX mtxProjection;		//プロジェクション変換行列
-	D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
-	D3DXMatrixLookAtLH(&mtxView, &MainCamera->position, &MainCamera->at, &MainCamera->up);	//変換
-																							//カメラの座標を変更（ビュー行列）
-	System_GetDevice()->SetTransform(D3DTS_VIEW, &mtxView);
-	System_GetDevice()->SetTransform(D3DTS_PROJECTION, &mtxProjection);
-	System_GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);	//ライティングをOFF
-
-	return true;
-}
-
-bool Camera::Begin(int num)
-{
-	D3DXMATRIX mtxView;							//メインビュー変換行列
-	D3DXMATRIX mtxProjection;		//プロジェクション変換行列
-
-	switch (num)
-	{
-	case 0:
-		if (MainCamera == NULL) return false;
-		D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
-		D3DXMatrixLookAtLH(&mtxView, &MainCamera->position, &MainCamera->at, &MainCamera->up);	//変換
-
-		break;
-	case 1:
-		if (MainCamera1 == NULL) return false;
-		D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
-		D3DXMatrixLookAtLH(&mtxView, &MainCamera1->position, &MainCamera1->at, &MainCamera1->up);	//変換
-
-		break;
-	case 2:
-		if (MainCamera2 == NULL) return false;
-		D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
-		D3DXMatrixLookAtLH(&mtxView, &MainCamera2->position, &MainCamera2->at, &MainCamera2->up);	//変換
-
-		break;
-	case 3:
-		if (MainCamera3 == NULL) return false;
-		D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
-		D3DXMatrixLookAtLH(&mtxView, &MainCamera3->position, &MainCamera3->at, &MainCamera3->up);	//変換
-
-		break;
-	default:
-		break;
-	}
-
-	System_GetDevice()->SetTransform(D3DTS_VIEW, &mtxView);
-	System_GetDevice()->SetTransform(D3DTS_PROJECTION, &mtxProjection);
-	System_GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);	//ライティングをOFF
-
-	return true;
-}
-
 
