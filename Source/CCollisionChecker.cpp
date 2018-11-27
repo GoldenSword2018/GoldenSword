@@ -23,6 +23,7 @@
 //===============================================
 //	マクロ定義		define
 //===============================================
+void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable);
 
 
 //===============================================
@@ -240,6 +241,7 @@ void TmpCollisionChecker::CheckCollisionPlayerVsStageObj( void )
 			if( CollisionCheck::OBBVsOBB( pStageBlock[ si ]->ColShape, pPlayer->ColShape ) )
 			{ // Hit
 				pPlayer->ColShape.Color = D3DCOLOR_RGBA( 255, 0, 0, 255 );
+				Collision_PushBack(&pPlayer->ColShape, &pStageBlock[si]->ColShape);
 			}
 			else
 			{ // No Hit
@@ -249,6 +251,84 @@ void TmpCollisionChecker::CheckCollisionPlayerVsStageObj( void )
 		else
 		{ // Invalid pointer
 			 // null
+		}
+	}
+}
+
+void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable)
+{
+	float diffX = (pShapeStable->pParentPos->x - pShapeMovable->pParentPos->x);		// X座標差分
+	float diffY = (pShapeStable->pParentPos->y - pShapeMovable->pParentPos->y);		// Y座標差分
+	float diffZ = (pShapeStable->pParentPos->z - pShapeMovable->pParentPos->z);		// Z座標差分
+
+	float absX = fabs(diffX);														// X差分絶対値
+	float absY = fabs(diffY);														// Y差分絶対値
+	float absZ = fabs(diffZ);														// Z差分絶対値
+
+	float lX = (pShapeStable->Length[1] + pShapeMovable->Length[1]) - absX;			// Xめり込み量
+	float lY = (pShapeStable->Length[2] + pShapeMovable->Length[2]) - absY;			// Yめり込み量
+	float lZ = (pShapeStable->Length[0] + pShapeMovable->Length[0]) - absZ;			// Zめり込み量
+
+	if (lX > lY)
+	{
+		if (lY > lZ)
+		{
+			// Zめり込みが一番少ない
+			if (diffZ >= 0)
+			{
+				// 固定物が奥側にある
+				pShapeMovable->pParentPos->z = pShapeStable->pParentPos->z - (pShapeStable->Length[0] + pShapeMovable->Length[0]);
+			}
+			else
+			{
+				// 固定物が手前側にある
+				pShapeMovable->pParentPos->z = pShapeStable->pParentPos->z + (pShapeStable->Length[0] + pShapeMovable->Length[0]);
+			}
+		}
+		else
+		{
+			// Yめり込みが一番少ない
+			if (diffY >= 0)
+			{
+				// 固定物が上側にある
+				pShapeMovable->pParentPos->y = pShapeStable->pParentPos->y - (pShapeStable->Length[2] + pShapeMovable->Length[2]);
+			}
+			else
+			{
+				// 固定物が下側にある
+				pShapeMovable->pParentPos->y = pShapeStable->pParentPos->y + (pShapeStable->Length[2] + pShapeMovable->Length[2]);
+			}
+		}
+	}
+	else
+	{
+		if (lX > lZ)
+		{
+			// Zめり込みが一番少ない
+			if (diffZ >= 0)
+			{
+				// 固定物が奥側にある
+				pShapeMovable->pParentPos->z = pShapeStable->pParentPos->z - (pShapeStable->Length[0] + pShapeMovable->Length[0]);
+			}
+			else
+			{
+				// 固定物が手前側にある
+				pShapeMovable->pParentPos->z = pShapeStable->pParentPos->z + (pShapeStable->Length[0] + pShapeMovable->Length[0]);
+			}
+		}
+		else
+		{
+			// Xめり込みが一番少ない
+			if (diffX >= 0)
+			{
+				// 固定物が右側にある
+				pShapeMovable->pParentPos->x = pShapeStable->pParentPos->x - (pShapeStable->Length[1] + pShapeMovable->Length[1]);
+			}
+			else
+			{
+				// 固定物が左側にある
+				pShapeMovable->pParentPos->x = pShapeStable->pParentPos->x + (pShapeStable->Length[1] + pShapeMovable->Length[1]);
+			}
 		}
 	}
 }

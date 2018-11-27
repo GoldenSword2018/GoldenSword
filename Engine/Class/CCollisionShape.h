@@ -99,9 +99,9 @@ class ShapeOBB : public Shape
 {
 public:
 	D3DXVECTOR3 NormalDirect[ 3 ]; // 0:前, 1:右, 2: 上 単位ベクトル
-	float Length[ 3 ];// 0:幅, 1:高さ, 2: 奥行 それぞれの半分
 private:
 	ShapeOBB() {}
+	float Length[ 3 ];// 0:奥行, 1:幅, 2:高さ それぞれの半分
 public:
 	ShapeOBB( Transform* pParentTransform, D3DXVECTOR3* pRadian, D3DXVECTOR3* Length,D3DXVECTOR3* pGapPos = &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
 	~ShapeOBB();

@@ -164,6 +164,7 @@ void CoreObject::Render()
 
 		mtxTransform = mtxTranslation * mtxRotation * mtxScaling;	// Šî€•ÏŠ·s—ñ‚ÌÝ’è
 
+
 		if (this->face == D3DXVECTOR3(0.0f, 1.0f, 0.0f))
 		{
 			D3DXMatrixRotationX(&mtxRotation, -D3DX_PI / 2);

@@ -124,6 +124,7 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	RightArm_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
 	LeftLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
 	RightLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255)))
+
 {
 	this->Forward = *pForward;
 	this->AngleY = 0.0f;
@@ -215,6 +216,7 @@ void Player::Set_Parts()
 //-------------------------------------
 void Player::Update()
 {	
+
 	this->Camera.Update();
 	this->transform.Set_WorldTransform();				//WorldPosition‚ğZo
 	this->transform.WorldPosition.y = 0.0f;				//‚‚³‚ğŒÅ’è
