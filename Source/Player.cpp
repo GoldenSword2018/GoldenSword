@@ -218,9 +218,8 @@ void Player::Update()
 {	
 
 	this->Camera.Update();
+	this->transform.Position.y = 0.0f;				//高さを固定
 	this->transform.Set_WorldTransform();				//WorldPositionを算出
-	this->transform.WorldPosition.y = 0.0f;				//高さを固定
-
 	
 	SetForward(this->Camera.forward);
 	this->transform.Rotation.y = this->RotY;
@@ -262,7 +261,6 @@ void Player::Update()
 	}
 
 
-
 #if !defined(DISABLE_JOYCON) && !defined(DISABLE_GAMEPAD)
 	Move();
 	Rotation();
@@ -280,7 +278,7 @@ void Player::Update()
 
 	SetPosition(this->transform.Position);
 	this->Camera.at = this->transform.WorldPosition;	//注視点をプレイヤーに
-	this->Camera.at.y += 2.0f;
+	this->Camera.at.y +=  2.0f;
 	this->Camera.Position = this->Camera.at - this->Forward * this->Camera.atDistance;		//カメラ位置を決める
 
 }
