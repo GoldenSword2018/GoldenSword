@@ -149,8 +149,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 #else
 			Transform::ResetConvert();
 			g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BG_COLOR, 1.0f, 0);
-			Camera::Begin(0);
 			Main_Render();
+			Camera::Begin(0);
 
 #endif
 

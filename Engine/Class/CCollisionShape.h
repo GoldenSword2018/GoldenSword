@@ -71,7 +71,6 @@ public:
 	virtual ~Shape();
 public:
 	Transform* pParentTransform;
-	D3DXVECTOR3* pParentPos; // 持ち主の位置ポインタ ( オブジェクト中央を想定 ) // これプライベートにする？
 	D3DXVECTOR3	GapPos; // 持ち主との位置の補正（オブジェクト中央からずらす）
 	D3DCOLOR	Color;
 public:

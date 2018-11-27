@@ -19,6 +19,16 @@
 #include"CArmorObject.h"
 
 //===============================================
+//	マクロ定義
+//===============================================
+#define PLAYER_MOVE_SPEED		(0.1f)				// プレイヤー移動速度
+#define WAIT_ANGLER_VEROCITY	(100.0f * 24.0f)	// 角速度補正値
+#define WAIT_ROT_Y				(40)				// 視点左右回転速度補正値
+
+#define DISTANCE_TO_AT			(5.0f)				// 注視点までの距離
+#define LIMIT_CAMERA_ELEVATION	(80.0f)				// カメラの仰俯角の限界値
+
+//===============================================
 //	Player 構造体
 //===============================================
 typedef struct PLAYER_tag
