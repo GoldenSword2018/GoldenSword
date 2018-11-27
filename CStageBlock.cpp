@@ -140,6 +140,8 @@ StageBlock::StageBlock(Transform* pTransform, int TextureIndex)
 {
 	pTexture = Texture_GetTexture(TextureIndex);
 	TmpCollisionChecker::GetInstance()->RegisterCollision_StageBlock( this );
+	pPrev = NULL;
+	pNext = NULL;
 }
 
 StageBlock::StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGING_TYPE type)
@@ -149,6 +151,8 @@ StageBlock::StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGIN
 {
 	pTexture = Texture_GetTexture(TextureIndex);
 	TmpCollisionChecker::GetInstance()->RegisterCollision_StageBlock( this );
+	pPrev = NULL;
+	pNext = NULL;
 }
 
 //-------------------------------------

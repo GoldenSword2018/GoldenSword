@@ -33,7 +33,7 @@ class StageBlock;
 
 #define COLLISION_BULLET_MAX    ( 1024 )
 #define COLLISION_CORE_MAX      ( 1024 )
-#define COLLISION_STAGEBLOCK_MAX	( 1024 )
+#define COLLISION_STAGEBLOCK_MAX	( 60000 )
 //================================================
 //	—ñ‹“Œ^		enum
 //================================================

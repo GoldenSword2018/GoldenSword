@@ -124,6 +124,7 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	RightArm_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
 	LeftLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
 	RightLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255)))
+
 {
 	this->Forward = *pForward;
 	this->AngleY = 0.0f;
@@ -215,10 +216,10 @@ void Player::Set_Parts()
 //-------------------------------------
 void Player::Update()
 {	
-	this->Camera.Update();
-	this->transform.Set_WorldTransform();				//WorldPositionを算出
-	this->transform.WorldPosition.y = 0.0f;				//高さを固定
 
+	this->Camera.Update();
+	this->transform.Position.y = 0.0f;				//高さを固定
+	this->transform.Set_WorldTransform();				//WorldPositionを算出
 	
 	SetForward(this->Camera.forward);
 	this->transform.Rotation.y = this->RotY;
@@ -261,7 +262,6 @@ void Player::Update()
 	}
 
 
-
 #if !defined(DISABLE_JOYCON) && !defined(DISABLE_GAMEPAD)
 	Move();
 	Rotation();
@@ -279,7 +279,7 @@ void Player::Update()
 
 	SetPosition(this->transform.Position);
 	this->Camera.at = this->transform.WorldPosition;	//注視点をプレイヤーに
-	this->Camera.at.y += 2.0f;
+	this->Camera.at.y +=  2.0f;
 	this->Camera.Position = this->Camera.at - this->Forward * this->Camera.atDistance;		//カメラ位置を決める
 
 }

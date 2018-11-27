@@ -171,7 +171,7 @@ D3DXVECTOR3 Transform::GetWorldPosision( void )
 	if( this->pParent != NULL )
 	{
 		D3DXVECTOR3 WorldPos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
-		D3DXVec3TransformNormal( &WorldPos, &WorldPos, &this->GetWorldMatrix() );
+		D3DXVec3TransformCoord( &WorldPos, &this->Position, &this->GetWorldMatrix() );
 		return WorldPos;
 	}
 	else
