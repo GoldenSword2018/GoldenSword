@@ -28,8 +28,8 @@
 CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face)
 : 
 	GameObject(pTransform, pTexture),
-	ColShape(&transform.Position, 0.5f),
-	CorrectSphere(&transform.Position, 1.0f)
+	ColShape(&transform.WorldPosition, 0.5f),
+	CorrectSphere(&transform.WorldPosition, 1.0f)
 {
 	this->face = face;
 	TmpCollisionChecker::GetInstance()->RegisterCollision_CoreObject( this );
@@ -50,14 +50,16 @@ CoreObject::~CoreObject()
 void CoreObject::SetBody(BodyObject* pBodyObject)
 {
 	this->pBodyObject = pBodyObject;
+	this->Set_Parent(this->pBodyObject);
 }
 
 //-------------------------------------
 //	アーマーオブジェクトを登録
 //-------------------------------------
-void CoreObject::Set(ArmorObject* pArmorObject)
+void CoreObject::SetArmor(ArmorObject* pArmorObject)
 {
 	this->pArmor_Index.push_back(pArmorObject);
+	pArmorObject->transform.Set_Parent(&this->transform);
 }
 
 //--------------------------------------
@@ -65,9 +67,8 @@ void CoreObject::Set(ArmorObject* pArmorObject)
 //--------------------------------------
 void CoreObject::Set(ArmorObject* pArmorObject,BodyObject* pBodyObject)
 {
-	this->pArmor_Index.push_back(pArmorObject);
-	this->pBodyObject = pBodyObject;
-	this->Set_Parent(this->pBodyObject);
+	this->SetBody(pBodyObject);
+	this->SetArmor(pArmorObject);
 }
 
 //-------------------------------------
@@ -141,6 +142,23 @@ void CoreObject::Render()
 		D3DXMATRIXA16 mtxWorld;
 		D3DXMATRIXA16 mtxTranslation;
 		D3DXMATRIXA16 mtxRotation;
+		/*
+		D3DXMATRIXA16 mtxRotation2;
+		D3DXMATRIXA16 mtxScaling;
+
+		this->transform.Set_WorldTransform();
+		D3DXMatrixTranslation(&mtxTranslation, this->transform.WorldPosition.x, this->transform.WorldPosition.y, this->transform.WorldPosition.z);
+		D3DXMatrixTranslation(&mtxTranslation2, 0.0f, -0.5f, 0.0f);
+		//D3DXMatrixRotationY(&mtxRotation, D3DX_PI);
+		D3DXMatrixRotationYawPitchRoll(&mtxRotation2,this->transform.WorldRotation.y,this->transform.WorldRotation.x,this->transform.WorldRotation.z);
+		D3DXMatrixScaling(&mtxScaling, 0.4f, 0.4f, 0.4f);
+		
+
+		//合成
+		mtxWorld = (mtxTranslation2*mtxScaling)*mtxTranslation;
+		*/
+
+
 		D3DXMATRIXA16 mtxRotationY;
 		D3DXMATRIXA16 mtxRotationAxis;
 		D3DXVECTOR3 vecFaceGroud;
@@ -172,11 +190,18 @@ void CoreObject::Render()
 			D3DXMatrixRotationAxis(&mtxRotationAxis, &vecRight, acosf(D3DXVec3Dot(&this->face, &vecFaceGroud)));
 			mtxRotation = mtxRotationY * mtxRotationAxis;
 		}
-		D3DXMatrixTranslation(&mtxTranslation, this->transform.Position.x, this->transform.Position.y, this->transform.Position.z);		// 平行移動
+
+
+		this->transform.Set_WorldTransform();
+		D3DXMATRIX MtxRotation;
+		D3DXMatrixRotationYawPitchRoll(&MtxRotation, this->transform.WorldRotation.y, this->transform.WorldRotation.x, this->transform.WorldRotation.z);
+		D3DXVec3TransformNormal(&this->transform.WorldPosition, &this->transform.WorldPosition,&MtxRotation);
+
+		D3DXMatrixTranslation(&mtxTranslation, this->transform.WorldPosition.x, this->transform.WorldPosition.y, this->transform.WorldPosition.z);		// 平行移動
 
 		//合成
-		mtxWorld = mtxBaseTransform * mtxRotation * mtxTranslation;
-		
+		this->transform.MtxWorld = mtxWorld = mtxBaseTransform * mtxRotation * mtxTranslation;
+
 		//ネジの描画
 		XModel_Render(GetMeshData(ScrewIndex), mtxWorld);
 

@@ -15,6 +15,18 @@
 #include"CCamera.h"
 #include"CCollisionShape.h"
 #include"CBodyObject.h"
+#include"CCoreObject.h"
+#include"CArmorObject.h"
+
+//===============================================
+//	マクロ定義
+//===============================================
+#define PLAYER_MOVE_SPEED		(0.1f)				// プレイヤー移動速度
+#define WAIT_ANGLER_VEROCITY	(100.0f * 24.0f)	// 角速度補正値
+#define WAIT_ROT_Y				(40)				// 視点左右回転速度補正値
+
+#define DISTANCE_TO_AT			(5.0f)				// 注視点までの距離
+#define LIMIT_CAMERA_ELEVATION	(80.0f)				// カメラの仰俯角の限界値
 
 //===============================================
 //	Player 構造体
@@ -39,8 +51,14 @@ class PlayerCamera;
 class PlayerCamera:public Camera
 {
 private:
+<<<<<<< HEAD
 //	Player* pParent;
 public:	
+=======
+
+public:
+
+>>>>>>> 35340806847935d02ab1b61f517a16e5226858a6
 	void Initialize();
 	void Update();
 };
@@ -55,11 +73,15 @@ public:
 private:
 	D3DXVECTOR3 Forward;
 	D3DXVECTOR3 Right;
+
 	float AngleY;						// Y軸周りの回転角（視点の左右方向角度）
 	float AngleX;						// X軸周りの回転角（視点の仰角俯角）
 	float g_OldAngleX;
 public:
 	ShapeOBB ColShape;
+
+	float RotY;
+	float RotAxis;
 	
 public:
 	//各部位
@@ -69,6 +91,29 @@ public:
 	BodyObject RightArm;
 	BodyObject LeftLeg;
 	BodyObject RightLeg;
+
+public:
+	//コア
+	CoreObject Head_Screw;
+	CoreObject Body_Screw;
+	CoreObject LeftArm_Screw;
+	CoreObject RightArm_Screw;
+	CoreObject LeftLeg_Screw;
+	CoreObject RightLeg_Screw;
+
+public:
+	//アーマー
+	ArmorObject Head_Armor01;
+
+	ArmorObject Body_Armor01;
+
+	ArmorObject LeftArm_Armor01;
+
+	ArmorObject RightArm_Armor01;
+
+	ArmorObject LeftLeg_Armor01;
+
+	ArmorObject RightLeg_Armor01;
 
 public:
 	Player(Transform* pTransform, D3DXVECTOR3* pForward);

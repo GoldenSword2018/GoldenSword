@@ -74,12 +74,12 @@ void Main_Initialize(void)
 void Main_UpdateBegin(void)
 {
 	WinSock_Receiver();	//データを受信します。
-
-	CTeamProt_Update();
-	TestSpace_UpdateBegin();
 	Bullet_Update();
 	Screwdrop_Update();
 	Player_Update();
+	CTeamProt_Update();
+	TestSpace_UpdateBegin();
+
 
 }
 
