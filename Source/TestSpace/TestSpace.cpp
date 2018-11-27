@@ -50,26 +50,6 @@ void TestSpace_Initialize()
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(0.0f, 1.0f, 0.0f)
 		);
-//	g_pScrew->Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_0);
-	/*
-	for (int i = 0; i < 100; i++)
-	{
-		g_pScrew->Set(g_ppStageBlocks[i]);
-	}
-<<<<<<< HEAD
-
-	g_pBlockList = new StageBlockList(D3DXVECTOR3(10.0f, 0.0f, 0.0f), RADIALLY, 0);
-
-	for (int z = 0; z < 10; z++)
-	{
-		for (int y = 0; y < 10; y++)
-		{
-			g_pBlockList->CreateBlockRel(D3DXVECTOR3(0, y, z));
-		}
-	}
-=======
-	*/
->>>>>>> 35340806847935d02ab1b61f517a16e5226858a6
 };
 
 //ëOçXêV

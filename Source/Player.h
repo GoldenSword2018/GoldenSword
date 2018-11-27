@@ -50,15 +50,7 @@ class PlayerCamera;
 //-------------------------------------
 class PlayerCamera:public Camera
 {
-private:
-<<<<<<< HEAD
-//	Player* pParent;
-public:	
-=======
-
 public:
-
->>>>>>> 35340806847935d02ab1b61f517a16e5226858a6
 	void Initialize();
 	void Update();
 };

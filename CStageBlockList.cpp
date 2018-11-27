@@ -113,11 +113,11 @@ void StageBlockList::SetAll(CoreObject* pScrew)
 	if (pTop == NULL)
 		return;
 
-	pScrew->Set(pTop);
+	pScrew->SetArmor(pTop);
 	StageBlock *pCurrent = pTop;
 	while (pCurrent->pNext != NULL)
 	{
-		pScrew->Set(pCurrent->pNext);
+		pScrew->SetArmor(pCurrent->pNext);
 		pCurrent = pCurrent->pNext;
 	}
 }

@@ -104,13 +104,6 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	GameObject(pTransform, &Texture()),
 	ColShape
 	(
-<<<<<<< HEAD
-		&transform.Position,
-		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),
-		&D3DXVECTOR3(1.0f, 5.0f, 1.0f)
-	)
-=======
-
 		&transform.Position,
 		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		&D3DXVECTOR3(1.0f, 5.0f, 1.0f)
@@ -130,7 +123,6 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	RightArm_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
 	LeftLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
 	RightLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255)))
->>>>>>> 35340806847935d02ab1b61f517a16e5226858a6
 {
 	this->Forward = *pForward;
 	this->AngleY = 0.0f;
@@ -219,12 +211,8 @@ void Player::Set_Parts()
 //	XV
 //-------------------------------------
 void Player::Update()
-<<<<<<< HEAD
 {
-	this->Camera.position = this->transform.Position;
-=======
-{	
->>>>>>> 35340806847935d02ab1b61f517a16e5226858a6
+	this->Camera.Position = this->transform.Position;
 	this->Camera.Update();
 	this->transform.Set_WorldTransform();				//WorldPosition‚ğZo
 	this->transform.WorldPosition.y = 0.0f;				//‚‚³‚ğŒÅ’è
