@@ -63,12 +63,14 @@ public:
 public:
 	SHAPE_TYPE ShapeType;
 public:
-	Shape(); // どうにかして継承先がデフォルトコンストラクタで生成されないようにしたい。
-	Shape( D3DXVECTOR3* pParentPos, D3DXVECTOR3* pGapPos, SHAPE_TYPE ShapeType, D3DCOLOR Color );
-	Shape( D3DXVECTOR3* pParentPos, D3DXVECTOR3* pGapPos, SHAPE_TYPE ShapeType );
-	Shape( D3DXVECTOR3* pParentPos, SHAPE_TYPE ShapeType );
+	Shape() {} // どうにかして継承先がデフォルトコンストラクタで生成されないようにしたい。
+public:
+	Shape( Transform* pParentTransform, D3DXVECTOR3* pGapPos, SHAPE_TYPE ShapeType, D3DCOLOR Color );
+	Shape( Transform* pParentTransform, D3DXVECTOR3* pGapPos, SHAPE_TYPE ShapeType );
+	Shape( Transform* pParentTransform, SHAPE_TYPE ShapeType );
 	virtual ~Shape();
 public:
+	Transform* pParentTransform;
 	D3DXVECTOR3* pParentPos; // 持ち主の位置ポインタ ( オブジェクト中央を想定 ) // これプライベートにする？
 	D3DXVECTOR3	GapPos; // 持ち主との位置の補正（オブジェクト中央からずらす）
 	D3DCOLOR	Color;
@@ -83,9 +85,10 @@ class ShapeSphere : public Shape
 {
 public:
 	float Radius;
+private:
+	ShapeSphere() {}
 public:
-	ShapeSphere();
-	ShapeSphere( D3DXVECTOR3* pParentPos, float Radius, D3DXVECTOR3* pGapPos = &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ));
+	ShapeSphere( Transform* pParentTransform, float Radius, D3DXVECTOR3* pGapPos = &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ));
 	~ShapeSphere();
 public:
 	void DebugDraw();
@@ -97,9 +100,10 @@ class ShapeOBB : public Shape
 public:
 	D3DXVECTOR3 NormalDirect[ 3 ]; // 0:前, 1:右, 2: 上 単位ベクトル
 	float Length[ 3 ];// 0:幅, 1:高さ, 2: 奥行 それぞれの半分
+private:
+	ShapeOBB() {}
 public:
-	ShapeOBB();
-	ShapeOBB( D3DXVECTOR3* pParentPos, D3DXVECTOR3* pRadian, D3DXVECTOR3* Length,D3DXVECTOR3* pGapPos = &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) ); 
+	ShapeOBB( Transform* pParentTransform, D3DXVECTOR3* pRadian, D3DXVECTOR3* Length,D3DXVECTOR3* pGapPos = &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
 	~ShapeOBB();
 public:
 	void DebugDraw();

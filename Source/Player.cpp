@@ -104,8 +104,12 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	GameObject(pTransform, &Texture()),
 	ColShape
 	(
+<<<<<<< HEAD
 
 		&transform.Position,
+=======
+		&transform,
+>>>>>>> fd2f8f729303d78faeabea1f887a90e56cf92506
 		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		&D3DXVECTOR3(1.0f, 5.0f, 1.0f)
 	),
@@ -116,6 +120,7 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	RightArm_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
 	LeftLeg_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
 	RightLeg_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
+	// ボディはデフォルトコンストラクタ
 
 	//アーマー
 	Head_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
@@ -155,12 +160,14 @@ void Player::Set_Parts()
 	LeftLeg.Set_Parent(this);
 	RightLeg.Set_Parent(this);
 
+	/*
 	Head_Screw.Set_Parent(this);
 	Body_Screw.Set_Parent(this);
 	LeftArm_Screw.Set_Parent(this);
 	RightArm_Screw.Set_Parent(this);
 	LeftLeg_Screw.Set_Parent(this);
 	RightLeg_Screw.Set_Parent(this);
+	*/
 
 	//
 	Head.transform.Position = D3DXVECTOR3(0.0f,1.4f,0.0f);
@@ -186,7 +193,7 @@ void Player::Set_Parts()
 	RightLeg.transform.Position = D3DXVECTOR3(0.2f,-2.0f,0.0f);
 	RightLeg.transform.Scale = D3DXVECTOR3(0.5f,2.0f,0.5f);
 
-	//コアの登録
+	//コアへボディの登録
 	Head_Screw.SetBody(&Head);
 	Body_Screw.SetBody(&Body);
 	LeftArm_Screw.SetBody(&LeftArm);
@@ -194,7 +201,7 @@ void Player::Set_Parts()
 	LeftLeg_Screw.SetBody(&LeftLeg);
 	RightLeg_Screw.SetBody(&RightLeg);
 
-	//アーマーの登録
+	//コアへアーマーの登録
 	Head_Screw.SetArmor(&Head_Armor01);
 	
 	Body_Screw.SetArmor(&Body_Armor01);

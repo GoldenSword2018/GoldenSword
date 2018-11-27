@@ -136,7 +136,7 @@ void StageBlock::Finalize()
 StageBlock::StageBlock(Transform* pTransform, int TextureIndex) 
 :
 	ArmorObject(pTransform, FALL),
-	ColShape( &transform.Position, &transform.Rotation, &transform.Scale )
+	ColShape( &transform, &transform.Rotation, &transform.Scale )
 {
 	pTexture = Texture_GetTexture(TextureIndex);
 	TmpCollisionChecker::GetInstance()->RegisterCollision_StageBlock( this );
@@ -145,7 +145,7 @@ StageBlock::StageBlock(Transform* pTransform, int TextureIndex)
 StageBlock::StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGING_TYPE type)
 	: 
 	ArmorObject(pTransform, type),
-	ColShape(&transform.Position, &transform.Rotation, &transform.Scale)
+	ColShape(&transform, &transform.Rotation, &transform.Scale)
 {
 	pTexture = Texture_GetTexture(TextureIndex);
 	TmpCollisionChecker::GetInstance()->RegisterCollision_StageBlock( this );

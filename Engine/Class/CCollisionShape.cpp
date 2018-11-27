@@ -40,29 +40,24 @@
 //-------------------------------------
 //  コンストラクタ デストラクタ
 //-------------------------------------
-Shape::Shape()
-	: Shape( &COLLISION_SHAPE_DEFAULT_POS, &COLLISION_SHAPE_DEFAULT_POS,NO_TYPE )
-{
-
-}
-Shape::Shape( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_pGapPos, SHAPE_TYPE init_ShapeType, D3DCOLOR init_Color )
+Shape::Shape( Transform* init_pParentTransform, D3DXVECTOR3* init_pGapPos, SHAPE_TYPE init_ShapeType, D3DCOLOR init_Color )
 :
-	pParentPos( init_pParentPos ),
+	pParentTransform( init_pParentTransform ),
 	GapPos( *init_pGapPos ),
 	ShapeType( init_ShapeType ),
 	Color( init_Color )
 {
 
 }
-Shape::Shape( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_GapPos, SHAPE_TYPE init_ShapeType )
+Shape::Shape( Transform* init_pParentTransform, D3DXVECTOR3* init_GapPos, SHAPE_TYPE init_ShapeType )
 : 
-	Shape( init_pParentPos, init_GapPos, init_ShapeType, COLLISION_SHAPE_DEFAULT_COLOR )
+	Shape( init_pParentTransform, init_GapPos, init_ShapeType, COLLISION_SHAPE_DEFAULT_COLOR )
 {
 
 }
-Shape::Shape( D3DXVECTOR3* init_pParentPos, SHAPE_TYPE init_ShapeType )
+Shape::Shape( Transform* init_pParentTransform, SHAPE_TYPE init_ShapeType )
 :
-	Shape( init_pParentPos, &COLLISION_SHAPE_DEFAULT_POS, init_ShapeType, COLLISION_SHAPE_DEFAULT_COLOR )
+	Shape( init_pParentTransform, &COLLISION_SHAPE_DEFAULT_POS, init_ShapeType, COLLISION_SHAPE_DEFAULT_COLOR )
 {
 
 }
@@ -77,7 +72,7 @@ Shape::~Shape()
 
 D3DXVECTOR3 Shape::GetEffectivePos( void )const
 {
-	return *pParentPos + GapPos;
+	return pParentTransform->GetWorldPosision() + GapPos;
 }
 
 //===============================================
@@ -87,14 +82,8 @@ D3DXVECTOR3 Shape::GetEffectivePos( void )const
 //-------------------------------------
 //  コンストラクタ デストラクタ
 //-------------------------------------
-ShapeSphere::ShapeSphere()
-	: Shape(),
-	Radius( 0.0f )
-{
-
-}
-ShapeSphere::ShapeSphere( D3DXVECTOR3* init_pParentPos, float init_Radius, D3DXVECTOR3* init_GapPos )
-	: Shape( init_pParentPos, init_GapPos, SHAPE_TYPE::SPHERE ),
+ShapeSphere::ShapeSphere( Transform* init_pParentTransform, float init_Radius, D3DXVECTOR3* init_GapPos )
+	: Shape( init_pParentTransform, init_GapPos, SHAPE_TYPE::SPHERE ),
 	Radius( init_Radius )
 {
 
@@ -119,21 +108,11 @@ void ShapeSphere::DebugDraw()
 //-------------------------------------
 //  コンストラクタ デストラクタ
 //-------------------------------------
-ShapeOBB::ShapeOBB()
-	:Shape( &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), SHAPE_TYPE::OBB )
-{
-	NormalDirect[ 0 ] = D3DXVECTOR3( 1.0f, 0.0f, 0.0f );
-	NormalDirect[ 1 ] = D3DXVECTOR3( 0.0f, 0.0f, 1.0f );
-	NormalDirect[ 2 ] = D3DXVECTOR3( 0.0f, 1.0f, 0.0f );
-	
-	Length[ 0 ] = 0.0f;
-	Length[ 1 ] = 0.0f;
-	Length[ 2 ] = 0.0f;
-}
+
 // arg0: 持ち主の座標ポインタ, arg1: 各座標軸回りの角度(ラジアン) 回す順番 Roll->Pitch->Yaw
 // arg2: x幅, y高さ, z奥行, arg3: 当たり判定の座標との差分
-ShapeOBB::ShapeOBB( D3DXVECTOR3* init_pParentPos, D3DXVECTOR3* init_pRadian, D3DXVECTOR3* init_pLength, D3DXVECTOR3* init_pGapPos )
-	: Shape( init_pParentPos, init_pGapPos, SHAPE_TYPE::OBB )
+ShapeOBB::ShapeOBB( Transform* init_pParentTransform, D3DXVECTOR3* init_pRadian, D3DXVECTOR3* init_pLength, D3DXVECTOR3* init_pGapPos )
+	: Shape( init_pParentTransform, init_pGapPos, SHAPE_TYPE::OBB )
 {
 	D3DXMATRIX mtxRot;
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, D3DXToRadian( init_pRadian->y ), D3DXToRadian( init_pRadian->x ), D3DXToRadian( init_pRadian->z ) );

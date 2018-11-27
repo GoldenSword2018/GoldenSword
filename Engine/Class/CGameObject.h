@@ -26,7 +26,7 @@ public:
 	static void g_Update();	//全体更新
 	static void g_Render();	//全体描画
 
-private:
+public: 
 	GameObject* pParent;	//親
 
 public:
