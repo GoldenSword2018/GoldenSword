@@ -187,6 +187,9 @@
     <ClCompile Include="Engine\Geometry\Debug_Collision.cpp" />
     <ClCompile Include="Engine\Geometry\Geometry.cpp" />
     <ClCompile Include="Engine\Geometry\Grid.cpp" />
+    <ClCompile Include="Engine\Geometry\MeshField_Cylinder.cpp" />
+    <ClCompile Include="Engine\Geometry\MeshField_Ground.cpp" />
+    <ClCompile Include="Engine\Geometry\MeshField_SkyDome.cpp" />
     <ClCompile Include="Engine\Internal\Animation.cpp" />
     <ClCompile Include="Engine\Internal\Collision.cpp" />
     <ClCompile Include="Engine\Internal\Component.cpp" />
@@ -251,6 +254,9 @@
     <ClInclude Include="Engine\Geometry\Cube_Debug.h" />
     <ClInclude Include="Engine\Geometry\Debug_Collision.h" />
     <ClInclude Include="Engine\Geometry\Grid.h" />
+    <ClInclude Include="Engine\Geometry\MeshField_Cylinder.h" />
+    <ClInclude Include="Engine\Geometry\MeshField_Ground.h" />
+    <ClInclude Include="Engine\Geometry\MeshField_SkyDome.h" />
     <ClInclude Include="Engine\Internal\Animation.h" />
     <ClInclude Include="Engine\Internal\Collision.h" />
     <ClInclude Include="Engine\Internal\Component.h" />

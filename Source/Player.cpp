@@ -88,7 +88,7 @@ void PlayerCamera::Initialize()
 //-------------------------------------
 void PlayerCamera::Update()
 {
-	this->atDistance = 3.0f;
+	this->atDistance = 6.0f;
 	Camera::Update();
 }
 
@@ -213,7 +213,7 @@ void Player::Set_Parts()
 void Player::Update()
 {	
 	this->Camera.Update();
-	this->transform.Position.y = 0.0f;				//高さを固定
+	this->transform.Position.y = 2.0f;				//高さを固定
 	this->transform.Set_WorldTransform();				//WorldPositionを算出
 	
 	SetForward(this->Camera.forward);
@@ -389,7 +389,7 @@ void Player::Fire()
 {
 	//わからねぇ！！！
 	D3DXVECTOR3 look = this->Forward;
-	Bullet_Create(this->transform.Position, look, Bullet::NORMAL);
+	Bullet_Create( this->transform.Position + D3DXVECTOR3( 0.0f, 1.5f, 0.0f ), look, Bullet::NORMAL);
 }
 
 //-------------------------------------

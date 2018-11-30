@@ -40,6 +40,7 @@ DebugCollisionModule* DebugCollisionModule::pInstance = NULL;
 
 DebugCollisionModule::DebugCollisionModule()
 {
+#if defined(_DEBUG) || defined(DEBUG)
 	LPDIRECT3DDEVICE9 pDevice = System_GetDevice();
 
 	// 球用のバッファ確保
@@ -52,6 +53,7 @@ DebugCollisionModule::DebugCollisionModule()
 	pDevice->CreateVertexBuffer( sizeof( DebugVertex ) * CUBOID_VERTEX_COUNT * CUBOID_DRAW_MAX, D3DUSAGE_WRITEONLY, FVF_DEBUG_VERTEX, D3DPOOL_MANAGED, &pCuboidVertexBuffer, NULL );
 	pDevice->CreateIndexBuffer( sizeof( WORD ) * CUBOID_EDGE_COUNT * CUBOID_POINT_COUNT_PER_EDGE * CUBOID_DRAW_MAX, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &pCuboidIndexBuffer, NULL );
 	CuboidCount = 0;
+#endif // _DEBUG || DEBUG
 }
 /*
 * デストラクタ
@@ -99,6 +101,7 @@ DebugCollisionModule* DebugCollisionModule::GetInstance( void )
 
 	return pInstance;
 #endif // _DEBUG || DEBUG
+	return NULL;
 }
 void DebugCollisionModule::Finalize( void )
 {
@@ -112,14 +115,18 @@ void DebugCollisionModule::Finalize( void )
  */
 void DebugCollisionModule::BatchBegin( void )
 {
+#if defined(_DEBUG) || defined(DEBUG)
 	Sphere_BatchBegin();
 	Cuboid_BatchBegin();
+#endif // _DEBUG || DEBUG
 }
 
 void DebugCollisionModule::BatchRun( void )
 {
+#if defined(_DEBUG) || defined(DEBUG)
 	Sphere_BatchRun();
 	Cuboid_BatchRun();
+#endif // _DEBUG || DEBUG
 }
 
 //-------------------------------------

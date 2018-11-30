@@ -26,6 +26,7 @@ typedef enum TEXTURE_NAME
 	CubeTexture,
 	EroTexture1,
 	EroTexture2,
+	MeshGroundTexture1,
 	TEXTURE_NAME_END,	//テクスチャ終わり
 	TEXTURE_NONE		//指定無い場合
 }TEXTURE_NAME;

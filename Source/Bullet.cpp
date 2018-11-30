@@ -154,7 +154,7 @@ Bullet::Bullet()
 	IsEnable = false;
 }
 
-Bullet::Bullet(Transform* pTransform, Texture* pTexture):GameObject(pTransform,pTexture),ColSphape(&transform,1.0f)
+Bullet::Bullet(Transform* pTransform, Texture* pTexture):GameObject(pTransform,pTexture),ColSphape(&transform,0.5f)
 {
 	type = NORMAL;
 	Bullet();
