@@ -28,11 +28,11 @@
 CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face)
 : 
 	GameObject(pTransform, pTexture),
-	ColShape(&transform, 0.5f),
+	ColShape(&transform, 2.0f),
 	CorrectSphere(&transform, 1.0f)
 {
 	this->LocalFace = face;
-	TmpCollisionChecker::GetInstance()->RegisterCollision_CoreObject( this );
+
 	this->Type = Type;
 }
 
@@ -80,7 +80,7 @@ void CoreObject::Hit()
 
 	if(this->pArmor_Index.size() > 0)
 	{
-		DischargeArmor( 120.0f, 1.0f, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) ); // ここ引数をメンバにして持つなりする！ -------------------------------------------------------------------------- CAUTION!>
+		DischargeArmor( 30, 0.5f, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) ); // ここ引数をメンバにして持つなりする！ -------------------------------------------------------------------------- CAUTION!>
 	}
 }
 
@@ -89,6 +89,10 @@ void CoreObject::Hit()
 //-------------------------------------
 void CoreObject::Update()
 {
+	if( pArmor_Index.size() <= 0 )
+	{
+		int a = 0;
+	}
 	//弾との当たり判定ths
 	for (int i = 0; i<BULLET_MAX; i++)
 	{
@@ -201,14 +205,15 @@ void CoreObject::Set_JudgeType(CORE_DISCHARGE_JUDGE_TYPE Type)
 //-------------------------------------
 //	アーマー飛ばす
 //-------------------------------------
-void CoreObject::DischargeArmor( float Margin, float Weight, D3DXVECTOR3 AddUnitVec, float SpeedRatio )
+// para0 試しにint型にしてます。
+void CoreObject::DischargeArmor( int Margin, float Weight, D3DXVECTOR3 AddUnitVec, float SpeedRatio )
 {
 	for( int i = 0; i < pArmor_Index.size(); i++ )
 	{
 		// アーマー破棄イベントまでの遅延フレームを算出
 		float DelayFrame;
 
-		float SquaredDist = D3DXVec3LengthSq( &( pArmor_Index.at( i )->transform.Position - transform.Position ) );
+		float SquaredDist = D3DXVec3LengthSq( &( pArmor_Index.at( i )->transform.GetWorldPosision() - transform.GetWorldPosision() ) );
 
 		switch( this->Type )
 		{
@@ -235,13 +240,21 @@ void CoreObject::DischargeArmor( float Margin, float Weight, D3DXVECTOR3 AddUnit
 				*pInitSpeed += AddUnitVec;
 				break;
 			case RADIALLY: //放射状に広がる
-				pInitSpeed = new D3DXVECTOR3( pArmor_Index.at( i )->transform.Position - transform.Position );
+				pInitSpeed = new D3DXVECTOR3( pArmor_Index.at( i )->transform.GetWorldPosision() - transform.GetWorldPosision() );
 				D3DXVec3Normalize( pInitSpeed, pInitSpeed );
 				*pInitSpeed = ( *pInitSpeed + AddUnitVec ) * SpeedRatio;
 
 		}
-
+		this;
 		pArmor_Index.at( i )->Break( *pInitSpeed, DelayFrame );
+		// ワールド座標を一時的に保持。
+		D3DXVECTOR3 tmp = pArmor_Index.at( i )->transform.GetWorldPosision();
+		// アーマーとの親子関係を失効
+		pArmor_Index.at( i )->transform.pParent = NULL;
+		// 改めてワールドポジションを設定
+		pArmor_Index.at( i )->transform.Position = tmp;
+		D3DXVECTOR3 tmppos = pArmor_Index.at( i )->transform.Position;
+		tmppos = tmppos;
 	}
 	this->pArmor_Index.clear();
 }

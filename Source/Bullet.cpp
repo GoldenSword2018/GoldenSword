@@ -20,8 +20,8 @@
 //===============================================
 //	ƒ}ƒNƒ’è‹`
 //===============================================
-#define BULLET_NORMAL_SPEED (0.05f)
-#define BULLET_NORMAL_RADIUS (1)		//’e‚Ì”¼Œa
+#define BULLET_NORMAL_SPEED (0.1f)
+#define BULLET_NORMAL_RADIUS ( 1 )		//’e‚Ì”¼Œa
 #define BULLET_COUNT (256)
 #define BULLET_MAX (256)
 #define CORRECT_WAIT(a) (a/100.f)		//•â³‚Ì‹­‚³
@@ -149,12 +149,12 @@ Bullet* Bullet_GetBullet(int index)
 //-------------------------------------
 Bullet::Bullet()
 	:
-	ColSphape(&this->transform,0.5f)
+	ColSphape(&this->transform,1.0f)
 {
 	IsEnable = false;
 }
 
-Bullet::Bullet(Transform* pTransform, Texture* pTexture):GameObject(pTransform,pTexture),ColSphape(&transform,0.5f)
+Bullet::Bullet(Transform* pTransform, Texture* pTexture):GameObject(pTransform,pTexture),ColSphape(&transform,1.0f)
 {
 	type = NORMAL;
 	Bullet();
@@ -175,8 +175,6 @@ static float value = 0;
 //-------------------------------------
 void Bullet::Update()
 {
-	// ColSphape.Pos = this->BulletMesh.vecPosition;
-
 	switch (this->type)
 	{
 	case NORMAL:
@@ -226,6 +224,8 @@ void Bullet::Update()
 
 	fRoll += 0.001f;
 	value += 0.01f;
+
+	this->transform.Position = this->BulletMesh.vecPosition;
 }
 
 //-------------------------------------

@@ -499,7 +499,6 @@ void CTeamProt_Initialize()
 	//Screw_08.SetArmor(&Armor_8_43);			//アーマー設定
 	//Screw_08.SetArmor(&Armor_8_44);			//アーマー設定
 
-	Grid_Initialize();
 	g_Camera.Set_Main(0);
 	g_Camera1.Set_Main(1);
 	g_Camera2.Set_Main(2);
@@ -527,7 +526,6 @@ void CTeamProt_Render()
 	DebugCollisionModule::GetInstance()->BatchBegin();
 	GameObject::g_Render();
 	DebugCollisionModule::GetInstance()->BatchRun();
-	//Grid_Render();
 
 	//Camera::Begin();
 

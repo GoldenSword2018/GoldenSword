@@ -37,9 +37,9 @@ static LPDIRECT3DTEXTURE9 g_pTextures[TEXTURE_NAME_END];
 //-------------------------------------
 static TEXTUREDATA_INDEX Texture_Index[] = 
 {
-	{CubeTexture,"Texture/tex.png"},
+	{CubeTexture,"Texture/StageBlockTexture.png"},
 	{EroTexture1,"Texture/ero1.jpg"},
-	{EroTexture2,"Texture/ero2.jpg"},
+	{EroTexture2,"Texture/ero2.jpg"}
 };
 
 #endif

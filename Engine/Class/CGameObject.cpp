@@ -70,10 +70,6 @@ void GameObject::g_Update()
 		pIndex.at(i)->Update();
 	}
 
-	for( int i = 0; i < pIndex.size(); i++ )
-	{
-		pIndex.at( i )->transform.Convert();
-	}
 }
 
 //----------------------------------

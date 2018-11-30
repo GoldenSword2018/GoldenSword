@@ -63,7 +63,6 @@ StageBlockList* g_pBlockTest = NULL;
 void TestSpace_Initialize() 
 {
 	StageBlock::Initialize();
-	Grid_Initialize();
 	//g_ppStageBlocks = new StageBlock*[100];
 	//int index = 0;
 	//for (int z = 0; z < 10; z++)
@@ -84,15 +83,15 @@ void TestSpace_Initialize()
 	//	}
 	//}
 
-	g_pScrew = new CoreObject(
-		&Transform(
-			D3DXVECTOR3(0.0f, 0.5f, 0.0f),
-			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
-		CoreObject::CORE_JUDGE_TYPE_0,
-		D3DXVECTOR3(0.0f, -1.0f, 0.0f)
-		);
+	//g_pScrew = new CoreObject(
+	//	&Transform(
+	//		D3DXVECTOR3(0.0f, 0.5f, 0.0f),
+	//		D3DXVECTOR3(1.0f, 1.0f, 1.0f),
+	//		D3DXVECTOR3(0.0f, 0.0f, 0.0f)
+	//	), &Texture(),
+	//	CoreObject::CORE_JUDGE_TYPE_0,
+	//	D3DXVECTOR3(0.0f, -1.0f, 0.0f)
+	//	);
 
 	
 	//for (int i = 0; i < 100; i++)
@@ -102,7 +101,7 @@ void TestSpace_Initialize()
 	
 
 	//ˆÈ‰ºŽ¸”sEEE
-	g_pBlockA = new StageBlockList(D3DXVECTOR3(-34, 1, 23), RADIALLY, 0);
+	g_pBlockA = new StageBlockList(D3DXVECTOR3(-34.0f, 1.0f, 23.0f ), RADIALLY, 0.0f );
 
 	for (float x = 0; x < 2; x++)
 	{
@@ -118,7 +117,7 @@ void TestSpace_Initialize()
 	}
 	g_pScrewA = new CoreObject(
 		&Transform(
-			D3DXVECTOR3(-32.5, 6, 23),
+			D3DXVECTOR3(-32.5f, 6.0f, 23.0f),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
 		), &Texture(),
@@ -436,256 +435,256 @@ void TestSpace_Initialize()
 	);
 	g_pBlockL->SetAll(g_pScrewL);
 
-	g_pBlockM = new StageBlockList(D3DXVECTOR3(10, 1, -38), RADIALLY, 0);
-	for (float x = 0; x < 8; x++)
-	{
-		for (float z = 0; z < 14; z++)
-		{
-			for (float y = 0; y < 11; y++)
-			{
-				g_pBlockM->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-	}
-	g_pScrewM = new CoreObject(
-		&Transform(
-			D3DXVECTOR3(9.5f, 6.0f, -34.0f),
-			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
-		CoreObject::CORE_JUDGE_TYPE_0,
-		D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
-	);
-	g_pBlockM->SetAll(g_pScrewM);
+	//g_pBlockM = new StageBlockList(D3DXVECTOR3(10, 1, -38), RADIALLY, 0);
+	//for (float x = 0; x < 8; x++)
+	//{
+	//	for (float z = 0; z < 14; z++)
+	//	{
+	//		for (float y = 0; y < 11; y++)
+	//		{
+	//			g_pBlockM->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//}
+	//g_pScrewM = new CoreObject(
+	//	&Transform(
+	//		D3DXVECTOR3(9.5f, 6.0f, -34.0f),
+	//		D3DXVECTOR3(1.0f, 1.0f, 1.0f),
+	//		D3DXVECTOR3(0.0f, 0.0f, 0.0f)
+	//	), &Texture(),
+	//	CoreObject::CORE_JUDGE_TYPE_0,
+	//	D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
+	//);
+	//g_pBlockM->SetAll(g_pScrewM);
 
-	g_pBlockN = new StageBlockList(D3DXVECTOR3(15, 1, -47), RADIALLY, 0);
-	for (float x = 0; x < 8; x++)
-	{
-		for (float z = 0; z < 11; z++)
-		{
-			for (float y = 0; y < 8; y++)
-			{
-				g_pBlockN->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-	}
-	g_pScrewN = new CoreObject(
-		&Transform(
-			D3DXVECTOR3(18.5f, 4.5f, -47.5f),
-			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
-		CoreObject::CORE_JUDGE_TYPE_0,
-		D3DXVECTOR3(0.0f, 0.0f, -1.0f)
-	);
-	g_pBlockN->SetAll(g_pScrewN);
+	//g_pBlockN = new StageBlockList(D3DXVECTOR3(15, 1, -47), RADIALLY, 0);
+	//for (float x = 0; x < 8; x++)
+	//{
+	//	for (float z = 0; z < 11; z++)
+	//	{
+	//		for (float y = 0; y < 8; y++)
+	//		{
+	//			g_pBlockN->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//}
+	//g_pScrewN = new CoreObject(
+	//	&Transform(
+	//		D3DXVECTOR3(18.5f, 4.5f, -47.5f),
+	//		D3DXVECTOR3(1.0f, 1.0f, 1.0f),
+	//		D3DXVECTOR3(0.0f, 0.0f, 0.0f)
+	//	), &Texture(),
+	//	CoreObject::CORE_JUDGE_TYPE_0,
+	//	D3DXVECTOR3(0.0f, 0.0f, -1.0f)
+	//);
+	//g_pBlockN->SetAll(g_pScrewN);
 
 
-	g_pBlockO = new StageBlockList(D3DXVECTOR3(26, 1, 24), RADIALLY, 0);
-	for (float x = 0; x < 10; x++)
-	{
-		for (float y = 0; y < 8; y++)
-		{
-			g_pBlockO->CreateBlockRel(D3DXVECTOR3(x, y, 0));
-		}
-	}
-	for (float z = 1; z < 8; z++)
-	{
-		for (float y = 0; y < 8; y++)
-		{
-			g_pBlockO->CreateBlockRel(D3DXVECTOR3(0, y, z));
-		}
-	}
-	for (float z = 12; z < 18; z++)
-	{
-		for (float y = 0; y < 8; y++)
-		{
-			g_pBlockO->CreateBlockRel(D3DXVECTOR3(0, y, z));
-		}
-	}
-	for (float x = 0; x < 10; x++)
-	{
-		for (float y = 0; y < 8; y++)
-		{
-			g_pBlockO->CreateBlockRel(D3DXVECTOR3(x, y, 18));
-		}
-	}
-	for (float z = 1; z < 18; z++)
-	{
-		for (float y = 0; y < 8; y++)
-		{
-			g_pBlockO->CreateBlockRel(D3DXVECTOR3(9, y, z));
-		}
-	}
-	for (float x = 0; x < 10; x++)
-	{
-		for (float z = 0; z < 19; z++)
-		{
-			g_pBlockO->CreateBlockRel(D3DXVECTOR3(x, 8, z));
-		}
-	}
-	g_pScrewO = new CoreObject(
-		&Transform(
-			D3DXVECTOR3(25.5f, 9.0f, 33.5f),
-			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
-		CoreObject::CORE_JUDGE_TYPE_0,
-		D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
-	);
-	g_pBlockO->SetAll(g_pScrewO);
+	//g_pBlockO = new StageBlockList(D3DXVECTOR3(26, 1, 24), RADIALLY, 0);
+	//for (float x = 0; x < 10; x++)
+	//{
+	//	for (float y = 0; y < 8; y++)
+	//	{
+	//		g_pBlockO->CreateBlockRel(D3DXVECTOR3(x, y, 0));
+	//	}
+	//}
+	//for (float z = 1; z < 8; z++)
+	//{
+	//	for (float y = 0; y < 8; y++)
+	//	{
+	//		g_pBlockO->CreateBlockRel(D3DXVECTOR3(0, y, z));
+	//	}
+	//}
+	//for (float z = 12; z < 18; z++)
+	//{
+	//	for (float y = 0; y < 8; y++)
+	//	{
+	//		g_pBlockO->CreateBlockRel(D3DXVECTOR3(0, y, z));
+	//	}
+	//}
+	//for (float x = 0; x < 10; x++)
+	//{
+	//	for (float y = 0; y < 8; y++)
+	//	{
+	//		g_pBlockO->CreateBlockRel(D3DXVECTOR3(x, y, 18));
+	//	}
+	//}
+	//for (float z = 1; z < 18; z++)
+	//{
+	//	for (float y = 0; y < 8; y++)
+	//	{
+	//		g_pBlockO->CreateBlockRel(D3DXVECTOR3(9, y, z));
+	//	}
+	//}
+	//for (float x = 0; x < 10; x++)
+	//{
+	//	for (float z = 0; z < 19; z++)
+	//	{
+	//		g_pBlockO->CreateBlockRel(D3DXVECTOR3(x, 8, z));
+	//	}
+	//}
+	//g_pScrewO = new CoreObject(
+	//	&Transform(
+	//		D3DXVECTOR3(25.5f, 9.0f, 33.5f),
+	//		D3DXVECTOR3(1.0f, 1.0f, 1.0f),
+	//		D3DXVECTOR3(0.0f, 0.0f, 0.0f)
+	//	), &Texture(),
+	//	CoreObject::CORE_JUDGE_TYPE_0,
+	//	D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
+	//);
+	//g_pBlockO->SetAll(g_pScrewO);
 
-	g_pBlockP = new StageBlockList(D3DXVECTOR3(32, 1, -16), RADIALLY, 0);
-	float nP1 = 0;
-	for (float z = 0; z < 8; z++)
-	{
-		for (float x = 0; x < 7; x++)
-		{
-			for (float y = 0; y <= nP1; y++)
-			{
-				g_pBlockP->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-		nP1++;
-	}
-	for (float x = 0; x < 7; x++)
-	{
-		for (float z = 7; z < 18; z++)
-		{
-			for (float y = 0; y < 8; y++)
-			{
-				g_pBlockP->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-	}
-	float nP2 = 7;
-	for (float z = 18; z < 25; z++)
-	{
-		for (float x = 0; x < 7; x++)
-		{
-			for (float y = 0; y < nP2; y++)
-			{
-				g_pBlockP->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-		nP2--;
-	}
-	for (float z = 8; z < 18; z++)
-	{
-		for (float y = 8; y < 12; y++)
-		{
-			g_pBlockP->CreateBlockRel(D3DXVECTOR3(0, y, z));
-		}
-	}
-	g_pScrewP = new CoreObject(
-		&Transform(
-			D3DXVECTOR3(31.0f, 5.0f, -4.0f),
-			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
-		CoreObject::CORE_JUDGE_TYPE_0,
-		D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
-	);
-	g_pBlockP->SetAll(g_pScrewP);
+	//g_pBlockP = new StageBlockList(D3DXVECTOR3(32, 1, -16), RADIALLY, 0);
+	//float nP1 = 0;
+	//for (float z = 0; z < 8; z++)
+	//{
+	//	for (float x = 0; x < 7; x++)
+	//	{
+	//		for (float y = 0; y <= nP1; y++)
+	//		{
+	//			g_pBlockP->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//	nP1++;
+	//}
+	//for (float x = 0; x < 7; x++)
+	//{
+	//	for (float z = 7; z < 18; z++)
+	//	{
+	//		for (float y = 0; y < 8; y++)
+	//		{
+	//			g_pBlockP->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//}
+	//float nP2 = 7;
+	//for (float z = 18; z < 25; z++)
+	//{
+	//	for (float x = 0; x < 7; x++)
+	//	{
+	//		for (float y = 0; y < nP2; y++)
+	//		{
+	//			g_pBlockP->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//	nP2--;
+	//}
+	//for (float z = 8; z < 18; z++)
+	//{
+	//	for (float y = 8; y < 12; y++)
+	//	{
+	//		g_pBlockP->CreateBlockRel(D3DXVECTOR3(0, y, z));
+	//	}
+	//}
+	//g_pScrewP = new CoreObject(
+	//	&Transform(
+	//		D3DXVECTOR3(31.0f, 5.0f, -4.0f),
+	//		D3DXVECTOR3(1.0f, 1.0f, 1.0f),
+	//		D3DXVECTOR3(0.0f, 0.0f, 0.0f)
+	//	), &Texture(),
+	//	CoreObject::CORE_JUDGE_TYPE_0,
+	//	D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
+	//);
+	//g_pBlockP->SetAll(g_pScrewP);
 
-	g_pBlockQ = new StageBlockList(D3DXVECTOR3(31, 1, -38), RADIALLY, 0);
-	for (float x = 0; x < 6; x++)
-	{
-		for (float z = 0; z < 8; z++)
-		{
-			for (float y = 0; y < 8; y++)
-			{
-				g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-	}
-	for (float x = 1; x < 4; x++)
-	{
-		for (float z = 1; z < 7; z++)
-		{
-			for (float y = 8; y < 10; y++)
-			{
-				g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-	}
-	for (float x = 0; x < 6; x++)
-	{
-		for (float z = 0; z < 8; z++)
-		{
-			for (float y = 10; y < 16; y++)
-			{
-				g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-	}
-	for (float x = 1; x < 4; x++)
-	{
-		for (float z = 1; z < 7; z++)
-		{
-			for (float y = 16; y < 18; y++)
-			{
-				g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-	}
-	for (float x = 0; x < 6; x++)
-	{
-		for (float z = 0; z < 8; z++)
-		{
-			for (float y = 18; y < 23; y++)
-			{
-				g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-	}
-	for (float x = 1; x < 4; x++)
-	{
-		for (float z = 1; z < 7; z++)
-		{
-			for (float y = 23; y < 25; y++)
-			{
-				g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-	}
-	for (float x = 0; x < 6; x++)
-	{
-		for (float z = 0; z < 8; z++)
-		{
-			for (float y = 25; y < 29; y++)
-			{
-				g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-	}
-	for (float x = 1; x < 5; x++)
-	{
-		for (float z = 2; z < 6; z++)
-		{
-			g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, 29, z));
-		}
-	}
-	for (float x = 2; x < 4; x++)
-	{
-		for (float z = 3; z < 5; z++)
-		{
-			for (float y = 30; y < 32; y++)
-			{
-				g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
-			}
-		}
-	}
-	g_pScrewQ = new CoreObject(
-		&Transform(
-			D3DXVECTOR3(30.5f, 15.0f, -34.5f),
-			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
-		CoreObject::CORE_JUDGE_TYPE_0,
-		D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
-	);
-	g_pBlockQ->SetAll(g_pScrewQ);
+	//g_pBlockQ = new StageBlockList(D3DXVECTOR3(31, 1, -38), RADIALLY, 0);
+	//for (float x = 0; x < 6; x++)
+	//{
+	//	for (float z = 0; z < 8; z++)
+	//	{
+	//		for (float y = 0; y < 8; y++)
+	//		{
+	//			g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//}
+	//for (float x = 1; x < 4; x++)
+	//{
+	//	for (float z = 1; z < 7; z++)
+	//	{
+	//		for (float y = 8; y < 10; y++)
+	//		{
+	//			g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//}
+	//for (float x = 0; x < 6; x++)
+	//{
+	//	for (float z = 0; z < 8; z++)
+	//	{
+	//		for (float y = 10; y < 16; y++)
+	//		{
+	//			g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//}
+	//for (float x = 1; x < 4; x++)
+	//{
+	//	for (float z = 1; z < 7; z++)
+	//	{
+	//		for (float y = 16; y < 18; y++)
+	//		{
+	//			g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//}
+	//for (float x = 0; x < 6; x++)
+	//{
+	//	for (float z = 0; z < 8; z++)
+	//	{
+	//		for (float y = 18; y < 23; y++)
+	//		{
+	//			g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//}
+	//for (float x = 1; x < 4; x++)
+	//{
+	//	for (float z = 1; z < 7; z++)
+	//	{
+	//		for (float y = 23; y < 25; y++)
+	//		{
+	//			g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//}
+	//for (float x = 0; x < 6; x++)
+	//{
+	//	for (float z = 0; z < 8; z++)
+	//	{
+	//		for (float y = 25; y < 29; y++)
+	//		{
+	//			g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//}
+	//for (float x = 1; x < 5; x++)
+	//{
+	//	for (float z = 2; z < 6; z++)
+	//	{
+	//		g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, 29, z));
+	//	}
+	//}
+	//for (float x = 2; x < 4; x++)
+	//{
+	//	for (float z = 3; z < 5; z++)
+	//	{
+	//		for (float y = 30; y < 32; y++)
+	//		{
+	//			g_pBlockQ->CreateBlockRel(D3DXVECTOR3(x, y, z));
+	//		}
+	//	}
+	//}
+	//g_pScrewQ = new CoreObject(
+	//	&Transform(
+	//		D3DXVECTOR3(30.5f, 15.0f, -34.5f),
+	//		D3DXVECTOR3(1.0f, 1.0f, 1.0f),
+	//		D3DXVECTOR3(0.0f, 0.0f, 0.0f)
+	//	), &Texture(),
+	//	CoreObject::CORE_JUDGE_TYPE_0,
+	//	D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
+	//);
+	//g_pBlockQ->SetAll(g_pScrewQ);
 
 };
 
