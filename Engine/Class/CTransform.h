@@ -79,7 +79,6 @@ public:
 	D3DXMATRIX GetWorldMatrix( void );
 	void SetWorldPosition( D3DXVECTOR3 Position );
 	void SetLocalPosition( D3DXVECTOR3 Position );
-
 };
 
 //===============================================
