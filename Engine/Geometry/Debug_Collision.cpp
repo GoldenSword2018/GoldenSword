@@ -170,6 +170,7 @@ void DebugCollisionModule::Sphere_BatchRun( void )
 void DebugCollisionModule::BatchDraw( const ShapeSphere *Sphere )
 {
 #if defined(_DEBUG) || defined(DEBUG)
+	/*
 	// Šù‚É•`‰æÅ‘å”‚ğ’´‚¦‚Äƒoƒbƒ`“o˜^‚µ‚Ä‚¢‚½‚çreturn ‚Æ‚è‚ ‚¦‚¸
 	if( CIRCLE_DRAW_MAX < SphereCount  )
 	{
@@ -215,7 +216,7 @@ void DebugCollisionModule::BatchDraw( const ShapeSphere *Sphere )
 	}
 
 	SphereCount++;
-
+	*/
 #endif // _DEBUG || DEBUG
 }
 
@@ -263,6 +264,7 @@ void DebugCollisionModule::Cuboid_BatchRun( void )
 void DebugCollisionModule::BatchDraw( const ShapeOBB* pCuboid )
 {
 #if defined(_DEBUG) || defined(DEBUG)
+	/*
 	// Šù‚É•`‰æÅ‘å”‚ğ’´‚¦‚Äƒoƒbƒ`“o˜^‚µ‚Ä‚¢‚½‚çreturn ‚Æ‚è‚ ‚¦‚¸
 	if( CUBOID_DRAW_MAX < CuboidCount )
 	{
@@ -336,6 +338,6 @@ void DebugCollisionModule::BatchDraw( const ShapeOBB* pCuboid )
 	pCuboidVertexIndex[ IndexMargin + 22 ] = (WORD) ( Margin + 7 );
 	pCuboidVertexIndex[ IndexMargin + 23 ] = (WORD) ( Margin + 2 );
 	CuboidCount++;
-
+	*/
 #endif // _DEBUG || DEBUG 
 }
