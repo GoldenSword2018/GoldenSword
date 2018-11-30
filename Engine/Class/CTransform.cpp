@@ -165,13 +165,13 @@ void Transform::Set_WorldTransform()
 		this->WorldRotation = this->Rotation;
 	}
 }
-/* ============== 不出来な子 ==================================================================================== */
+
 D3DXVECTOR3 Transform::GetWorldPosision( void )
 {
 	if( this->pParent != NULL )
 	{
 		D3DXVECTOR3 WorldPos;
-		D3DXVec3TransformCoord( &WorldPos, &this->Position, &this->GetWorldMatrix() );
+		D3DXVec3TransformCoord( &WorldPos, &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), &this->GetWorldMatrix() );
 		return WorldPos;
 	}
 	else
@@ -179,54 +179,24 @@ D3DXVECTOR3 Transform::GetWorldPosision( void )
 		return this->Position;
 	}
 }
-/* ============== 不出来な子 終わり============================================================================== */
 
 
 D3DXMATRIX Transform::GetWorldMatrix( void )
 {
-
-
-	//D3DXMATRIX MtxTransform;
-	//D3DXMATRIX MtxScale;
-	//D3DXMATRIX MtxRotation;
-
-	////変換
-	//D3DXMatrixIdentity( &this->MtxWorld );
-	//D3DXMatrixTranslation( &MtxTransform, this->Position.x, this->Position.y, this->Position.z );
-	//D3DXMatrixScaling( &MtxScale, this->Scale.x, this->Scale.y, this->Scale.z );
-	//D3DXMatrixRotationYawPitchRoll( &MtxRotation, this->Rotation.y, this->Rotation.x, this->Rotation.z );
-
-	////合成
-	//this->MtxWorld = MtxScale * MtxRotation * MtxTransform;
-
-	////親が居る
-	//if( this->pParent != NULL )
-	//{
-	//	//親の行列を見てくる
-	//	this->MtxWorld *= this->pParent->GetWorldMatrix();
-
-	//}
-	//else
-	//{
-
-	//}
-
-
-	//return this->MtxWorld;
-	D3DXMATRIX MtxTransform;
+	D3DXMATRIX MtxTranslation;
 	D3DXMATRIX MtxRotation;
 	D3DXMATRIX MtxScale;
 
 
 	//変換
-	D3DXMatrixTranslation( &MtxTransform, this->Position.x, this->Position.y, this->Position.z );
+	D3DXMatrixTranslation( &MtxTranslation, this->Position.x, this->Position.y, this->Position.z );
 	D3DXMatrixScaling( &MtxScale, this->Scale.x, this->Scale.y, this->Scale.z );
 	D3DXMatrixRotationYawPitchRoll( &MtxRotation, this->Rotation.y, this->Rotation.x, this->Rotation.z );
 
 
 	D3DXMATRIX _MtxWorld;
 	D3DXMatrixIdentity( &_MtxWorld );
-	_MtxWorld = MtxScale * MtxRotation * MtxTransform;
+	_MtxWorld = MtxScale * MtxRotation * MtxTranslation;
 
 	if( this->pParent != NULL )
 	{
@@ -240,7 +210,23 @@ D3DXMATRIX Transform::GetWorldMatrix( void )
 	return _MtxWorld;
 }
 
+void Transform::SetWorldPosition( D3DXVECTOR3 NewPos )
+{
+	if( this->pParent != NULL )
+	{ // 親がいるので、相対座標を変更。
+		this->Position += this->GetWorldPosision() - NewPos;
+	}
+	else
+	{ // 親がいないので、ワールド座標を変更
+		this->Position = NewPos;
+	}
+}
 
+
+void Transform::SetLocalPosition( D3DXVECTOR3 NewPos )
+{
+	this->Position = NewPos;
+}
 
 //===============================================
 //	Transform2
