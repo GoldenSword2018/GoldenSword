@@ -24,7 +24,7 @@
 #define CUBOID_VERTEX_COUNT     ( 8 )
 #define CUBOID_EDGE_COUNT       ( 12 )
 #define CUBOID_POINT_COUNT_PER_EDGE    ( 2 )
-#define CUBOID_DRAW_MAX			( 2048 )
+#define CUBOID_DRAW_MAX			( 10000 )
 //===============================================
 //	構造体
 //===============================================
@@ -170,7 +170,11 @@ void DebugCollisionModule::Sphere_BatchRun( void )
 void DebugCollisionModule::BatchDraw( const ShapeSphere *Sphere )
 {
 #if defined(_DEBUG) || defined(DEBUG)
-
+	// 既に描画最大数を超えてバッチ登録していたらreturn とりあえず
+	if( CIRCLE_DRAW_MAX < SphereCount  )
+	{
+		return;
+	}
 	int n = SphereCount * CIRCLE_VERTEX_COUNT;
 	D3DXVECTOR3 Pos = Sphere->GetEffectivePos();
 
@@ -259,6 +263,11 @@ void DebugCollisionModule::Cuboid_BatchRun( void )
 void DebugCollisionModule::BatchDraw( const ShapeOBB* pCuboid )
 {
 #if defined(_DEBUG) || defined(DEBUG)
+	// 既に描画最大数を超えてバッチ登録していたらreturn とりあえず
+	if( CUBOID_DRAW_MAX < CuboidCount )
+	{
+		return;
+	}
 	D3DXVECTOR3 AbsLocalX = pCuboid->NormalDirect[ 1 ] * pCuboid->Length[ 1 ];
 	D3DXVECTOR3 AbsLocalY = pCuboid->NormalDirect[ 2 ] * pCuboid->Length[ 2 ];
 	D3DXVECTOR3 AbsLocalZ = pCuboid->NormalDirect[ 0 ] * pCuboid->Length[ 0 ];

@@ -57,6 +57,8 @@ CoreObject *g_pScrewR = NULL;
 
 
 StageBlock** g_ppBlock = NULL;
+
+StageBlockList* g_pBlockTest = NULL;
 //èâä˙âª
 void TestSpace_Initialize() 
 {
@@ -91,24 +93,24 @@ void TestSpace_Initialize()
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(0.0f, -1.0f, 0.0f)
 		);
-//	g_pScrew->Set_JudgeType(CoreObject::CORE_JUDGE_TYPE_0);
-	/*
-	for (int i = 0; i < 100; i++)
-	{
-		g_pScrew->Set(g_ppStageBlocks[i]);
-	}
-	*/
+
+	
+	//for (int i = 0; i < 100; i++)
+	//{
+	//	g_pScrew->Set(g_ppStageBlocks[i]);
+	//}
+	
 
 	//à»â∫é∏îsÅEÅEÅE
-
 	g_pBlockA = new StageBlockList(D3DXVECTOR3(-34, 1, 23), RADIALLY, 0);
 
-	for (int x = 0; x < 2; x++)
+	for (float x = 0; x < 2; x++)
 	{
-		for (int z = 0; z < 2; z++)
+		for (float z = 0; z < 2; z++)
 		{
-			for (int y = 0; y < 15; y++)
+			for (float y = 0; y < 15; y++)
 			{
+
 				g_pBlockA->CreateBlockRel(D3DXVECTOR3(x, y, z));
 			}
 		}

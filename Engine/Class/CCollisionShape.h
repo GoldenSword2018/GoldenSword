@@ -94,7 +94,7 @@ public:
 };
 
 //-------------------------------------
-class ShapeOBB : public Shape
+class ShapeOBB : public Shape 
 {
 public:
 	D3DXVECTOR3 NormalDirect[ 3 ]; // 0:前, 1:右, 2: 上 単位ベクトル

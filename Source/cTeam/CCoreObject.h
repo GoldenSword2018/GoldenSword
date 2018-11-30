@@ -46,7 +46,7 @@ private:
 
 public:
 	bool bHit;							//当たった
-	D3DXVECTOR3 face;					//ネジ向き
+	D3DXVECTOR3 LocalFace;				//ネジ向き
 	ShapeSphere ColShape;				//ネジ自身
 	ShapeSphere CorrectSphere;			//補正球
 

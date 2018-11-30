@@ -159,14 +159,16 @@ StageBlock::StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGIN
 //	描画
 //-------------------------------------
 void StageBlock::Render()
-{
-	LPDIRECT3DDEVICE9 pDevice = System_GetDevice();
+{ // やばい GetWorldPosisionがやばい.
+	// 11/28現状子が親のスケールを受け継いでしまうので座標を相対位置に設定するだけでは不十分. 
+	// 親のScale（ないし、回転など一部の要素）の影響を受けないようにする必要がある（？）
+	LPDIRECT3DDEVICE9 pDevice = System_GetDevice(); 
 
 	D3DXMATRIX mtxWorld;
 	D3DXMATRIX mtxTranslation;
 	D3DXMATRIX mtxScaling;
 
-	D3DXMatrixTranslation(&mtxTranslation, transform.Position.x, transform.Position.y, transform.Position.z);
+	D3DXMatrixTranslation(&mtxTranslation, transform.GetWorldPosision().x, transform.GetWorldPosision().y, transform.GetWorldPosision().z);
 	D3DXMatrixScaling(&mtxScaling, transform.Scale.x, transform.Scale.y, transform.Scale.z);
 
 	mtxWorld = mtxScaling * mtxTranslation;
@@ -177,4 +179,5 @@ void StageBlock::Render()
 	pDevice->SetStreamSource(0, pVertexBuffer, 0, sizeof(StageBlockVertex));
 	pDevice->SetIndices(pIndexBuffer);
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, NUM_STAGE_VERTEX, 0, NUM_STAGE_VERTEX * 2 / 4);
+	ColShape.DebugDraw();
 }

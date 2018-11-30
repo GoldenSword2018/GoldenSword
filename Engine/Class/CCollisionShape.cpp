@@ -174,7 +174,6 @@ bool CollisionCheck::SphereVsSphere( ShapeSphere& Sphere0, ShapeSphere& Sphere1 
 
 bool CollisionCheck::OBBVsOBB( ShapeOBB& OBB0, ShapeOBB& OBB1 )
 {
-
 	// 各方向ベクトルの確保
 	// （N***:標準化方向ベクトル）
 	D3DXVECTOR3 NAe1 = OBB0.NormalDirect[ 0 ], Ae1 = NAe1 * OBB0.Length[ 0 ];

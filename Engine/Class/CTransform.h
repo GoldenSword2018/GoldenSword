@@ -75,9 +75,6 @@ public:
 	void Release_Parent();					//親と離れる
 	void Set_WorldTransform();
 	D3DXVECTOR3 GetWorldPosision( void );
-	D3DXVECTOR3 GetWorldRotation( void );
-	void GetLocalUpForwardRight( D3DXVECTOR3* pUp, D3DXVECTOR3* pForward, D3DXVECTOR3* pRight ); // 各引数に値を設定します。
-	void GetWorldUpForwardRight( D3DXVECTOR3* pUp, D3DXVECTOR3* pForward, D3DXVECTOR3* pRight ); // 各引数に値を設定します。
 	D3DXMATRIX GetWorldMatrix( void );
 };
 
