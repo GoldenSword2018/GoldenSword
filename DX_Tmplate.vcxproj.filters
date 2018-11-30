@@ -231,6 +231,9 @@
     <ClCompile Include="CStageBlockList.cpp">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Geometry\MeshField_Ground.cpp">
+      <Filter>ソース ファイル\Engine\Geometry\MeshField</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Internal\Component.h">
@@ -379,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="CStageBlockList.h">
       <Filter>ソース ファイル\Assets\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Geometry\MeshField_Ground.h">
+      <Filter>ソース ファイル\Engine\Geometry\MeshField</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

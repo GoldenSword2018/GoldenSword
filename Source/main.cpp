@@ -16,14 +16,14 @@
 #include"XModel.h"
 #include"Screwdrop.h"
 
-#define MODEL_FILE ()
-
 #include"CTransform.h"
 
 #include"TestSpace.h"
 
 //Class
 #include"CUI.h"
+
+#include"MeshField_Ground.h"
 
 //===============================================
 //	ÉOÉçÅ[ÉoÉãïœêî
@@ -53,6 +53,7 @@ void Main_Initialize(void)
 {
 	Lighting_Initialize();
 
+	MeshField_Ground_Initialize();
 	XModel_Initialize();
 	Bullet_Initialize();
 	Screwdrop_Init();
@@ -80,7 +81,6 @@ void Main_UpdateBegin(void)
 	CTeamProt_Update();
 	TestSpace_UpdateBegin();
 
-
 }
 
 //=============================================================
@@ -92,7 +92,6 @@ void Main_Render(void)
 	TestSpace_Render();
 
 	uiSprite.render.Begin(R2D_SPRITE_ROTATE);
-	
 	Bullet_Render();
 	Screwdrop_Render();
 	Player_Render();

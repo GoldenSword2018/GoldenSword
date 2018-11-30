@@ -149,7 +149,7 @@ void MeshField_Ground_Render(const D3DXVECTOR3 Center,TEXTURE_NAME Texture)
 	LPDIRECT3DDEVICE9 Device = System_GetDevice();
 
 	D3DXMATRIX mtxWorld;
-	D3DXMatrixTranslation(&mtxWorld,Center.x,0,Center.z);
+	D3DXMatrixTranslation(&mtxWorld,Center.x,Center.y,Center.z);
 	Device->SetTransform(D3DTS_WORLD,&mtxWorld);
 	Device->SetMaterial(&g_Material);
 	Device->SetStreamSource(0,g_pMeshField_Ground_VertexBuffer,0,sizeof(MeshFieldVertex3D));
