@@ -146,12 +146,7 @@ void CoreObject::Render()
 		D3DXVECTOR3 vecFaceGroud;
 		D3DXVECTOR3 vecRight;
 
-
-		D3DXMatrixTranslation(&mtxBaseTranslation, 0.0f, -0.5f, 0.0f);    // 原点に平行移動
-		D3DXMatrixRotationY(&mtxBaseRotation, D3DX_PI);                    // Y軸周りに半回転して正面に向ける
-		D3DXMatrixScaling(&mtxBaseScaling, 0.6f, 0.6f, 0.6f );            // サイズ調整
-
-		mtxBaseTransform = mtxBaseTranslation * mtxBaseRotation * mtxBaseScaling;    // 基準変換行列の設定
+		D3DXMatrixIdentity( &mtxBaseTransform );
 
 		if (this->LocalFace == D3DXVECTOR3(0.0f, 1.0f, 0.0f))
 		{
@@ -179,7 +174,6 @@ void CoreObject::Render()
 		this->transform.MtxWorld = mtxBaseTransform * this->transform.GetWorldMatrix();
 
 		////ネジの描画
-		// this->transform.Scale = D3DXVECTOR3( 0.4f, 0.4f, 0.4f );
 		XModel_Render(GetMeshData(ScrewIndex), this->transform.MtxWorld );
 
 		//当たり判定の描画

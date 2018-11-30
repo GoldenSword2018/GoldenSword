@@ -159,7 +159,7 @@ StageBlock::StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGIN
 //	描画
 //-------------------------------------
 void StageBlock::Render()
-{ // やばい GetWorldPosisionがやばい.
+{ 
 	// 11/28現状子が親のスケールを受け継いでしまうので座標を相対位置に設定するだけでは不十分. 
 	// 親のScale（ないし、回転など一部の要素）の影響を受けないようにする必要がある（？）
 	LPDIRECT3DDEVICE9 pDevice = System_GetDevice(); 
@@ -168,6 +168,7 @@ void StageBlock::Render()
 	D3DXMATRIX mtxTranslation;
 	D3DXMATRIX mtxScaling;
 
+	D3DXVECTOR3 pos = transform.GetWorldPosision();
 	D3DXMatrixTranslation(&mtxTranslation, transform.GetWorldPosision().x, transform.GetWorldPosision().y, transform.GetWorldPosision().z);
 	D3DXMatrixScaling(&mtxScaling, transform.Scale.x, transform.Scale.y, transform.Scale.z);
 

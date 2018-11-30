@@ -71,11 +71,14 @@ public:
 public:
 
 	D3DXMATRIX Convert();					//変換開始
-	void Set_Parent(Transform* pParent);		//親を設定
+	void Set_Parent(Transform* pParent);	//親を設定
 	void Release_Parent();					//親と離れる
 	void Set_WorldTransform();
+	// ワールド座標へのアクセサ
 	D3DXVECTOR3 GetWorldPosision( void );
 	D3DXMATRIX GetWorldMatrix( void );
+	void SetWorldPosition( D3DXVECTOR3 Position );
+	void SetLocalPosition( D3DXVECTOR3 Position );
 };
 
 //===============================================
