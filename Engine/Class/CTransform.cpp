@@ -137,7 +137,8 @@ void Transform::Set_Parent(Transform* pParent)
 //-------------------------------------
 void Transform::Release_Parent()
 {
-
+	this->pParent = NULL;
+	this->Set_WorldTransform();
 }
 
 //-----------------------------------------------

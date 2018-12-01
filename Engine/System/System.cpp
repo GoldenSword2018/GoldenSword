@@ -1,27 +1,7 @@
 //
 //	System.cpp
-//		Author:HIROMASA IKEDA	DATE:2018/09/13
+//		Author:HIROMASA IKEDA	DATE:2018/11/30
 //===============================================
-//
-//	マクロ条件で設定してあるもの
-//
-//	・入力関係			input.h
-//	・テクスチャ関係	Texture.h
-//	・描画関係			Sprite.h
-//	・タイマー			system_time.h
-//	・サウンド			sound.h
-//
-//	デバッグ
-//	・デバッグCircle	Debug_Circle.h
-//	・デバッグfont		debug_font.h
-//
-//-----------------------------------------------
-//
-//	left Shift + Dキーでデバッグ表示を有効にする場合
-//	#define	DEBUG_KEY_ENABLE 
-//	を定義
-//
-//-----------------------------------------------
 #include<Windows.h>
 #include<d3dx9.h>
 
@@ -107,12 +87,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	g_Msg = {};				//Message
 
-	System_Initialize();	//初期化
+	System_Initialize();	//システム初期化
 
 	//------------------------------------
 	//	メインループ
 	//------------------------------------
-	Main_Initialize();
+
+	Main_Initialize();		//Main初期化
 
 	do
 	{

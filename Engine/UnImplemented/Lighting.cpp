@@ -41,22 +41,6 @@ void Lighting_Initialize()
 	System_GetDevice()->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_RGBA(64, 64, 64, 255));
 	System_GetDevice()->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_COLOR1);
 
-	/*
-		D3DMCS_COLOR1 頂点カラーをマテリアルの色にします。
-		D3DMCS_MATERIAL マテリアルをマテリアルの色にします。
-
-		提案1
-		 ライトらかSetRenderStateの設定を消す。
-		 キューブなどの描画にD3DMCS_COLOR1
-		 モデルの描画にD3DMCS_MATERIAL
-
-		提案2
-		 どちらかをデフォルトを設定して
-		 違うやつをやった後に、デフォルトに戻す
-	
-		提案3
-		　全てをマテリアルにする
-	*/
 }
 
 //===============================================

@@ -41,6 +41,14 @@ ACamera::ACamera(D3DXVECTOR3 Position,D3DXVECTOR3 At,float atDistance,float fov)
 	this->atDistance = atDistance;
 	this->fov = fov;
 	this->up = CAMERA_UP;
+
+	//前
+	this->forward = CAMERA_FORWARD;
+	D3DXVec3Normalize(&this->forward, &this->forward);
+
+	//右
+	D3DXVec3Cross(&this->right, &this->forward, &this->up);
+	D3DXVec3Normalize(&this->right, &this->right);
 }
 
 //-------------------------------------
@@ -68,10 +76,10 @@ bool ACamera::Begin(int ScreenNum)
 	
 	D3DXMATRIX mtxProjection;		//プロジェクション変換行列
 	D3DXMatrixPerspectiveFovLH(&mtxProjection, D3DXToRadian(60), (float)WINDOWSCREEN_WIDTH / WINDOWSCREEN_HEIGHT, 0.1f, 100.0f);	//Fovは画角　変換
-	D3DXMatrixLookAtLH(&pMainCamera[ScreenNum]->MtxView, &pMainCamera[ScreenNum]->Position, &pMainCamera[ScreenNum]->at, &pMainCamera[ScreenNum]->up);	//変換
-																							//カメラの座標を変更（ビュー行列）
-	System_GetDevice()->SetTransform(D3DTS_VIEW, &pMainCamera[ScreenNum]->MtxView);
 	System_GetDevice()->SetTransform(D3DTS_PROJECTION, &mtxProjection);
+	
+	D3DXMatrixLookAtLH(&pMainCamera[ScreenNum]->MtxView, &pMainCamera[ScreenNum]->Position, &pMainCamera[ScreenNum]->at, &pMainCamera[ScreenNum]->up);	//変換																					//カメラの座標を変更（ビュー行列）
+	System_GetDevice()->SetTransform(D3DTS_VIEW, &pMainCamera[ScreenNum]->MtxView);
 
 	return true;
 }
@@ -103,16 +111,8 @@ Camera::Camera(D3DXVECTOR3 Position, D3DXVECTOR3 At,float AtDistance,float fov)
 :
 	ACamera(Position,At,AtDistance,fov)
 {
+	//カメラの速度を設定
 	this->Speed = CAMERA_INITIALSPEED;
-
-	//前
-
-	this->forward = CAMERA_FORWARD;
-	D3DXVec3Normalize(&this->forward, &this->forward);
-
-	//右
-	D3DXVec3Cross(&this->right, &this->forward, &this->up);
-	D3DXVec3Normalize(&this->right, &this->right);
 }
 
 

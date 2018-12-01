@@ -102,7 +102,7 @@ public:
 	Camera(D3DXVECTOR3 Position, D3DXVECTOR3 At, float AtDistance, float fov);
 
 public:
-	virtual void Update();		//更新
+	virtual void Update() override;		//更新
 };
 
 

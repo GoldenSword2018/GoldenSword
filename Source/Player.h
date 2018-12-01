@@ -111,6 +111,7 @@ public:
 
 public:
 	Player(Transform* pTransform, D3DXVECTOR3* pForward);
+	~Player();
 
 private:
 	void Set_Parts();		//•”ˆÊ‚ğİ’è
@@ -132,6 +133,7 @@ public:
 //===============================================
 //	ŠÖ”
 //===============================================
+
 void Player_Initialize(void);
 void Player_Update(void);
 void Player_Render(void);

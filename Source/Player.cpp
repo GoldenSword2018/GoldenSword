@@ -40,8 +40,8 @@ Player Player01(
 void Player_Initialize(void)
 {
 	Player01.Camera.Set_Main(0);
-	Bullet_Initialize();
-	TmpCollisionChecker::GetInstance()->RegisterCollision_Player( &Player01 );
+	//Bullet_Initialize();			//二回目のBullet初期化
+	TmpCollisionChecker::GetInstance()->RegisterCollision_Player( &Player01 );	//プレイヤーの当たり判定を登録
 }
 
 //===============================================
@@ -50,7 +50,6 @@ void Player_Initialize(void)
 void Player_Update(void)
 {
 	Player01.Update();
-	Bullet_Update();
 }
 
 //===============================================
@@ -59,7 +58,6 @@ void Player_Update(void)
 void Player_Render(void)
 {
 	Player01.Render();
-	Bullet_Render();
 }
 
 //===============================================
@@ -108,6 +106,7 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		&D3DXVECTOR3(1.0f, 5.0f, 1.0f)
 	),
+
 	//コア
 	Head_Screw(&Transform(D3DCOLOR_RGBA(255,0,0,255))),
 	Body_Screw(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
@@ -144,6 +143,14 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 }
 
 //-------------------------------------
+//	デストラクタ
+//-------------------------------------
+Player::~Player()
+{
+
+}
+
+//-------------------------------------
 //	各部位を設定
 //-------------------------------------
 void Player::Set_Parts()
@@ -155,15 +162,6 @@ void Player::Set_Parts()
 	RightArm.Set_Parent(this);
 	LeftLeg.Set_Parent(this);
 	RightLeg.Set_Parent(this);
-
-	/*
-	Head_Screw.Set_Parent(this);
-	Body_Screw.Set_Parent(this);
-	LeftArm_Screw.Set_Parent(this);
-	RightArm_Screw.Set_Parent(this);
-	LeftLeg_Screw.Set_Parent(this);
-	RightLeg_Screw.Set_Parent(this);
-	*/
 
 	//
 	Head.transform.Position = D3DXVECTOR3(0.0f,1.4f,0.0f);
@@ -214,7 +212,7 @@ void Player::Update()
 
 	this->Camera.Update();
 	this->transform.Position.y = 0.0f;				//高さを固定
-	this->transform.Set_WorldTransform();				//WorldPositionを算出
+	this->transform.Set_WorldTransform();			//WorldPositionを算出
 	
 	SetForward(this->Camera.forward);
 	this->transform.Rotation.y = this->RotY;

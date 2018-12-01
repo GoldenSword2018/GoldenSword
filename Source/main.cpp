@@ -53,14 +53,14 @@ void Main_Initialize(void)
 {
 	Lighting_Initialize();
 
-	MeshField_Ground_Initialize();
-	XModel_Initialize();
-	Bullet_Initialize();
-	Screwdrop_Init();
+	MeshField_Ground_Initialize();	//MeshField仕様変更
+	XModel_Initialize();			//XModel仕様変更
+	Bullet_Initialize();			//Bulletの初期化 (問題処理)
+	Screwdrop_Init();				//ネジが落ちる
 	CTeamProt_Initialize();
 	TestSpace_Initialize();	//テストスペース
-	Player_Initialize();
-	Cube_Initialize();
+	Player_Initialize();			//
+	Cube_Initialize();				//Cube色をMaterialで管理
 
 	uiSprite = uiSprite;
 
@@ -75,7 +75,7 @@ void Main_Initialize(void)
 void Main_UpdateBegin(void)
 {
 	WinSock_Receiver();	//データを受信します。
-	Bullet_Update();
+	Bullet_Update();	//弾の更新
 	Screwdrop_Update();
 	Player_Update();
 	CTeamProt_Update();

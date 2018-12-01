@@ -35,17 +35,18 @@ void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable);
 //	Tmp Collision Collection
 //===============================================
 
-TmpCollisionChecker* TmpCollisionChecker::pInstance;
+TmpCollisionChecker* TmpCollisionChecker::pInstance = NULL;		//インスタンス
+
 //-------------------------------------
 //	GetInstance
 //-------------------------------------
-
 TmpCollisionChecker* TmpCollisionChecker::GetInstance( void )
 {
 	if( !pInstance )
 	{
-		pInstance = new TmpCollisionChecker;
+		pInstance = new TmpCollisionChecker();
 	}
+
 	return pInstance;
 }
 

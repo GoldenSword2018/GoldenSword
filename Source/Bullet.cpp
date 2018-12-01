@@ -6,6 +6,11 @@
 //		Author:MinodaTakamasa DATE:2018/10/23
 //
 //-----------------------------------------------
+//
+//	設計思想と噛み合って無いので、改造するべき事項。
+//
+//-----------------------------------------------
+
 #include <d3dx9.h>
 #include<math.h>
 #include "Bullet.h"
@@ -32,8 +37,9 @@
 //	グローバル変数
 //===============================================
 
-Bullet g_Bullet[BULLET_MAX];
-float fRoll = 0;
+Bullet g_Bullet[BULLET_MAX];	//弾配列
+float fRoll = 0;				//弾の回転
+static float value = 0;			//誰？
 
 //===============================================
 //	関数
@@ -44,7 +50,6 @@ float fRoll = 0;
 //-------------------------------------
 void Bullet_Initialize()
 {
-
 	for(int i = 0; i<BULLET_MAX; i++)
 	{
 		memcpy(&g_Bullet[i].BulletMesh, GetMeshData(BulletIndex), sizeof(MeshData));
@@ -166,7 +171,7 @@ void Bullet::TypeSet(TYPE tyep)
 	this->type = type;
 }
 
-static float value = 0;
+
 
 //-------------------------------------
 //	更新処理
@@ -182,7 +187,7 @@ void Bullet::Update()
 		this->BulletMesh.vecPosition += this->face * BULLET_NORMAL_SPEED;
 		break;
 
-	//回転させる弾
+	//回転させる弾	(動作が不詳、不必要な処理の可能性)
 	case TORNADO:
 		this->BulletMesh.vecPosition += this->face * BULLET_NORMAL_SPEED;
 		//this->transform.Position = MainPosition;
@@ -195,20 +200,34 @@ void Bullet::Update()
 		break;
 	}
 
-	D3DXMATRIXA16 matPosition;
+	//===========================================
+	//	弾の向きを変更する行列変換
+	//===========================================
+
+	D3DXMATRIXA16 matPosition;//Matrix16を使う意味とは?
+
+	//平行移動
 	//D3DXMatrixIdentity(&this->BulletMesh.matWorld);
 	D3DXMatrixTranslation(&matPosition, this->BulletMesh.vecPosition.x, this->BulletMesh.vecPosition.y, this->BulletMesh.vecPosition.z);
 
+	//Z軸回転
 	D3DXMATRIX matRotationZ;
 	D3DXMatrixRotationZ(&matRotationZ, fRoll);
 
+	//回転
 	D3DXMATRIX matRotationFace;
 	D3DXVECTOR3 face = this->face;
-	D3DXVECTOR3 X, Y, Z; //X:右 Z:前 Y:上
+	D3DXVECTOR3 X, Y, Z;				//X:右 Z:前 Y:上	(命名がナンセンス)
 	D3DXVECTOR3 Faceup = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	Z = -face;
+
+	Z = -face;							//逆転？
+	//FaceUpを正規化したYベクトル と face向きを逆転させたZ との外積
 	D3DXVec3Cross(&X, D3DXVec3Normalize(&Y, &Faceup), &Z);
+
+	//Xベクトル？を正規化
 	D3DXVec3Normalize(&X, &X);
+
+	//ZベクトルとXベクトルの外積Yベクトルを正規化
 	D3DXVec3Normalize(&Y, D3DXVec3Cross(&Y, &Z, &X));
 
 	//回転行列を作る
@@ -217,13 +236,15 @@ void Bullet::Update()
 	matRotationFace._31 = Z.x; matRotationFace._32 = Z.y; matRotationFace._33 = Z.z; matRotationFace._34 = 0;
 	matRotationFace._41 = 0.0f; matRotationFace._42 = 0.0f; matRotationFace._43 = 0.0f; matRotationFace._44 = 1.0f;
 
+	//スケール行列
 	D3DXMATRIX matSize;
-	D3DXMatrixScaling(&matSize, 0.2f, 0.2f, 0.2f);
+	D3DXMatrixScaling(&matSize, 0.2f, 0.2f, 0.2f);	//マジックナンバーだ！！
 
+	//ワールド行列
 	this->BulletMesh.matWorld =  matSize * matRotationZ * matRotationFace * matPosition;
 
 	fRoll += 0.001f;
-	value += 0.01f;
+	value += 0.01f;		
 }
 
 //-------------------------------------

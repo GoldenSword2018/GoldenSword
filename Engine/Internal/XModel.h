@@ -42,7 +42,7 @@ typedef struct MeshTag
 	LPDIRECT3DTEXTURE9* pMeshTextures;
 	DWORD dwNumMaterials;
 
-	D3DXVECTOR3 vecPosition;
+	D3DXVECTOR3 vecPosition;		//Mesh‚Ì’†SˆÊ’uH
 	D3DXMATRIXA16 matWorld;
 
 }MeshData;

@@ -7,10 +7,11 @@
 //
 //-----------------------------------------------
 #include "Screwdrop.h"
+
 //===============================================
 //	マクロ定義
 //===============================================
-#define BULLET_MAX (256)
+#define BULLET_MAX (256)				//被ってるだろが！！
 #define SCREW_DROP_SPEED (0.03f)		//落下速度
 #define SCREW_ROTATION_SPEED (0.01f)	//回転時の移動速度
 #define ROTATION_FRAME_MAX (1000)		//回転フレーム数
@@ -22,7 +23,8 @@
 //===============================================
 //	グローバル変数
 //===============================================
-Screwdrop g_Screwdrop[BULLET_MAX];
+Screwdrop g_Screwdrop[BULLET_MAX];		//大丈夫かこの配列！
+
 //================================================
 //	関数		
 //================================================
@@ -31,7 +33,6 @@ Screwdrop g_Screwdrop[BULLET_MAX];
 //-------------------------------------
 void Screwdrop_Init()
 {
-
 	for (int i = 0; i<BULLET_MAX; i++)
 	{
 		g_Screwdrop[i].IsEnable = false;
@@ -52,16 +53,20 @@ void Screwdrop_Update()
 {
 	for (int i = 0; i< BULLET_MAX; i++)
 	{
+		//有効ならば
 		if (g_Screwdrop[i].IsEnable)
 		{
+			//ROTATION_FRAME_MAX以下ならば
 			if (g_Screwdrop[i].rotation_count <= ROTATION_FRAME_MAX)
 			{
+				//回転しながら外す
 				g_Screwdrop[i].BulletPosition -= g_Screwdrop[i].face * SCREW_ROTATION_SPEED;
 				g_Screwdrop[i].ScrewPosition -= g_Screwdrop[i].face * SCREW_ROTATION_SPEED;
 				g_Screwdrop[i].rotation_count+=10;
 			}
 			else
 			{
+				//地面に接地するまで落ちる
 				if (g_Screwdrop[i].BulletPosition.y >= 0.0f/*地面*/)
 				{
 					g_Screwdrop[i].BulletPosition.y -= SCREW_DROP_SPEED;
@@ -69,6 +74,7 @@ void Screwdrop_Update()
 				}
 				else
 				{
+					//無効化
 					Screwdrop_DisEnable(i);
 				}
 			}
@@ -83,6 +89,7 @@ void Screwdrop_Render()
 {
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
+		//有効なら
 		if (g_Screwdrop[i].IsEnable)
 		{
 			D3DXMATRIX mtxWorld;
@@ -90,27 +97,43 @@ void Screwdrop_Render()
 			D3DXMATRIX mtxTranslation;
 			D3DXMATRIX mtxScaling;
 
+			//平行移動
 			D3DXMatrixTranslation(&mtxTranslation, g_Screwdrop[i].BulletPosition.x, g_Screwdrop[i].BulletPosition.y, g_Screwdrop[i].BulletPosition.z);
 
+			//Faceを軸に回転
 			D3DXMatrixRotationAxis(&mtxRotation, &g_Screwdrop[i].face,D3DXToRadian(3*g_Screwdrop[i].rotation_count));
 			//D3DXMatrixRotationY(&mtxRotation, D3DXToRadian(g_Screwdrop[i].rotation_count));
-			D3DXMatrixScaling(&mtxScaling, 0.3f, 0.3f, 0.3f);
+			
+			//スケールを変更
+			D3DXMatrixScaling(&mtxScaling, 0.3f, 0.3f, 0.3f);	//マジックナンバ
 
+			//ワールド行列
 			mtxWorld = mtxRotation * mtxScaling * mtxTranslation;
-			System_GetDevice()->SetTransform(D3DTS_WORLD, &mtxWorld);
+			System_GetDevice()->SetTransform(D3DTS_WORLD, &mtxWorld);	//この登録意味ある？
 
 			//バレットの描画関数
 			XModel_Render(&g_Screwdrop[i].BulletMesh, mtxWorld);
 
+
 			D3DXMATRIX mtxTranlationScrew;		// ネジを原点に移動するための平行移動行列
 			D3DXMATRIX mtxRotationScrew;		// ネジを正対させるための回転行列
-			D3DXMatrixTranslation(&mtxTranlationScrew, 0.0f, -0.5f, 0.0f);
+			
+			//平行移動
+			D3DXMatrixTranslation(&mtxTranlationScrew, 0.0f, -0.5f, 0.0f);	//マジックナンバ
 
+			//スケールを変更
 			D3DXMatrixScaling(&mtxScaling, 0.5f, 0.5f, 0.5f);
+
+			//Y軸を中心に半周
 			D3DXMatrixRotationY(&mtxRotationScrew, D3DX_PI);
+			
+			//スクリューの位置に移行
 			D3DXMatrixTranslation(&mtxTranslation, g_Screwdrop[i].ScrewPosition.x, g_Screwdrop[i].ScrewPosition.y, g_Screwdrop[i].ScrewPosition.z);
+		
+			//ワールド行列変換
 			mtxWorld = mtxTranlationScrew * mtxRotationScrew * mtxScaling * mtxRotation * mtxTranslation;
-			System_GetDevice()->SetTransform(D3DTS_WORLD, &mtxWorld);
+			
+			System_GetDevice()->SetTransform(D3DTS_WORLD, &mtxWorld);	//この登録意味ある？
 
 			//ネジの描画関数
 			XModel_Render(&g_Screwdrop[i].ScrewMesh, mtxWorld);
