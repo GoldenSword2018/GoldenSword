@@ -86,7 +86,7 @@ void PlayerCamera::Initialize()
 //-------------------------------------
 void PlayerCamera::Update()
 {
-	this->atDistance = 3.0f;
+	this->atDistance = 6.0f;
 	Camera::Update();
 }
 
@@ -140,6 +140,7 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	this->Right = vecRight;
 
 	this->Set_Parts();
+
 }
 
 //-------------------------------------
@@ -209,10 +210,9 @@ void Player::Set_Parts()
 //-------------------------------------
 void Player::Update()
 {	
-
 	this->Camera.Update();
-	this->transform.Position.y = 0.0f;				//高さを固定
-	this->transform.Set_WorldTransform();			//WorldPositionを算出
+	this->transform.Position.y = 2.0f;				//高さを固定
+	this->transform.Set_WorldTransform();				//WorldPositionを算出
 	
 	SetForward(this->Camera.forward);
 	this->transform.Rotation.y = this->RotY;
@@ -254,7 +254,6 @@ void Player::Update()
 		this->transform.Position += this->transform.right * PLAYER_MOVE_SPEED;
 	}
 
-
 #if !defined(DISABLE_JOYCON) && !defined(DISABLE_GAMEPAD)
 	Move();
 	Rotation();
@@ -274,7 +273,6 @@ void Player::Update()
 	this->Camera.at = this->transform.WorldPosition;	//注視点をプレイヤーに
 	this->Camera.at.y +=  2.0f;
 	this->Camera.Position = this->Camera.at - this->Forward * this->Camera.atDistance;		//カメラ位置を決める
-
 }
 
 
@@ -303,7 +301,6 @@ void Player::Move()
 	vecDirMove *= PLAYER_MOVE_SPEED;															// 移動速度を設定
 
 	this->transform.Position += this->Forward * vecDirMove.z + this->Right * vecDirMove.x;		// プレイヤー座標に加算して反映
-
 }
 
 //-------------------------------------
@@ -356,7 +353,6 @@ void Player::Rotation()
 	this->Camera.at = this->transform.Position + this->Forward * DISTANCE_TO_AT;		// カメラ注視点をプレイヤー座標とプレイヤー視点方向から算出
 
 	g_OldAngleX = this->AngleX;
-
 }
 
 //-------------------------------------
@@ -391,7 +387,7 @@ void Player::Fire()
 {
 	//わからねぇ！！！
 	D3DXVECTOR3 look = this->Forward;
-	Bullet_Create(this->transform.Position, look, Bullet::NORMAL);
+	Bullet_Create( this->transform.Position + D3DXVECTOR3( 0.0f, 1.5f, 0.0f ), look, Bullet::NORMAL);
 }
 
 //-------------------------------------

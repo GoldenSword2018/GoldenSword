@@ -34,6 +34,7 @@ class ArmorObject :public GameObject
 {
 private: // 一般
 	D3DXVECTOR3 Speed;
+public:
 	bool bBreak;		//バラバラフラグ　True(バラバラになる)
 	
 public:

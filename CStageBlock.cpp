@@ -168,7 +168,6 @@ void StageBlock::Render()
 	D3DXMATRIX mtxTranslation;
 	D3DXMATRIX mtxScaling;
 
-	D3DXVECTOR3 pos = transform.GetWorldPosision();
 	D3DXMatrixTranslation(&mtxTranslation, transform.GetWorldPosision().x, transform.GetWorldPosision().y, transform.GetWorldPosision().z);
 	D3DXMatrixScaling(&mtxScaling, transform.Scale.x, transform.Scale.y, transform.Scale.z);
 

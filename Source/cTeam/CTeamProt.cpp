@@ -34,7 +34,6 @@ static float movez = -5.0f;
 //-------------------------------------
 void CTeamProt_Initialize()
 {
-	Grid_Initialize();
 }
 
 //-------------------------------------

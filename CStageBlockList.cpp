@@ -13,6 +13,7 @@
 #include"common.h"
 #include"CStageBlockList.h"
 
+#include "CCollisionChecker.h"
 //Class
 
 //===============================================
@@ -112,7 +113,7 @@ void StageBlockList::SetAll(CoreObject* pScrew)
 {
 	if (pTop == NULL)
 		return;
-
+	TmpCollisionChecker::GetInstance()->RegisterCollision_CoreObject( pScrew );
 	pScrew->SetArmor(pTop);
 	pTop->transform.Position = pTop->transform.Position - pScrew->transform.GetWorldPosision();
 

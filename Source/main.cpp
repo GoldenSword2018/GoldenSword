@@ -20,6 +20,7 @@
 
 #include"TestSpace.h"
 
+#include "MeshField_Ground.h"
 //Class
 #include"CUI.h"
 
@@ -88,6 +89,7 @@ void Main_UpdateBegin(void)
 //=============================================================
 void Main_Render(void)
 {
+	MeshField_Ground_Render( D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), MeshGroundTexture1 );
 	CTeamProt_Render();
 	TestSpace_Render();
 
@@ -113,6 +115,9 @@ void Main_UpdateEnd()
 void Main_Finalize(void)
 {
 	Player_Finalize();
-	CTeamProt_Finalize();
 	TestSpace_Finalize();
+	CTeamProt_Finalize();
+
+	MeshField_Ground_Finalize();
+
 }

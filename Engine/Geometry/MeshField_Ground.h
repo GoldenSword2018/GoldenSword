@@ -20,8 +20,8 @@
 //================================================
 //	マクロ定義	define
 //================================================
-#define MESHFIELD_GRIDNUM_WIDTH (50)		//グリッド幅数(四角ポリゴン数)
-#define MESHFIELD_GRIDNUM_DEPTH (50)		//グリッド奥行き数(四角ポリゴン数)
+#define MESHFIELD_GRIDNUM_WIDTH (10)		//グリッド幅数(四角ポリゴン数)
+#define MESHFIELD_GRIDNUM_DEPTH (10)		//グリッド奥行き数(四角ポリゴン数)
 
 #define MESHFIELD_SIZE_WIDTH (100)			//サイズ幅
 #define MESHFIELD_SIZE_DEPTH (100)			//サイズ奥行き

@@ -69,7 +69,7 @@ public:
 	void Render();
 	D3DXVECTOR3 GetFace();
 
-	void DischargeArmor( float MarginFrame, float WeightToDelay, D3DXVECTOR3 AdditionalUnitVector, float SpeedRatio = 1.0f ); // Dist^2 * Weight = DelayFrame
+	void DischargeArmor( int MarginFrame, float WeightToDelay, D3DXVECTOR3 AdditionalUnitVector, float SpeedRatio = 1.0f ); // Dist^2 * Weight = DelayFrame
 
 };
 
