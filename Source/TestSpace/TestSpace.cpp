@@ -11,6 +11,7 @@
 #include"CStageBlock.h"
 #include"CCoreObject.h"
 #include "Grid.h"
+
 StageBlock **g_ppStageBlocks = NULL;
 CoreObject *g_pScrew = NULL;
 
@@ -54,7 +55,6 @@ CoreObject *g_pScrewO = NULL;
 CoreObject *g_pScrewP = NULL;
 CoreObject *g_pScrewQ = NULL;
 CoreObject *g_pScrewR = NULL;
-
 
 StageBlock** g_ppBlock = NULL;
 

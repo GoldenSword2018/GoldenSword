@@ -97,7 +97,6 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	RightArm_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
 	LeftLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255))),
 	RightLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255)))
-
 {
 	TmpCollisionChecker::GetInstance()->RegisterCollision_Player(&Player01);	//ƒvƒŒƒCƒ„[‚Ì“–‚½‚è”»’è‚ğ“o˜^
 	
