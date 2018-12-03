@@ -47,6 +47,7 @@
 #define CAMERA_FOV (D3DXToRadian(60))
 
 #define CAMERA_COUNT (4) //カメラ数
+//#define DISABLE_SCREEN_SEGMENTATION //画面分割を無効化
 
 //================================================
 //	グローバル変数　global

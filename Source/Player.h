@@ -135,11 +135,5 @@ public:
 //===============================================
 
 void Player_Initialize(void);
-void Player_Update(void);
-void Player_Render(void);
-void Player_Finalize(void);
-
-void Player_ResetAngle(void);
-const PLAYER *Player_GetPlayer(void);
 
 #endif // !PLAYER_H

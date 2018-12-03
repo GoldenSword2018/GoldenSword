@@ -60,13 +60,13 @@ void Main_Initialize(void)
 	Screwdrop_Init();				//ネジが落ちる
 	CTeamProt_Initialize();
 	TestSpace_Initialize();	//テストスペース
-	Player_Initialize();			//
+	Player_Initialize();			
 	Cube_Initialize();				//Cube色をMaterialで管理
 
 	uiSprite = uiSprite;
 
 	srand((UINT)time(NULL));
-
+	
 	//XModel_Load("Models/Ps4_Controller2.x");
 }
 
@@ -77,10 +77,10 @@ void Main_UpdateBegin(void)
 {
 	WinSock_Receiver();	//データを受信します。
 	Bullet_Update();	//弾の更新
-	Screwdrop_Update();
-	Player_Update();
-	CTeamProt_Update();
-	TestSpace_UpdateBegin();
+	Screwdrop_Update();		//弾落とす動き
+	//Player_Update();		//GameObjectで更新をかける
+	CTeamProt_Update();		//CTeamでの更新処理
+	TestSpace_UpdateBegin();//テストスペース処理
 
 }
 
@@ -96,7 +96,7 @@ void Main_Render(void)
 	uiSprite.render.Begin(R2D_SPRITE_ROTATE);
 	Bullet_Render();
 	Screwdrop_Render();
-	Player_Render();
+	//Player_Render();			GameObjectで描画をかける
 	
 }
 
@@ -114,7 +114,6 @@ void Main_UpdateEnd()
 //=============================================================
 void Main_Finalize(void)
 {
-	Player_Finalize();
 	TestSpace_Finalize();
 	CTeamProt_Finalize();
 

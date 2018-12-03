@@ -148,7 +148,7 @@ void Transform::ResetConvert()
 {
 	for(int i = 0; i < pIndex.size(); i++)
 	{
-		pIndex.at(i)->bConverted = false;
+		pIndex.at(i)->bConverted = false;	//–¢s—ñ•ÏŠ·
 	}
 }
 

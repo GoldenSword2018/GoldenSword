@@ -31,7 +31,7 @@ Player Player01(
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		D3DCOLOR_RGBA(255, 255, 255, 255)
 	),
-	&D3DXVECTOR3(0.0f, 0.0f, 1.0f)
+	&D3DXVECTOR3(0.0f, 0.0f, -1.0f)
 );
 
 //===============================================
@@ -40,32 +40,6 @@ Player Player01(
 void Player_Initialize(void)
 {
 	Player01.Camera.Set_Main(0);
-	//Bullet_Initialize();			//二回目のBullet初期化
-	TmpCollisionChecker::GetInstance()->RegisterCollision_Player( &Player01 );	//プレイヤーの当たり判定を登録
-}
-
-//===============================================
-//	更新
-//===============================================
-void Player_Update(void)
-{
-	Player01.Update();
-}
-
-//===============================================
-//	描画
-//===============================================
-void Player_Render(void)
-{
-	Player01.Render();
-}
-
-//===============================================
-//	終了処理
-//===============================================
-void Player_Finalize(void)
-{
-	TmpCollisionChecker::GetInstance()->DeregisterCollision_Player( &Player01 );
 }
 
 
@@ -125,21 +99,23 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 	RightLeg_Armor01(&Transform(D3DCOLOR_RGBA(255, 0, 0, 255)))
 
 {
-	this->Forward = *pForward;
-	this->AngleY = 0.0f;
-	this->AngleX = 0.0f;
-	this->RotY = 0.0f;
-	this->RotAxis = 0.0f;
-	this->g_OldAngleX = 0.0f;
-	D3DXVECTOR3 vecRight = this->Forward;
-	D3DXMATRIX mtxRotationY;
-	D3DXMatrixRotationY(&mtxRotationY, (-D3DX_PI / 2));
-	D3DXVec3TransformNormal(&vecRight, &vecRight, &mtxRotationY);
-	vecRight.y = 0.0f;
-	D3DXVec3Normalize(&vecRight, &vecRight);
-	this->Right = vecRight;
+	TmpCollisionChecker::GetInstance()->RegisterCollision_Player(&Player01);	//プレイヤーの当たり判定を登録
+	
+	this->Forward = *pForward;	//独自の前向きを設定
+	this->AngleY = 0.0f;		//Y	
+	this->AngleX = 0.0f;		//X
+	this->RotY = 0.0f;			//Y
+	this->RotAxis = 0.0f;		//Axisの可変値
+	this->g_OldAngleX = 0.0f;	//前のRotAxis
+	D3DXVECTOR3 vecRight = this->Forward;	//右向き (こいついる？this->Rightで処理すれば)
+	D3DXMATRIX mtxRotationY;	//Y軸回転行列
+	D3DXMatrixRotationY(&mtxRotationY, (-D3DX_PI / 2));	//逆半周半に回転させる。
+	D3DXVec3TransformNormal(&vecRight, &vecRight, &mtxRotationY);	//右向きを算出
+	vecRight.y = 0.0f;			//高さを0に
+	D3DXVec3Normalize(&vecRight, &vecRight);	//右向きベクトルを正規化
+	this->Right = vecRight;		//Right向きに代入
 
-	this->Set_Parts();
+	this->Set_Parts();			//パーツをセット
 
 }
 
@@ -148,7 +124,7 @@ Player::Player(Transform *pTransform, D3DXVECTOR3 *pForward)
 //-------------------------------------
 Player::~Player()
 {
-
+	TmpCollisionChecker::GetInstance()->DeregisterCollision_Player(&Player01);
 }
 
 //-------------------------------------
@@ -210,15 +186,16 @@ void Player::Set_Parts()
 //-------------------------------------
 void Player::Update()
 {	
-	this->Camera.Update();
-	this->transform.Position.y = 2.0f;				//高さを固定
-	this->transform.Set_WorldTransform();				//WorldPositionを算出
+	this->Camera.Update();						//Cameraを更新
+	this->transform.Position.y = 2.0f;			//プレイヤーの高さを固定(別のところで設定できるようにしたい。)
+	this->transform.Set_WorldTransform();		//WorldPositionを算出(外部で動作すべき内容)
 	
 	SetForward(this->Camera.forward);
-	this->transform.Rotation.y = this->RotY;
+	this->transform.Rotation.y = this->RotY;	//transformのY軸回転に代入
 
-	D3DXVECTOR3 face = this->Forward;
-	face.y = 0.0f;
+	D3DXVECTOR3 face = this->Forward;			//前向き
+	face.y = 0.0f;								//どこで使うのか?
+
 	/*
 	Head_Screw.face = face;
 	Body_Screw.face = face;
@@ -232,8 +209,9 @@ void Player::Update()
 	*/
 
 
-	CalWorldMtx();
+	CalWorldMtx();		//WorldMatrixを算出(無駄な処理が入ってる)
 
+	//以下移動
 	if (Keyboard_IsPress(DIK_W))
 	{
 		this->transform.Position += this->transform.forward * PLAYER_MOVE_SPEED;
@@ -266,12 +244,13 @@ void Player::Update()
 
 	if (JoyconInput_IsTrigger(JOYCON_BUTTON_INDEX_R_SR) || Keyboard_IsTrigger(DIK_F))		// SRボタン入力かFキーで発射
 	{
-		Fire();
+		Fire();	//発射位置から射撃
 	}
 
-	SetPosition(this->transform.Position);
+	SetPosition(this->transform.Position);				//移動分を適応
+
 	this->Camera.at = this->transform.WorldPosition;	//注視点をプレイヤーに
-	this->Camera.at.y +=  2.0f;
+	this->Camera.at.y +=  2.0f;							//目線を高めに
 	this->Camera.Position = this->Camera.at - this->Forward * this->Camera.atDistance;		//カメラ位置を決める
 }
 
@@ -385,7 +364,6 @@ void Player::ResetAngle()
 //-------------------------------------
 void Player::Fire()
 {
-	//わからねぇ！！！
 	D3DXVECTOR3 look = this->Forward;
 	Bullet_Create( this->transform.Position + D3DXVECTOR3( 0.0f, 1.5f, 0.0f ), look, Bullet::NORMAL);
 }
@@ -402,12 +380,14 @@ D3DXMATRIX Player::CalWorldMtx()
 
 	D3DXVECTOR3 vecDirGround = this->Forward;
 	vecDirGround.y = 0.0f;
+
 	D3DXVec3Normalize(&vecDirGround, &vecDirGround);
 
-	RotY = atan2f(vecDirGround.x, vecDirGround.z);
-	RotAxis = acosf(D3DXVec3Dot(&this->Forward, &vecDirGround));
+	RotY = atan2f(vecDirGround.x, vecDirGround.z);				//RotYの算出
 	D3DXMatrixRotationY(&mtxRotationY, RotY);
-	D3DXMatrixRotationAxis(&mtxRotationAxis, &this->Right, RotAxis);
+
+	RotAxis = acosf(D3DXVec3Dot(&this->Forward, &vecDirGround));//地面と向いている向きとの角度？
+	D3DXMatrixRotationAxis(&mtxRotationAxis, &this->Right, RotAxis);	//右ベクトルを軸に回転
 
 	D3DXMatrixTranslation(&mtxTranslation, this->transform.Position.x, this->transform.Position.y, this->transform.Position.z);
 	mtxWorld = mtxRotationY * mtxRotationAxis * mtxTranslation;
