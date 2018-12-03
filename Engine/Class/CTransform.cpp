@@ -7,24 +7,6 @@
 #include"Animation.h"
 
 //===============================================
-//	MatrixTransform 
-//===============================================
-
-//-------------------------------------
-//	コンストラクタ
-//-------------------------------------
-MatrixTransform::MatrixTransform()
-{
-	D3DXMatrixIdentity(&this->MtxWorld);
-	D3DXMatrixIdentity(&this->MtxTransform);
-	D3DXMatrixIdentity(&this->MtxRotation);
-}
-
-//-------------------------------------
-//	
-//-------------------------------------
-
-//===============================================
 //	Transform3
 //===============================================
 std::vector<Transform*>  Transform::pIndex;

@@ -207,9 +207,6 @@
     <ClCompile Include="Engine\System\WinSock.cpp">
       <Filter>ソース ファイル\Engine\System\WinSock</Filter>
     </ClCompile>
-    <ClCompile Include="Ground.cpp">
-      <Filter>ソース ファイル\Assets\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="CStageBlock.cpp">
       <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClCompile>
@@ -361,9 +358,6 @@
     </ClInclude>
     <ClInclude Include="Engine\System\resource1.h">
       <Filter>リソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Ground.h">
-      <Filter>ソース ファイル\Assets\Stage</Filter>
     </ClInclude>
     <ClInclude Include="CStageBlock.h">
       <Filter>ソース ファイル\Assets\Stage</Filter>

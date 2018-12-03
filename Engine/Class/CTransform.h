@@ -10,42 +10,35 @@
 #include<vector>
 
 //===============================================
-//	MatrixTransform : 行列 クラス
-//===============================================
-class MatrixTransform
-{
-private:
-	D3DXMATRIX MtxWorld;					//ワールド変換行列
-	D3DXMATRIX MtxTransform;				//位置
-	D3DXMATRIX MtxRotation;					//回転
-	D3DXMATRIX MtxScale;					//拡大・縮小
-public:
-	MatrixTransform();
-};
-
-//===============================================
 //	Transform : 3D専用　クラス
 //===============================================
 class Transform
 {
 private:
-	
 	static std::vector<Transform*> pIndex;
+
+private:
+	bool bConverted;				//変換したか
+
 public :
-	bool bConverted;			//変換したか
-	Transform* pParent;		//親
+	Transform* pParent;				//親
 	std::vector<Transform*> pChild;	//子
+
 	D3DXMATRIX MtxWorld;		//変換した行列
 
-	//基本情報
+	//絶対位置
 	D3DXVECTOR3 Position;	//位置
-	D3DXVECTOR3 Scale;		//サイズ
 	D3DXVECTOR3 Rotation;	//回転
+	D3DXVECTOR3 Scale;		//サイズ
 
 	//ワールド空間の情報	
-	//	pParent->transform.position + this->transform.position;
 	D3DXVECTOR3 WorldPosition;
 	D3DXVECTOR3 WorldRotation;
+
+	//相対位置
+	D3DXVECTOR3 localPosition;
+	D3DXVECTOR3 localRotation;
+	D3DXVECTOR3 lovalScale;
 
 	D3DCOLOR	Color;		//色
 	
