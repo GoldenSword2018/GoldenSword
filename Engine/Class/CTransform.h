@@ -15,6 +15,7 @@
 class Transform
 {
 private:
+	//全Transformを格納
 	static std::vector<Transform*> pIndex;
 
 private:
@@ -26,23 +27,21 @@ public :
 
 	D3DXMATRIX MtxWorld;		//変換した行列
 
-	//絶対位置
-	D3DXVECTOR3 Position;	//位置
-	D3DXVECTOR3 Rotation;	//回転
-	D3DXVECTOR3 Scale;		//サイズ
 
-	//ワールド空間の情報	
-	D3DXVECTOR3 WorldPosition;
-	D3DXVECTOR3 WorldRotation;
+	//空間位置(ワールド空間上での位置などを保持します)
+	//親の位置などを演算した結果
+	D3DXVECTOR3 Position;
+	D3DXVECTOR3 Rotation;		//Radian
+	D3DXVECTOR3 Scale;
 
-	//相対位置
+	//基本位置(自身の位置などを保持します)
 	D3DXVECTOR3 localPosition;
 	D3DXVECTOR3 localRotation;
-	D3DXVECTOR3 lovalScale;
+	D3DXVECTOR3 localScale;
 
 	D3DCOLOR	Color;		//色
 	
-	//軸方向
+	//方向
 	D3DXVECTOR3 up;			//上
 	D3DXVECTOR3 forward;	//前
 	D3DXVECTOR3 right;		//右
@@ -62,16 +61,30 @@ public:
 	~Transform();
 
 public:
+	//Get
+
+	//Set
+
+//	回転関数
+//	forwardなどの方向の値が狂うので基本はこの関数群を使う
+public:
+	void Rotation(const D3DXVECTOR3 value);
+	void RotationAxis(const D3DXVECTOR3 Axis, const float value);
+
+public:
 
 	D3DXMATRIX Convert();					//変換開始
+	void Adjustment_Rotation();
 	void Set_Parent(Transform* pParent);	//親を設定
 	void Release_Parent();					//親と離れる
 	void Set_WorldTransform();
+
 	// ワールド座標へのアクセサ
 	D3DXVECTOR3 GetWorldPosision( void );
 	D3DXMATRIX GetWorldMatrix( void );
 	void SetWorldPosition( D3DXVECTOR3 Position );
 	void SetLocalPosition( D3DXVECTOR3 Position );
+
 };
 
 //===============================================

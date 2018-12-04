@@ -20,9 +20,13 @@ Transform::Transform(D3DXVECTOR3 Position, D3DXVECTOR3 Scale, D3DXVECTOR3 Rotati
 	this->pParent = NULL;
 
 	this->Position = Position;
-	this->Scale = Scale;
 	this->Rotation = Rotation;
-	this->WorldPosition = Position;
+	this->Scale = Scale;
+
+	this->localPosition = Position;
+	this->localRotation = Rotation;
+	this->localScale = Scale;
+	
 	this->Color = Color;
 
 	this->up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -91,11 +95,11 @@ D3DXMATRIX Transform::Convert()
 	{
 		//親の行列を見てくる
 		this->MtxWorld *= this->pParent->Convert();
-		this->WorldPosition = this->pParent->Position + this->Position;
+		this->Position = this->pParent->Position + this->localPosition;
 	}
 	else
 	{
-		this->WorldPosition = this->Position;
+		this->Position = this->localPosition;
 	}
 
 	//変換終了
@@ -139,13 +143,13 @@ void Transform::Set_WorldTransform()
 	if(this->pParent != NULL)
 	{
 		this->pParent->Set_WorldTransform();
-		this->WorldPosition = this->pParent->WorldPosition + this->Position;
-		this->WorldRotation = this->pParent->WorldRotation + this->Rotation;
+		this->Position = this->pParent->Position + this->localPosition;
+		this->Rotation = this->pParent->Rotation + this->localRotation;
 	}
 	else
 	{
-		this->WorldPosition = this->Position;
-		this->WorldRotation = this->Rotation;
+		this->Position = this->localPosition;
+		this->Rotation = this->localRotation;
 	}
 }
 
@@ -169,7 +173,6 @@ D3DXMATRIX Transform::GetWorldMatrix( void )
 	D3DXMATRIX MtxTranslation;
 	D3DXMATRIX MtxRotation;
 	D3DXMATRIX MtxScale;
-
 
 	//変換
 	D3DXMatrixTranslation( &MtxTranslation, this->Position.x, this->Position.y, this->Position.z );
@@ -196,11 +199,13 @@ D3DXMATRIX Transform::GetWorldMatrix( void )
 void Transform::SetWorldPosition( D3DXVECTOR3 NewPos )
 {
 	if( this->pParent != NULL )
-	{ // 親がいるので、相対座標を変更。
+	{ 
+		// 親がいるので、相対座標を変更。
 		this->Position += this->GetWorldPosision() - NewPos;
 	}
 	else
-	{ // 親がいないので、ワールド座標を変更
+	{ 
+		// 親がいないので、ワールド座標を変更
 		this->Position = NewPos;
 	}
 }
@@ -209,6 +214,83 @@ void Transform::SetWorldPosition( D3DXVECTOR3 NewPos )
 void Transform::SetLocalPosition( D3DXVECTOR3 NewPos )
 {
 	this->Position = NewPos;
+}
+
+//-----------------------------------------------
+//	回転変換
+//-----------------------------------------------
+
+//-------------------------------------
+//	方向変換
+//-------------------------------------
+inline void TransformDirectionVec(Transform* pthis, const D3DXMATRIX *MtxRotation)
+{
+	//三軸方向
+	pthis->up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	D3DXVec3TransformNormal(&pthis->up, &pthis->up, MtxRotation);
+	D3DXVec3Normalize(&pthis->up, &pthis->up);
+
+	pthis->forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+	D3DXVec3TransformNormal(&pthis->forward, &pthis->forward, MtxRotation);
+	D3DXVec3Normalize(&pthis->forward, &pthis->forward);
+
+	D3DXVec3Cross(&pthis->right, &pthis->up, &pthis->forward);
+}
+
+//-------------------------------------
+//	Rotation
+//-------------------------------------
+void Transform::Rotation(const D3DXVECTOR3 value)
+{
+	this->localRotation += value;	//加算
+
+	this->Adjustment_Rotation();	//親の回転値を見てくる
+
+	D3DXMATRIX MtxRotation;
+	D3DXMatrixRotationYawPitchRoll(&MtxRotation,this->Rotation.y, this->Rotation.x, this->Rotation.z);
+
+	TransformDirectionVec(this,&MtxRotation);
+
+	return;
+}
+
+//-------------------------------------
+//	RotationAxis
+//-------------------------------------
+void Transform::RotationAxis(const D3DXVECTOR3 Axis,const float Value)
+{
+	D3DXMATRIX MtxAxis;
+	D3DXMatrixRotationAxis(&MtxAxis,&Axis,Value);
+	
+	D3DXVECTOR3 VecAxis;
+	D3DXVec3TransformNormal(&VecAxis,&VecAxis,&MtxAxis);	//変化値を得る
+
+	this->localRotation += VecAxis;	//加算
+
+	this->Adjustment_Rotation();	//親の回転値を見てくる
+
+	D3DXMATRIX MtxRotation;
+	D3DXMatrixRotationYawPitchRoll(&MtxRotation,this->Rotation.y,this->Rotation.x,this->Rotation.z);
+
+	TransformDirectionVec(this,&MtxRotation);
+}
+
+//-------------------------------------
+//	Adjustment_Rotation
+//-------------------------------------
+void Transform::Adjustment_Rotation()
+{
+	if(this->pParent)
+	{
+		this->pParent->Adjustment_Rotation();
+		this->Rotation = this->pParent->Rotation + this->localRotation;
+	}
+	else
+	{
+		this->Rotation = this->localRotation;
+	}
+
+	return;
 }
 
 //===============================================
