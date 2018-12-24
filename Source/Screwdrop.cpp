@@ -41,8 +41,8 @@ void Screwdrop_Init()
 		g_Screwdrop[i].bullet_type = Bullet::NORMAL;
 		g_Screwdrop[i].face = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
 		g_Screwdrop[i].rotation_count = 0;
-		memcpy(&g_Screwdrop[i].BulletMesh, GetMeshData(BulletIndex), sizeof(MeshData));
-		memcpy(&g_Screwdrop[i].ScrewMesh, GetMeshData(ScrewIndex), sizeof(MeshData));
+		memcpy(&g_Screwdrop[i].BulletMesh, NModel::Get_Data(NModel::BulletIndex), sizeof(NModel::Data));
+		memcpy(&g_Screwdrop[i].ScrewMesh, NModel::Get_Data(NModel::ScrewIndex), sizeof(NModel::Data));
 	}
 }
 
@@ -112,8 +112,8 @@ void Screwdrop_Render()
 			System_GetDevice()->SetTransform(D3DTS_WORLD, &mtxWorld);	//この登録意味ある？
 
 			//バレットの描画関数
-			XModel_Render(&g_Screwdrop[i].BulletMesh, mtxWorld);
-
+			System_GetDevice()->SetTransform(D3DTS_WORLD, &mtxWorld);
+			NModel::Render(&g_Screwdrop[i].BulletMesh);
 
 			D3DXMATRIX mtxTranlationScrew;		// ネジを原点に移動するための平行移動行列
 			D3DXMATRIX mtxRotationScrew;		// ネジを正対させるための回転行列
@@ -133,10 +133,10 @@ void Screwdrop_Render()
 			//ワールド行列変換
 			mtxWorld = mtxTranlationScrew * mtxRotationScrew * mtxScaling * mtxRotation * mtxTranslation;
 			
-			System_GetDevice()->SetTransform(D3DTS_WORLD, &mtxWorld);	//この登録意味ある？
+			System_GetDevice()->SetTransform(D3DTS_WORLD, &mtxWorld);
 
 			//ネジの描画関数
-			XModel_Render(&g_Screwdrop[i].ScrewMesh, mtxWorld);
+			NModel::Render(&g_Screwdrop[i].ScrewMesh);
 
 		}
 	}

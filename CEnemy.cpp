@@ -34,7 +34,7 @@ vector<BodyObject*> pBody_Index;
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-Enemy::Enemy(Transform* pTransform,Texture* pTexture):GameObject(pTransform,pTexture)
+Enemy::Enemy(Transform* pTransform, NMesh::AMesh* pModel) :GameObject(pTransform,pModel)
 {
 
 }

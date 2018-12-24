@@ -143,10 +143,10 @@ void Render2D_Porigon_Rotate(const Transform2* pTransform2)
 //===============================================
 //	画像サイズ描画
 //===============================================
-void Render2D_Texture_Size(const Transform2* pTransform2,Texture* pTexture) 
+void Render2D_Texture_Size(const Transform2* pTransform2,NTexture::CTexture* pTexture) 
 {
-	float width  = pTexture->GetWidth() * 0.5f;
-	float height = pTexture->GetHeight() *0.5f;
+	float width  = pTexture->Get_Width() * 0.5f;
+	float height = pTexture->Get_Height() *0.5f;
 
 	TexVertex2D Sprite[4] = 
 	{
@@ -157,7 +157,7 @@ void Render2D_Texture_Size(const Transform2* pTransform2,Texture* pTexture)
 	};
 
 	g_pD3DDevice->SetFVF(FVF_TEXVERTEX2D);
-	g_pD3DDevice->SetTexture(0, Texture_GetTexture(pTexture->Texture_index));
+	g_pD3DDevice->SetTexture(0, NTexture::Get_Texture(pTexture->name));
 	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, &Sprite, sizeof(Sprite[0]));
 
 }
@@ -165,7 +165,7 @@ void Render2D_Texture_Size(const Transform2* pTransform2,Texture* pTexture)
 //===============================================
 //	ポリゴンサイズに描画
 //===============================================
-void Render2D_Texture_Fill(Transform2* pTransform2,Texture* pTexture) 
+void Render2D_Texture_Fill(Transform2* pTransform2,NTexture::CTexture* pTexture) 
 {
 	float width  = pTransform2->Scale.x *0.5f;
 	float height = pTransform2->Scale.y *0.5f;
@@ -179,7 +179,7 @@ void Render2D_Texture_Fill(Transform2* pTransform2,Texture* pTexture)
 	};
 
 	g_pD3DDevice->SetFVF(FVF_TEXVERTEX2D);
-	g_pD3DDevice->SetTexture(0, Texture_GetTexture(pTexture->Texture_index));
+	g_pD3DDevice->SetTexture(0, NTexture::Get_Texture(pTexture->name));
 	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, &Sprite, sizeof(Sprite[0]));
 
 }
@@ -187,18 +187,18 @@ void Render2D_Texture_Fill(Transform2* pTransform2,Texture* pTexture)
 //===============================================
 //	テクスチャの切り抜きサイズ
 //===============================================
-void Render2D_Texture_Clip(Transform2* pTransform2,Texture* pTexture)
+void Render2D_Texture_Clip(Transform2* pTransform2,NTexture::CTexture* pTexture)
 {
-	float width  = (float)pTexture->GetWidth();
-	float height = (float)pTexture->GetHeight();
+	float width  = (float)pTexture->Get_Width();
+	float height = (float)pTexture->Get_Height();
 
-	float u0 = (float)pTexture->TexCoord.x / width;
-	float v0 = (float)pTexture->TexCoord.y / height;
-	float u1 = u0 + (float)pTexture->TexScale.width / width;
-	float v1 = v0 + (float)pTexture->TexScale.height / height;
+	float u0 = (float)pTexture->Coord.x / width;
+	float v0 = (float)pTexture->Coord.y / height;
+	float u1 = u0 + (float)pTexture->Scale.x / width;
+	float v1 = v0 + (float)pTexture->Scale.y / height;
 
-	width  = pTexture->TexScale.width  * 0.5f;
-	height = pTexture->TexScale.height * 0.5f;
+	width  = pTexture->Scale.x  * 0.5f;
+	height = pTexture->Scale.y * 0.5f;
 
 	TexVertex2D Sprite[4] =
 	{
@@ -209,7 +209,7 @@ void Render2D_Texture_Clip(Transform2* pTransform2,Texture* pTexture)
 	};
 
 	g_pD3DDevice->SetFVF(FVF_TEXVERTEX2D);
-	g_pD3DDevice->SetTexture(0, Texture_GetTexture(pTexture->Texture_index));
+	g_pD3DDevice->SetTexture(0, NTexture::Get_Texture(pTexture->name));
 	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, &Sprite, sizeof(Sprite[0]));
 
 }
@@ -217,15 +217,15 @@ void Render2D_Texture_Clip(Transform2* pTransform2,Texture* pTexture)
 //===============================================
 //	スプライト描画
 //===============================================
-void Render2D_Sprite(Transform2* pTransform2,Texture* pTexture)
+void Render2D_Sprite(Transform2* pTransform2,NTexture::CTexture* pTexture)
 {
-	float width		= (float)pTexture->GetWidth();
-	float height	= (float)pTexture->GetHeight();
+	float width		= (float)pTexture->Get_Width();
+	float height	= (float)pTexture->Get_Height();
 
-	float u0 =		(float)pTexture->TexCoord.x		 / width;
-	float v0 =		(float)pTexture->TexCoord.y		 / height;
-	float u1 = u0 + (float)pTexture->TexScale.width  / width;
-	float v1 = v0 + (float)pTexture->TexScale.height / height;
+	float u0 =		(float)pTexture->Coord.x / width;
+	float v0 =		(float)pTexture->Coord.y / height;
+	float u1 = u0 + (float)pTexture->Scale.x / width;
+	float v1 = v0 + (float)pTexture->Scale.y / height;
 
 	width  = pTransform2->Scale.x * 0.5f;
 	height = pTransform2->Scale.y * 0.5f;
@@ -239,7 +239,7 @@ void Render2D_Sprite(Transform2* pTransform2,Texture* pTexture)
 	};
 
 	g_pD3DDevice->SetFVF(FVF_TEXVERTEX2D);
-	g_pD3DDevice->SetTexture(0, Texture_GetTexture(pTexture->Texture_index));
+	g_pD3DDevice->SetTexture(0, NTexture::Get_Texture(pTexture->name));
 	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, &Sprite, sizeof(Sprite[0]));
 
 }
@@ -247,7 +247,7 @@ void Render2D_Sprite(Transform2* pTransform2,Texture* pTexture)
 //===============================================
 //	スプライト描画
 //===============================================
-void Render2D_Sprite_Rotate(Transform2* pTransform2,Texture* pTexture)
+void Render2D_Sprite_Rotate(Transform2* pTransform2,NTexture::CTexture* pTexture)
 {
 	float width  = pTransform2->Scale.x * 0.5f;
 	float height = pTransform2->Scale.y * 0.5f;
@@ -269,13 +269,13 @@ void Render2D_Sprite_Rotate(Transform2* pTransform2,Texture* pTexture)
 	px[3] = width * cosf(Rotation) - height * sinf(Rotation);
 	py[3] = width * sinf(Rotation) + height * cosf(Rotation);
 	
-	width  = (float)pTexture->GetWidth();
-	height = (float)pTexture->GetHeight();
+	width  = (float)pTexture->Get_Width();
+	height = (float)pTexture->Get_Height();
 
-	float u0 = pTexture->TexCoord.x / width;
-	float v0 = pTexture->TexCoord.y / height;
-	float u1 = u0 + pTexture->TexScale.width / width;
-	float v1 = v0 + pTexture->TexScale.height / height;
+	float u0 = pTexture->Coord.x / width;
+	float v0 = pTexture->Coord.y / height;
+	float u1 = u0 + pTexture->Scale.x / width;
+	float v1 = v0 + pTexture->Scale.y / height;
 
 	width  = pTransform2->Scale.x  * 0.5f;
 	height = pTransform2->Scale.y * 0.5f;
@@ -289,7 +289,7 @@ void Render2D_Sprite_Rotate(Transform2* pTransform2,Texture* pTexture)
 	};
 
 	g_pD3DDevice->SetFVF(FVF_TEXVERTEX2D);
-	g_pD3DDevice->SetTexture(0, Texture_GetTexture(pTexture->Texture_index));
+	g_pD3DDevice->SetTexture(0, NTexture::Get_Texture(pTexture->name));
 	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, &Sprite, sizeof(Sprite[0]));
 
 }

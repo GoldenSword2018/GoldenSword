@@ -13,11 +13,11 @@
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-UI::UI(Transform2* pTransform2, Texture* pTexture):Sprite(pTransform2, pTexture)
+UI::UI(Transform2* pTransform2, NTexture::CTexture* pTexture) :Sprite(pTransform2, pTexture)
 {
 }
 
-UI::UI(Transform2* pTransform2, Texture* pTexture, Animation* pAnimation): Sprite(pTransform2, pTexture, pAnimation)
+UI::UI(Transform2* pTransform2, NTexture::CTexture* pTexture, NTexture::CAnimation* pAnimation): Sprite(pTransform2, pTexture, pAnimation)
 {
 	
 }

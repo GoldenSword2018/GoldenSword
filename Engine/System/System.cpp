@@ -116,9 +116,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//--------------------------
 	//	描画
 	//--------------------------
-			g_pD3DDevice->BeginScene();
+			Transform::g_Convert();
 
-			Transform::ResetConvert();	//行列変換を初期化
+			g_pD3DDevice->BeginScene();
 
 #if !defined(DISABLE_SCREEN_SEGMENTATION)	
 			for (int i = 0; i < CAMERA_COUNT; i++)
@@ -287,7 +287,7 @@ void System_Initialize()
 	//	テクスチャ　初期化
 	//------------------------------------
 #if defined(TEXTURE_H)
-	Texture_Initialize();
+	NTexture::Initialize();
 #endif // TEXTURE_H
 
 	//------------------------------------
@@ -388,7 +388,7 @@ void System_Finalize()
 	//------------------------------------
 	//	テクスチャ		終了処理
 	//------------------------------------
-	Texture_Finalize();
+	NTexture::Finalize();
 #endif // TEXTURE_H
 	
 #if defined(_SOUND_H_)

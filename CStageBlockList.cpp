@@ -115,13 +115,13 @@ void StageBlockList::SetAll(CoreObject* pScrew)
 		return;
 	TmpCollisionChecker::GetInstance()->RegisterCollision_CoreObject( pScrew );
 	pScrew->SetArmor(pTop);
-	pTop->transform.Position = pTop->transform.Position - pScrew->transform.GetWorldPosision();
+	*pTop->transform.Position() -= pScrew->transform.Get_Position();
 	pScrew->SetArmor(pTop);
 	StageBlock *pCurrent = pTop;
 	while (pCurrent->pNext != NULL)
 	{
 		pScrew->SetArmor(pCurrent->pNext);
-		pCurrent->pNext->transform.Position = pCurrent->pNext->transform.Position - pScrew->transform.GetWorldPosision();
+		*pCurrent->pNext->transform.Position() -= pScrew->transform.Get_Position();
 		pCurrent = pCurrent->pNext;
 	}
 }

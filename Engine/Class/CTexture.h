@@ -16,6 +16,7 @@
 //-------------------------------------
 //	テクスチャ
 //-------------------------------------
+/*
 class Texture
 {
 private:
@@ -34,7 +35,7 @@ public:
 	Texture():Texture(TEXTURE_NONE, { 0,0 }, { 0,0 }){};
 	Texture(int Texture_index, TEXCOORD TexCoord, TEXSCALE TexScale);
 };
-
+*/
 
 #endif // !CTEXTURE_H
 

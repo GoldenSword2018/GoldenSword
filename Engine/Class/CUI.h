@@ -21,8 +21,8 @@ private:
 public:
 
 	//コンストラクタ
-	UI(Transform2* pTransform2, Texture* pTexture);
-	UI(Transform2* pTransform2, Texture* pTexture, Animation* pAnimation);
+	UI(Transform2* pTransform2, NTexture::CTexture* pTexture);
+	UI(Transform2* pTransform2, NTexture::CTexture* pTexture, NTexture::CAnimation* pAnimation);
 
 	void Set(Transform2* pTransform2);
 	bool Click();	//クリック時

@@ -21,13 +21,17 @@ std::vector<GameObject*> GameObject::pIndex;
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-GameObject::GameObject(Transform* pTransform, Texture* pTexture) : render(&this->transform,&this->texture)
+GameObject::GameObject(Transform* pTransform)
 {
 	this->transform		= *pTransform;
-	this->texture		= *pTexture;
 	this->pIndex.push_back(this);
 	this->pParent = NULL;
-	
+}
+
+//モデル形式のコンストラクタ
+GameObject::GameObject(Transform* pTransform,NMesh::AMesh* pModel):GameObject(pTransform)
+{
+	this->render.Set_Mesh(pModel);
 }
 
 //-------------------------------------
@@ -42,7 +46,11 @@ void GameObject::Set_Parent(GameObject* pParent)
 //------------------------------------
 //	親を放す
 //------------------------------------
-//未実装
+void GameObject::Relesase_Parent()
+{
+	this->pParent = NULL;
+	return;
+}
 
 //------------------------------------
 //	更新処理
@@ -57,7 +65,7 @@ void GameObject::Update()
 //------------------------------------
 void GameObject::Render()
 {
-	render.Begin(FVF_CUBE_VERTEX3D, CUBE_PRIMITIVE_TYPE, GetModel_Cube(), sizeof(CubeVertex3D), CUBE_PRIMITIVE_NUM);
+	this->render.Begin(&this->transform.Get_MtxWorld());
 }
 
 //===============================================

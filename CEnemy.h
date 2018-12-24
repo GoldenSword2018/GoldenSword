@@ -58,8 +58,8 @@ private:
 	std::vector<BodyObject*> pBody_Index;
 public:
 
-	Enemy(Transform* pTransform) :Enemy(pTransform, &Texture()) {};
-	Enemy(Transform* pTransform,Texture* pTexture);
+	Enemy(Transform* pTransform) :Enemy(pTransform,&NMesh::CStandardMesh()){};
+	Enemy(Transform* pTransform, NMesh::AMesh* pModel);
 
 	~Enemy();
 

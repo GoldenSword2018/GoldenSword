@@ -18,24 +18,130 @@
 //===============================================
 //	グローバル変数
 //===============================================
-vector<Render*> Render::g_pIndex;
 
 //===============================================
-//	Render クラス
+//	名前空間
 //===============================================
-
-//-------------------------------------
-//	コンストラクタ
-//-------------------------------------
-Render::Render()
+namespace NRender
 {
-	g_pIndex.push_back(this);
+	//==============================================
+	//	Render3D
+	//==============================================
+
+	//コンストラクタ
+	Render3D::Render3D()
+	{
+		this->pModel = new NMesh::CStandardMesh();
+		this->bRender = true;
+		return;
+	}
+
+	//デストラクタ
+	Render3D::~Render3D()
+	{
+		if(this->pModel != NULL)
+		{
+			delete this->pModel;
+			this->pModel = NULL;
+		}
+		return;
+	}
+
+	//Set_Mesh()
+	void Render3D::Set_Mesh(NMesh::AMesh* pModel)
+	{
+		if (this->pModel != NULL) delete this->pModel;
+		this->pModel = pModel;
+		return;
+	}
+
+	//描画
+	void Render3D::Begin(D3DXMATRIX* MtxWorld)
+	{
+		if (this->pModel == NULL || this->bRender == false) return;
+		System_GetDevice()->SetTransform(D3DTS_WORLD,MtxWorld);
+		pModel->Begin();
+		return;
+	}
+
+	//==============================================
+	//	Render2D
+	//==============================================
+
+	//コンストラクタ
+	Render2D::Render2D(Transform2* pTransform, NTexture::CTexture* pTexture, NTexture::CAnimation* pAnimation)
+	{
+		this->pTransform = pTransform;
+		this->pTexture = pTexture;
+		this->pAnimation = pAnimation;
+	}
+
+	//デストラクタ
+	Render2D::~Render2D()
+	{
+		
+	}
+
+	//描画
+	bool Render2D::Begin(RENDER2D_TYPE R2D_TYPE)
+	{
+		if (this->pTransform == NULL || this->pTexture == NULL) return false;
+
+		switch (R2D_TYPE)
+		{
+		case R2D_PORIGON:
+			Render2D_Porigon(pTransform);
+			break;
+		case R2D_PORIGON_ROTATE:
+			Render2D_Porigon_Rotate(pTransform);
+			break;
+		case R2D_TEXTURE_SIZE:
+			Render2D_Texture_Size(pTransform, pTexture);
+			break;
+		case R2D_TEXTURE_FILL:
+			Render2D_Texture_Fill(pTransform, pTexture);
+			break;
+		case R2D_TEXTURE_CLIP:
+			Render2D_Texture_Clip(pTransform, pTexture);
+			break;
+		case R2D_SPRITE:
+			Render2D_Sprite(pTransform, pTexture);
+			break;
+		case R2D_SPRITE_ROTATE:
+			Render2D_Sprite_Rotate(pTransform, pTexture);
+			break;
+		default:
+			return false;
+		}
+
+		return true;
+	}
+
+	//描画
+	bool Render2D::Begin(RENDER2DANIMA_TYPE R2DA_TYPE)
+	{
+		if (this->pTransform == NULL || this->pTexture == NULL || this->pAnimation == NULL) return false;
+
+		switch (R2DA_TYPE)
+		{
+		case R2DA_NOLOOP:
+			Animation_NoLoop(pTransform, pTexture, pAnimation);
+			break;
+		case R2DA_LOOP:
+			Animation_Loop(pTransform, pTexture, pAnimation);
+			break;
+		case R2DA_LOOP_ROTATE:
+			Animation_Loop_Rotate(pTransform, pTexture, pAnimation);
+			break;
+		default:
+			return false;
+		}
+
+		return true;
+	}
 }
 
-//-------------------------------------
-//	描画更新
-//-------------------------------------
-
+/*
 //===============================================
 //	Render3D　クラス
 //===============================================
@@ -45,8 +151,6 @@ Render::Render()
 //-------------------------------------
 Render3D::Render3D()
 {
-	pTransform = NULL;
-	pTexture = NULL;
 	bRender = true;
 }
 
@@ -185,7 +289,6 @@ bool Render2D::Begin(RENDER2DANIMA_TYPE R2DA_TYPE)
 
 	return true;
 }
-
-
+*/
 
 

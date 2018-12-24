@@ -26,11 +26,11 @@
 //	コンストラクタ
 //-------------------------------------
 // コンストラクタでのShape系クラスの初期化はCoreObject自身のtransformのアドレスを与えること. 引数のpTransformはコンストラクタ終了後,破棄される.
-CoreObject::CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face)
-: 
-	GameObject(pTransform, pTexture),
-	ColShape(&transform, 0.5f),
-	CorrectSphere(&transform, 1.0f)
+CoreObject::CoreObject(Transform* pTransform, NMesh::AMesh* pModel, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face)
+	:
+	GameObject(pTransform, pModel),
+	ColShape(&this->transform,0.5f),
+	CorrectSphere(&this->transform, 1.0f)
 {
 	this->LocalFace = face;
 
@@ -104,7 +104,7 @@ void CoreObject::Update()
 			if ( CollisionCheck::SphereVsSphere(CorrectSphere, Bullet_ColShape(i))&& this->pArmor_Index.size() > 0)
 			{
 				const D3DXVECTOR3* bullet_face = Bullet_GetBullet(i)->GetFace();
-				D3DXVECTOR3 vec = (CorrectSphere.pParentTransform->Position) - (Bullet_ColShape(i).pParentTransform->Position);		// ネジと弾の中心間ベクトル
+				D3DXVECTOR3 vec = (CorrectSphere.pParentTransform->Get_Position()) - (Bullet_ColShape(i).pParentTransform->Get_Position());		// ネジと弾の中心間ベクトル
 				float Angle = acosf(D3DXVec3Dot(bullet_face, &vec));				// 弾の進行方向とvecの成す角
 
 				if (Angle <= D3DX_PI / 4 && Angle > 0.0f)
@@ -173,13 +173,15 @@ void CoreObject::Render()
 		    D3DXMatrixRotationAxis(&mtxRotationAxis, &vecRight, acosf(D3DXVec3Dot(&this->LocalFace, &vecFaceGroud)));
 		    mtxRotation = mtxRotationY * mtxRotationAxis;
 		 }
-		this->transform.Set_WorldTransform();
+
+		D3DXMATRIX MtxWorld = mtxBaseTransform * this->transform.Get_MtxWorld();
 
 		//合成
-		this->transform.MtxWorld = mtxBaseTransform * this->transform.GetWorldMatrix();
+		this->transform.Set_MtxWorld(MtxWorld);
 
 		////ネジの描画
-		XModel_Render(GetMeshData(ScrewIndex), this->transform.MtxWorld );
+		System_GetDevice()->SetTransform(D3DTS_WORLD,&MtxWorld);
+		NModel::Render(NModel::Get_Data(NModel::ScrewIndex));
 
 		//当たり判定の描画
 		ColShape.DebugDraw();
@@ -214,7 +216,7 @@ void CoreObject::DischargeArmor( int Margin, float Weight, D3DXVECTOR3 AddUnitVe
 		// アーマー破棄イベントまでの遅延フレームを算出
 		float DelayFrame;
 
-		float SquaredDist = D3DXVec3LengthSq( &( pArmor_Index.at( i )->transform.GetWorldPosision() - transform.GetWorldPosision() ) );
+		float SquaredDist = D3DXVec3LengthSq( &( pArmor_Index.at( i )->transform.Get_Position() - transform.Get_Position() ) );
 
 		switch( this->Type )
 		{
@@ -241,20 +243,20 @@ void CoreObject::DischargeArmor( int Margin, float Weight, D3DXVECTOR3 AddUnitVe
 				*pInitSpeed += AddUnitVec;
 				break;
 			case RADIALLY: //放射状に広がる
-				pInitSpeed = new D3DXVECTOR3( pArmor_Index.at( i )->transform.GetWorldPosision() - transform.GetWorldPosision() );
+				pInitSpeed = new D3DXVECTOR3( pArmor_Index.at( i )->transform.Get_Position() - transform.Get_Position() );
 				D3DXVec3Normalize( pInitSpeed, pInitSpeed );
 				*pInitSpeed = ( *pInitSpeed + AddUnitVec ) * SpeedRatio;
 
 		}
 		this;
-		pArmor_Index.at( i )->Break( *pInitSpeed, DelayFrame );
+		pArmor_Index.at( i )->Break( *pInitSpeed, (int)DelayFrame );
 		// ワールド座標を一時的に保持。
-		D3DXVECTOR3 tmp = pArmor_Index.at( i )->transform.GetWorldPosision();
+		D3DXVECTOR3 tmp = pArmor_Index.at( i )->transform.Get_Position();
 		// アーマーとの親子関係を失効
-		pArmor_Index.at( i )->transform.pParent = NULL;
+		pArmor_Index.at( i )->transform.Release_Parent();
 		// 改めてワールドポジションを設定
-		pArmor_Index.at( i )->transform.Position = tmp;
-		D3DXVECTOR3 tmppos = pArmor_Index.at( i )->transform.Position;
+		pArmor_Index.at( i )->transform.Set_Position(tmp);
+		D3DXVECTOR3 tmppos = pArmor_Index.at( i )->transform.Get_Position();
 		tmppos = tmppos;
 	}
 	this->pArmor_Index.clear();

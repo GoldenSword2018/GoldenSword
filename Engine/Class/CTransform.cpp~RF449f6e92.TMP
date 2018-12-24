@@ -1,0 +1,368 @@
+//
+//	Transform.cpp
+//		Author:HIROMASA IKEDA	DATA:2018/09/28
+//===============================================
+#include<d3dx9.h>
+#include"CTransform.h"
+#include"Animation.h"
+
+//=========================================================
+//	Transform3
+//=========================================================
+
+//-------------------------------------
+//	グローバル
+//-------------------------------------
+std::vector<Transform*>  Transform::pIndex;
+
+//===============================================
+//	Constructor/Destroctor
+//===============================================
+
+//-------------------------------------
+//	コンストラクタ
+//-------------------------------------
+Transform::Transform(D3DXVECTOR3 Position, D3DXVECTOR3 Scale, D3DXVECTOR3 Rotation, D3DCOLOR Color)
+{
+	this->bEnable_Convert = true;
+	this->bConverted = false;
+	this->pParent = NULL;
+
+	this->Position = Position;
+	this->Rotation = Rotation;
+	this->Scale = Scale;
+
+	this->localPosition = Position;
+	this->localRotation = Rotation;
+	this->localScale = Scale;
+	
+	this->Color = Color;
+
+	this->up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+
+	this->forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+	D3DXVec3Normalize(&this->forward, &this->forward);
+
+	D3DXVec3Cross(&this->right, &this->forward, &this->up);
+	D3DXVec3Normalize(&this->right, &this->right);
+
+	pIndex.push_back(this);
+}
+
+//-------------------------------------
+//	デストラクタ
+//-------------------------------------
+Transform::~Transform()
+{
+	this->pParent = NULL;
+
+	//子を持っているなら
+	if (this->pChild.size() > 0)
+	{
+		for (int i = 0; i < this->pChild.size(); i++)
+		{
+			this->pChild.at(i)->Release_Parent();
+		}
+
+	}
+
+}
+
+
+//-------------------------------------
+//	再変換 設定
+//-------------------------------------
+void Transform::ResetConvert()
+{
+	for (int i = 0; i < pIndex.size(); i++)
+	{
+		pIndex.at(i)->bConverted = false;	//未行列変換
+	}
+}
+
+//===============================================
+//	行列変換
+//===============================================
+
+//-------------------------------------
+//	行列変換 開始
+//-------------------------------------
+D3DXMATRIX Transform::Convert()
+{
+	if (this->bConverted) return this->MtxWorld;
+
+	D3DXMATRIX MtxTransform;
+	D3DXMATRIX MtxScale;
+	D3DXMATRIX MtxRotation;
+
+	//変換
+	D3DXMatrixIdentity(&this->MtxWorld);
+	D3DXMatrixTranslation(&MtxTransform, this->Position.x, this->Position.y, this->Position.z);
+	D3DXMatrixScaling(&MtxScale, this->Scale.x, this->Scale.y, this->Scale.z);
+	D3DXMatrixRotationYawPitchRoll(&MtxRotation, this->Rotation.y, this->Rotation.x, this->Rotation.z);
+
+	//ローカル方向
+	this->up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	D3DXVec3TransformNormal(&this->up, &this->up, &MtxRotation);
+	D3DXVec3Normalize(&this->up, &this->up);
+
+	this->forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+	D3DXVec3TransformNormal(&this->forward, &this->forward, &MtxRotation);
+	D3DXVec3Normalize(&this->forward, &this->forward);
+
+	D3DXVec3Cross(&this->right, &this->up, &this->forward);
+
+	//合成
+	this->MtxWorld = MtxScale * MtxRotation * MtxTransform;
+
+	//親が居る
+	if (this->pParent != NULL)
+	{
+		//親の行列を見てくる
+		this->MtxWorld *= this->pParent->Convert();
+		this->Position = this->pParent->Position + this->localPosition;
+	}
+	else
+	{
+		this->Position = this->localPosition;
+	}
+
+	//変換終了
+	this->bConverted = true;
+
+	return this->MtxWorld;
+}
+
+//===============================================
+// 回転変換
+//===============================================
+
+//-------------------------------------
+//	方向変換
+//-------------------------------------
+inline void TransformDirectionVec(Transform* pthis, const D3DXMATRIX *MtxRotation)
+{
+	//三軸方向
+	pthis->up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	D3DXVec3TransformNormal(&pthis->up, &pthis->up, MtxRotation);
+	D3DXVec3Normalize(&pthis->up, &pthis->up);
+
+	pthis->forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+	D3DXVec3TransformNormal(&pthis->forward, &pthis->forward, MtxRotation);
+	D3DXVec3Normalize(&pthis->forward, &pthis->forward);
+
+	D3DXVec3Cross(&pthis->right, &pthis->up, &pthis->forward);
+}
+
+//-------------------------------------
+//	Adjustment_Rotation
+//-------------------------------------
+void Transform::Adjustment_Rotation()
+{
+	if (this->pParent)
+	{
+		this->pParent->Adjustment_Rotation();
+		this->Rotation = this->pParent->Rotation + this->localRotation;
+	}
+	else
+	{
+		this->Rotation = this->localRotation;
+	}
+
+	return;
+}
+
+//-------------------------------------
+//	Rotation
+//-------------------------------------
+void Transform::RotationVec3(const D3DXVECTOR3 value)
+{
+	this->localRotation += value;	//加算
+
+	this->Adjustment_Rotation();	//親の回転値を見てくる
+
+	D3DXMATRIX MtxRotation;
+	D3DXMatrixRotationYawPitchRoll(&MtxRotation, this->Rotation.y, this->Rotation.x, this->Rotation.z);
+
+	TransformDirectionVec(this, &MtxRotation);
+
+	return;
+}
+
+//-------------------------------------
+//	RotationAxis
+//-------------------------------------
+void Transform::RotationAxis(const D3DXVECTOR3 Axis, const float Value)
+{
+	D3DXMATRIX MtxAxis;
+	D3DXMatrixRotationAxis(&MtxAxis, &Axis, Value);
+
+	D3DXVECTOR3 VecAxis;
+	D3DXVec3TransformNormal(&VecAxis, &VecAxis, &MtxAxis);	//変化値を得る
+
+	this->localRotation += VecAxis;	//加算
+
+	this->Adjustment_Rotation();	//親の回転値を見てくる
+
+	D3DXMATRIX MtxRotation;
+	D3DXMatrixRotationYawPitchRoll(&MtxRotation, this->Rotation.y, this->Rotation.x, this->Rotation.z);
+
+	TransformDirectionVec(this, &MtxRotation);
+}
+
+//===============================================
+//	親子関係
+//===============================================
+
+//-------------------------------------
+//	親を設定
+//-------------------------------------
+void Transform::Set_Parent(Transform* pParent)
+{
+	this->pParent = pParent;
+	pParent->pChild.push_back(this);
+	this->Set_WorldTransform();
+}
+
+//-------------------------------------
+//	親と離れる
+//-------------------------------------
+void Transform::Release_Parent()
+{
+	this->pParent = NULL;
+	this->Set_WorldTransform();
+}
+
+//===============================================
+//	アクセサ
+//===============================================
+
+//-------------------------------------
+//	Get_MatrixWorld
+//-------------------------------------
+D3DXMATRIX Transform::Get_MatrixWorld()
+{
+	return this->MtxWorld;
+}
+
+//-------------------------------------
+//	Set_MatrixWorld
+//-------------------------------------
+void Transform::Set_MatrixWorld(D3DXMATRIX MtxWorld)
+{
+	this->MtxWorld = MtxWorld;
+	return;
+}
+
+//===============================================
+//
+//===============================================
+
+void Transform::Set_WorldTransform()
+{
+	if(this->pParent != NULL)
+	{
+		this->pParent->Set_WorldTransform();
+		this->Position = this->pParent->Position + this->localPosition;
+		this->Rotation = this->pParent->Rotation + this->localRotation;
+	}
+	else
+	{
+		this->Position = this->localPosition;
+		this->Rotation = this->localRotation;
+	}
+}
+
+D3DXVECTOR3 Transform::GetWorldPosision( void )
+{
+	if( this->pParent != NULL )
+	{
+		D3DXVECTOR3 tmpWorldPos;
+		D3DXVec3TransformCoord( &tmpWorldPos, &D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), &this->GetWorldMatrix() );
+		return tmpWorldPos;
+	}
+	else
+	{
+		return this->Position;
+	}
+}
+
+
+D3DXMATRIX Transform::GetWorldMatrix( void )
+{
+	D3DXMATRIX MtxTranslation;
+	D3DXMATRIX MtxRotation;
+	D3DXMATRIX MtxScale;
+
+	//変換
+	D3DXMatrixTranslation( &MtxTranslation, this->Position.x, this->Position.y, this->Position.z );
+	D3DXMatrixScaling( &MtxScale, this->Scale.x, this->Scale.y, this->Scale.z );
+	D3DXMatrixRotationYawPitchRoll( &MtxRotation, this->Rotation.y, this->Rotation.x, this->Rotation.z );
+
+
+	D3DXMATRIX _MtxWorld;
+	D3DXMatrixIdentity( &_MtxWorld );
+	_MtxWorld = MtxScale * MtxRotation * MtxTranslation;
+
+	if( this->pParent != NULL )
+	{
+		_MtxWorld *= this->pParent->GetWorldMatrix();
+	}
+	else
+	{
+		// null
+	}
+
+	return _MtxWorld;
+}
+
+void Transform::SetWorldPosition( D3DXVECTOR3 NewPos )
+{
+	if( this->pParent != NULL )
+	{ 
+		// 親がいるので、相対座標を変更。
+		this->Position += this->GetWorldPosision() - NewPos;
+	}
+	else
+	{ 
+		// 親がいないので、ワールド座標を変更
+		this->Position = NewPos;
+	}
+}
+
+
+void Transform::SetLocalPosition( D3DXVECTOR3 NewPos )
+{
+	this->Position = NewPos;
+}
+
+//===============================================
+//	Transform2
+//===============================================
+
+//-------------------------------------
+//	コンストラクタ
+//-------------------------------------
+Transform2::Transform2()
+{
+	Position = {0.0f,0.0f};
+	Scale = {1.0f,1.0f};
+	Rotation = 0;
+	Color = Color;
+}
+
+Transform2::Transform2(D3DXVECTOR2 Position, D3DXVECTOR2 Scale, float Rotation)
+{
+	this->Position = Position;
+	this->Scale = Scale;
+	this->Rotation = Rotation;
+	Color = D3DCOLOR_RGBA(255,255,255,255);
+}
+
+Transform2::Transform2(D3DXVECTOR2 Position, D3DXVECTOR2 Scale, float Rotation, D3DCOLOR Color)
+{
+	this->Position = Position;
+	this->Scale = Scale;
+	this->Rotation = Rotation;
+	this->Color = Color;
+}

@@ -21,7 +21,6 @@
 #include"CGameObject.h"
 #include"CArmorObject.h"
 
-
 // 当たり判定
 class ShapeOBB;
 
@@ -77,7 +76,7 @@ public:
 	StageBlock* pNext;
 public:
 	// コンストラクタ
-	StageBlock(Transform *pTransform, int TextureIndex);
+	StageBlock(Transform* pTransform, int TextureIndex);
 	StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGING_TYPE type);
 
 	static void Initialize();								// 初期化(頂点バッファ、インデックスバッファの確保)

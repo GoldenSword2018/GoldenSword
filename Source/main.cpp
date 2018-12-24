@@ -39,9 +39,9 @@ static UI uiSprite(
 		0,
 		D3DCOLOR_RGBA(255, 255, 0, 255)
 	),
-	&Texture
+	&NTexture::CTexture
 	(
-		CubeTexture,
+		NTexture::CubeTexture,
 		{ 0,0 },
 		{ 256,256 }
 	)
@@ -55,7 +55,7 @@ void Main_Initialize(void)
 	Lighting_Initialize();
 
 	MeshField_Ground_Initialize();	//MeshField仕様変更
-	XModel_Initialize();			//XModel仕様変更
+	NModel::Initialize();			//XModel仕様変更
 	Bullet_Initialize();			//Bulletの初期化 (問題処理)
 	Screwdrop_Init();				//ネジが落ちる
 	CTeamProt_Initialize();
@@ -89,11 +89,11 @@ void Main_UpdateBegin(void)
 //=============================================================
 void Main_Render(void)
 {
-	MeshField_Ground_Render( D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), MeshGroundTexture1 );
+	MeshField_Ground_Render( D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), NTexture::MeshGroundTexture1 );
 	CTeamProt_Render();
 	TestSpace_Render();
 
-	uiSprite.render.Begin(R2D_SPRITE_ROTATE);
+	//uiSprite.render.Begin();
 	Bullet_Render();
 	Screwdrop_Render();
 	//Player_Render();			GameObjectで描画をかける

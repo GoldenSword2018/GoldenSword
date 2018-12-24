@@ -165,11 +165,16 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CStageBlock.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="CStageBlockList.cpp" />
+    <ClCompile Include="Engine.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Engine\Class\CAnimation.cpp" />
     <ClCompile Include="Engine\Class\CCamera.cpp">
       <SubType>
@@ -227,11 +232,16 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="CMesh.h" />
     <ClInclude Include="CStageBlock.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="CStageBlockList.h" />
+    <ClInclude Include="Engine.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Engine\Class\CAnimation.h" />
     <ClInclude Include="Engine\Class\CCamera.h">
       <SubType>

@@ -54,7 +54,7 @@ struct MeshFieldVertex3D
 //	ä÷êî		function
 //================================================
 void MeshField_Ground_Initialize();
-void MeshField_Ground_Render(const D3DXVECTOR3 Center, TEXTURE_NAME Texture);
+void MeshField_Ground_Render(const D3DXVECTOR3 Center, NTexture::Name Texture);
 void MeshField_Ground_Finalize();
 
 

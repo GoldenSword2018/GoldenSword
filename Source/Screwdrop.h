@@ -49,8 +49,8 @@ typedef struct
 	D3DXVECTOR3 ScrewPosition;				//ネジのポジション
 	Bullet::TYPE bullet_type;				//弾のタイプ
 //	SCREW_TYPE	screw_type;					//ネジのタイプ
-	MeshData BulletMesh;					//弾のメッシュデータ
-	MeshData ScrewMesh;						//ネジのメッシュデータ
+	NModel::Data BulletMesh;					//弾のメッシュデータ
+	NModel::Data ScrewMesh;						//ネジのメッシュデータ
 	D3DXVECTOR3 face;						//向き
 	int rotation_count;						//回転のフレーム数と角度
 }Screwdrop;

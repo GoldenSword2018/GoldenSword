@@ -35,8 +35,7 @@ class Bullet:public GameObject
 public:
 	enum TYPE
 	{
-		NORMAL,
-		TORNADO
+		NORMAL
 	};
 
 private:
@@ -44,12 +43,14 @@ private:
 	//D3DXVECTOR3 MainPosition;				//
 	TYPE type;						//タイプ
 	D3DXVECTOR3 face;						//弾の向き
+	D3DXVECTOR3 vecPosition;
 public:
-	MeshData BulletMesh;
+	NModel::Data BulletMesh;
 	ShapeSphere ColSphape;
 
 	Bullet();
-	Bullet(Transform* pTransform, Texture* pTexture);
+	Bullet(Transform* pTransform);
+	Bullet(Transform* pTransform, NMesh::AMesh* pModel);
 
 	virtual void Update();					//更新
 	bool GetEnable();						//有効・無効の取得

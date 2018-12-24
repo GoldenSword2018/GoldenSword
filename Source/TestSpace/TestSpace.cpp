@@ -10,7 +10,7 @@
 #include"CArmorObject.h"
 #include"CStageBlock.h"
 #include"CCoreObject.h"
-#include "Grid.h"
+#include"Grid.h"
 
 StageBlock **g_ppStageBlocks = NULL;
 CoreObject *g_pScrew = NULL;
@@ -59,6 +59,7 @@ CoreObject *g_pScrewR = NULL;
 StageBlock** g_ppBlock = NULL;
 
 StageBlockList* g_pBlockTest = NULL;
+
 //èâä˙âª
 void TestSpace_Initialize() 
 {
@@ -101,7 +102,7 @@ void TestSpace_Initialize()
 	
 
 	//à»â∫é∏îsÅEÅEÅE
-	g_pBlockA = new StageBlockList(D3DXVECTOR3(-34.0f, 1.0f, 23.0f ), RADIALLY, 0.0f );
+	g_pBlockA = new StageBlockList(D3DXVECTOR3(-34.0f, 1.0f, 23.0f ), RADIALLY, 0);
 
 	for (float x = 0; x < 2; x++)
 	{
@@ -120,7 +121,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(-32.5f, 6.0f, 23.0f),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		), 
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(1.0f, 0.0f, 0.0f)
 	);
@@ -142,7 +144,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(-30.5, 6, 14),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		), 
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(1.0f, 0.0f, 0.0f)
 	);
@@ -184,7 +187,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(-35.5, 4, -22),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		),
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(1.0f, 0.0f, 0.0f)
 	);
@@ -206,7 +210,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(-23.5f, 6.0f, 28.5f),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		), 
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
 	);
@@ -229,7 +234,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(-1.0f, 6.5f, 35.0f),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		),
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(1.0f, 0.0f, 0.0f)
 	);
@@ -250,7 +256,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(-8.5f, 5.5f, 4.5f),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		), 
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
 	);
@@ -272,7 +279,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(-8.5f, 5.5f, -26.0f),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		), 
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
 	);
@@ -295,7 +303,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(-9.0f, 3.5f, -41.0f),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		), 
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(0.0f, 0.0f, -1.0f)
 	);
@@ -314,7 +323,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(17.0f, 4.5f, 25.5f),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		),
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(0.0f, 0.0f, -1.0f)
 	);
@@ -368,7 +378,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(15.5f, 4.5f, 4.5f),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		),
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(1.0f, 0.0f, 0.0f)
 	);
@@ -394,7 +405,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(11.0f, 9.0f, -12.0f),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		),
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(1.0f, 0.0f, 0.0f)
 	);
@@ -429,7 +441,8 @@ void TestSpace_Initialize()
 			D3DXVECTOR3(5.5f, 5.0f, -23.0f),
 			D3DXVECTOR3(1.0f, 1.0f, 1.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-		), &Texture(),
+		), 
+		&NMesh::CXModelName(NModel::ScrewIndex),
 		CoreObject::CORE_JUDGE_TYPE_0,
 		D3DXVECTOR3(-1.0f, 0.0f, 0.0f)
 	);

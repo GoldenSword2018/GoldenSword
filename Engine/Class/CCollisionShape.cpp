@@ -72,7 +72,7 @@ Shape::~Shape()
 
 D3DXVECTOR3 Shape::GetEffectivePos( void )const
 {
-	return pParentTransform->GetWorldPosision();
+	return pParentTransform->Get_Position();
 }
 
 //===============================================

@@ -43,7 +43,6 @@ private:
 	
 	CORE_DISCHARGE_JUDGE_TYPE Type;		//飛び方判定タイプ
 	
-
 public:
 	bool bHit;							//当たった
 	D3DXVECTOR3 LocalFace;				//ネジ向き
@@ -51,11 +50,9 @@ public:
 	ShapeSphere CorrectSphere;			//補正球
 
 public:
-	CoreObject(Transform* pTransform) :CoreObject(&Transform(),&Texture()) {};
-	CoreObject(Transform* pTransform, Texture* pTexture) :CoreObject(pTransform, pTexture, CORE_JUDGE_TYPE_0) {};
-	CoreObject(Transform* pTransform, CORE_DISCHARGE_JUDGE_TYPE Type) :CoreObject(pTransform, &Texture(), Type) {};
-	CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type) :CoreObject(pTransform, pTexture, Type, { 0.0f,0.0f,-1.0f }) {};
-	CoreObject(Transform* pTransform, Texture* pTexture, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face);
+	CoreObject(NMesh::AMesh* pModel):CoreObject(&Transform(), pModel , CORE_JUDGE_TYPE_0, { 0.0f,0.0f,-1.0f }) {};
+	CoreObject(Transform* pTransform, NMesh::AMesh* pModel) :CoreObject(pTransform,pModel,CORE_JUDGE_TYPE_0, { 0.0f,0.0f,-1.0f }) {};
+	CoreObject(Transform* pTransform, NMesh::AMesh* pModel, CORE_DISCHARGE_JUDGE_TYPE Type, D3DXVECTOR3 face);
 	~CoreObject();
 
 public:

@@ -9,6 +9,7 @@
 #include<d3dx9.h>
 #include<vector>
 #include"common.h"
+#include"CMesh.h"
 
 using namespace std;
 
@@ -50,10 +51,11 @@ public: // 一般関数
 	void Set_DischargingType(ARMOR_DISCHARGING_TYPE Type);
 
 public: // コンストラクタ | デストラクタ
-	ArmorObject(Transform* pTransform) :ArmorObject(pTransform, &Texture(),FALL) {};
-	ArmorObject(Transform* pTransform, Texture* pTexture) :ArmorObject(pTransform, pTexture, FALL) {};
-	ArmorObject(Transform* pTransform, ARMOR_DISCHARGING_TYPE Type) :ArmorObject(pTransform,&Texture(),Type) {};
-	ArmorObject(Transform* pTransform, Texture* pTexture,ARMOR_DISCHARGING_TYPE Type);
+	ArmorObject(Transform* pTransform, NMesh::AMesh* pModel, ARMOR_DISCHARGING_TYPE Type);
+	ArmorObject(Transform* pTransform, NMesh::AMesh* pModel) :ArmorObject(pTransform, pModel, FALL) {};
+	ArmorObject(Transform* pTransform, ARMOR_DISCHARGING_TYPE Type) :ArmorObject(pTransform, &NMesh::CStandardMesh(), Type) {};
+	ArmorObject(Transform* pTransform) :ArmorObject(pTransform, &NMesh::CStandardMesh(), FALL) {};
+	ArmorObject() :ArmorObject(&Transform(), &NMesh::CStandardMesh(), FALL) {};
 
 public:
 	void Update();		//更新処理

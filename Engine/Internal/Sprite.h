@@ -43,11 +43,11 @@ void Render2D_Porigon(const Transform2* pTransform2);							//ポリゴン描画
 void Render2D_Porigon_Circle(const Transform2* pTransform2,float radius);		//円ポリゴン
 void Render2D_Line(D3DXVECTOR2 Vector1, D3DXVECTOR2 Vector2);					//線(太さとか設定できる線)
 void Render2D_Porigon_Rotate(const Transform2* pTransform2);					//ポリゴン回転
-void Render2D_Texture_Size(const Transform2* pTransform2, Texture* pTexture);	//画像サイズ描画
-void Render2D_Texture_Fill(Transform2* pTransform2, Texture* pTexture);			//ポリゴンサイズに描画
-void Render2D_Texture_Clip(Transform2* pTransform2, Texture* pTexture);			//テクスチャ切り抜きサイズ描画
-void Render2D_Sprite(Transform2* pTransform2, Texture* pTexture);				//スプライト描画
-void Render2D_Sprite_Rotate(Transform2* pTransform2, Texture* pTexture);		//回す
+void Render2D_Texture_Size(const Transform2* pTransform2, NTexture::CTexture* pTexture);	//画像サイズ描画
+void Render2D_Texture_Fill(Transform2* pTransform2, NTexture::CTexture* pTexture);			//ポリゴンサイズに描画
+void Render2D_Texture_Clip(Transform2* pTransform2, NTexture::CTexture* pTexture);			//テクスチャ切り抜きサイズ描画
+void Render2D_Sprite(Transform2* pTransform2, NTexture::CTexture* pTexture);				//スプライト描画
+void Render2D_Sprite_Rotate(Transform2* pTransform2, NTexture::CTexture* pTexture);		//回す
 
 #endif
 

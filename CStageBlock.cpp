@@ -136,9 +136,9 @@ void StageBlock::Finalize()
 StageBlock::StageBlock(Transform* pTransform, int TextureIndex) 
 :
 	ArmorObject(pTransform, FALL),
-	ColShape( &transform, &transform.Rotation, &transform.Scale )
+	ColShape( &transform, &transform.Get_Rotation(), &transform.Get_Scale() )
 {
-	pTexture = Texture_GetTexture(TextureIndex);
+	pTexture = NTexture::Get_Texture(TextureIndex);
 	TmpCollisionChecker::GetInstance()->RegisterCollision_StageBlock( this );
 	pPrev = NULL;
 	pNext = NULL;
@@ -147,9 +147,9 @@ StageBlock::StageBlock(Transform* pTransform, int TextureIndex)
 StageBlock::StageBlock(Transform* pTransform, int TextureIndex, ARMOR_DISCHARGING_TYPE type)
 	: 
 	ArmorObject(pTransform, type),
-	ColShape(&transform, &transform.Rotation, &transform.Scale)
+	ColShape(&transform, &transform.Get_Rotation(), &transform.Get_Scale())
 {
-	pTexture = Texture_GetTexture(TextureIndex);
+	pTexture = NTexture::Get_Texture(TextureIndex);
 	TmpCollisionChecker::GetInstance()->RegisterCollision_StageBlock( this );
 	pPrev = NULL;
 	pNext = NULL;
@@ -168,8 +168,8 @@ void StageBlock::Render()
 	D3DXMATRIX mtxTranslation;
 	D3DXMATRIX mtxScaling;
 
-	D3DXMatrixTranslation(&mtxTranslation, transform.GetWorldPosision().x, transform.GetWorldPosision().y, transform.GetWorldPosision().z);
-	D3DXMatrixScaling(&mtxScaling, transform.Scale.x, transform.Scale.y, transform.Scale.z);
+	D3DXMatrixTranslation(&mtxTranslation, transform.Get_Position().x, transform.Get_Position().y, transform.Get_Position().z);
+	D3DXMatrixScaling(&mtxScaling, transform.Get_Scale().x, transform.Get_Scale().y, transform.Get_Scale().z);
 
 	mtxWorld = mtxScaling * mtxTranslation;
 

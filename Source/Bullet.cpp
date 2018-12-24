@@ -52,7 +52,7 @@ void Bullet_Initialize()
 {
 	for(int i = 0; i<BULLET_MAX; i++)
 	{
-		memcpy(&g_Bullet[i].BulletMesh, GetMeshData(BulletIndex), sizeof(MeshData));
+		memcpy(&g_Bullet[i].BulletMesh, NModel::Get_Data(NModel::BulletIndex), sizeof(NModel::Data));
 	}
 }
 
@@ -92,7 +92,7 @@ void Bullet_Render()
 	{
 		if(g_Bullet[i].GetEnable())
 		{
-			XModel_Render(&g_Bullet[i].BulletMesh);
+			NModel::Render(&g_Bullet[i].BulletMesh);
 		}
 	}
 	
@@ -157,10 +157,17 @@ Bullet::Bullet()
 	IsEnable = false;
 }
 
-Bullet::Bullet(Transform* pTransform, Texture* pTexture):GameObject(pTransform,pTexture),ColSphape(&transform,0.5f)
+Bullet::Bullet(Transform* pTransform):GameObject(pTransform),ColSphape(&this->transform,0.5f)
 {
 	type = NORMAL;
 	Bullet();
+}
+
+Bullet::Bullet(Transform* pTransform,NMesh::AMesh* pModel)
+:
+	GameObject(pTransform,pModel),ColSphape(&this->transform,0.5f)
+{
+	
 }
 
 //-------------------------------------
@@ -182,19 +189,7 @@ void Bullet::Update()
 	{
 	case NORMAL:
 		//スプライトの中心座標を更新する
-		this->BulletMesh.vecPosition += this->face * BULLET_NORMAL_SPEED;
-		break;
-
-	//回転させる弾	(動作が不詳、不必要な処理の可能性)
-	case TORNADO:
-		this->BulletMesh.vecPosition += this->face * BULLET_NORMAL_SPEED;
-		//this->transform.Position = MainPosition;
-
-		this->BulletMesh.vecPosition.x += 0.01f * sinf(D3DXToRadian(value));
-		this->BulletMesh.vecPosition.y +=0.01f * cosf(D3DXToRadian(value));
-
-		break;
-	default:
+		*this->transform.Position() += this->face * BULLET_NORMAL_SPEED;
 		break;
 	}
 
@@ -202,11 +197,11 @@ void Bullet::Update()
 	//	弾の向きを変更する行列変換
 	//===========================================
 
-	D3DXMATRIXA16 matPosition;//Matrix16を使う意味とは?
+	D3DXMATRIXA16 matPosition;
 
 	//平行移動
 	//D3DXMatrixIdentity(&this->BulletMesh.matWorld);
-	D3DXMatrixTranslation(&matPosition, this->BulletMesh.vecPosition.x, this->BulletMesh.vecPosition.y, this->BulletMesh.vecPosition.z);
+	D3DXMatrixTranslation(&matPosition, this->vecPosition.x, this->vecPosition.y, this->vecPosition.z);
 
 	//Z軸回転
 	D3DXMATRIX matRotationZ;
@@ -215,7 +210,7 @@ void Bullet::Update()
 	//回転
 	D3DXMATRIX matRotationFace;
 	D3DXVECTOR3 face = this->face;
-	D3DXVECTOR3 X, Y, Z;				//X:右 Z:前 Y:上	(命名がナンセンス)
+	D3DXVECTOR3 X, Y, Z;				//X:右 Z:前 Y:上
 	D3DXVECTOR3 Faceup = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 	Z = -face;							//逆転？
@@ -239,12 +234,12 @@ void Bullet::Update()
 	D3DXMatrixScaling(&matSize, 0.2f, 0.2f, 0.2f);	//マジックナンバーだ！！
 
 	//ワールド行列
-	this->BulletMesh.matWorld =  matSize * matRotationZ * matRotationFace * matPosition;
+	this->transform.Set_MtxWorld(matSize * matRotationZ * matRotationFace * matPosition);
 
 	fRoll += 0.001f;
 	value += 0.01f;
 
-	this->transform.Position = this->BulletMesh.vecPosition;
+	*this->transform.Position() = this->vecPosition;
 }
 
 //-------------------------------------
@@ -262,7 +257,7 @@ void Bullet::SetBullet(D3DXVECTOR3 position, D3DXVECTOR3 face, TYPE type)
 {
 	D3DXVec3Normalize(&face,&face);		//単位化
 	//this->MainPosition = position;
-	memcpy(&this->BulletMesh.vecPosition, position, sizeof(D3DXVECTOR3));
+	memcpy(&this->vecPosition, position, sizeof(D3DXVECTOR3));
 	this->face = face;
 	this->type = type;
 	this->IsEnable = true;
@@ -291,7 +286,7 @@ const D3DXVECTOR3* Bullet::GetFace()
 //-------------------------------------
 void Bullet::SetPos(D3DXVECTOR3 Pos)
 {
-	this->BulletMesh.vecPosition = Pos;
+	this->vecPosition = Pos;
 	// this->ColSphape.Pos = Pos;
 }
 

@@ -16,9 +16,9 @@ class BodyObject:public GameObject
 private:
 
 public:
-	BodyObject() :BodyObject(&Transform(), &Texture()) {};
-	BodyObject(Transform* pTransform) :BodyObject(pTransform, &Texture()) {};
-	BodyObject(Transform* pTransform, Texture* pTexture);
+	BodyObject();
+	BodyObject(Transform* pTransform);
+	BodyObject(Transform* pTransform, NMesh::AMesh* pModel);
 };
 
 #endif // !CBODYOBJECT_H

@@ -12,11 +12,20 @@
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-BodyObject::BodyObject(Transform* pTransform,Texture* pTexture):GameObject(pTransform,pTexture)
+BodyObject::BodyObject():GameObject()
 {
 
 }
 
+BodyObject::BodyObject(Transform* pTransform):GameObject(pTransform)
+{
+
+}
+
+BodyObject::BodyObject(Transform* pTransform, NMesh::AMesh* pModel) : GameObject(pTransform,pModel)
+{
+
+}
 
 
 

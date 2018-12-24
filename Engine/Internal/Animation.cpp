@@ -44,15 +44,15 @@ void Animation_Update()
 //===============================================
 //	アニメーション NOLOOP
 //===============================================
-bool Animation_NoLoop(Transform2* pTransform,Texture* pTexture,Animation* pAnimetion)
+bool Animation_NoLoop(Transform2* pTransform,NTexture::CTexture* pTexture,NTexture::CAnimation* pAnimetion)
 {
-	float width  = (float)pTexture->GetWidth();
-	float height = (float)pTexture->GetHeight();
+	float width  = (float)pTexture->Get_Width();
+	float height = (float)pTexture->Get_Height();
 
 	pAnimetion->AnimaPatern  = min((g_FrameCounter / pAnimetion->Waitframe),pAnimetion->MaxPatern);
 
-	Texture Tex = *pTexture;
-	Tex.TexCoord = { pTexture->TexScale.width * (pAnimetion->AnimaPatern % pAnimetion->YMaxPatern),pTexture->TexScale.height * (pAnimetion->AnimaPatern / pAnimetion->YMaxPatern) };
+	NTexture::CTexture Tex = *pTexture;
+	Tex.Coord = { pTexture->Scale.x * (pAnimetion->AnimaPatern % pAnimetion->YMaxPatern),pTexture->Scale.y * (pAnimetion->AnimaPatern / pAnimetion->YMaxPatern) };
 	Render2D_Texture_Clip(pTransform,&Tex);
 
 	return pAnimetion->AnimaPatern >= pAnimetion->MaxPatern;
@@ -61,40 +61,40 @@ bool Animation_NoLoop(Transform2* pTransform,Texture* pTexture,Animation* pAnime
 //===============================================
 //	アニメーション LOOP
 //===============================================
-void Animation_Loop(Transform2* pTransform,Texture* pTexture,Animation* pAnimetion)
+void Animation_Loop(Transform2* pTransform,NTexture::CTexture* pTexture,NTexture::CAnimation* pAnimetion)
 {
-	float width  = (float)pTexture->GetWidth();
-	float height = (float)pTexture->GetHeight();
+	float width  = (float)pTexture->Get_Width();
+	float height = (float)pTexture->Get_Height();
 
 	pAnimetion->AnimaPatern = (g_FrameCounter / pAnimetion->Waitframe) % pAnimetion->MaxPatern;
 
-	Texture Tex = *pTexture;
-	Tex.TexCoord = { pTexture->TexScale.width * (pAnimetion->AnimaPatern % pAnimetion->YMaxPatern),pTexture->TexScale.height * (pAnimetion->AnimaPatern / pAnimetion->YMaxPatern) };
+	NTexture::CTexture Tex = *pTexture;
+	Tex.Coord = { pTexture->Scale.x * (pAnimetion->AnimaPatern % pAnimetion->YMaxPatern),pTexture->Scale.y * (pAnimetion->AnimaPatern / pAnimetion->YMaxPatern) };
 	Render2D_Texture_Clip(pTransform,&Tex);
 }
 
 //===============================================
 //	回転アニメーション
 //===============================================
-void Animation_Loop_Rotate(Transform2* pTransform,Texture* pTexture,Animation* pAnimetion)
+void Animation_Loop_Rotate(Transform2* pTransform,NTexture::CTexture* pTexture,NTexture::CAnimation* pAnimetion)
 {
-	float width  = (float)pTexture->GetWidth();
-	float height = (float)pTexture->GetHeight();
+	float width  = (float)pTexture->Get_Width();
+	float height = (float)pTexture->Get_Height();
 
 	pAnimetion->AnimaPatern = (g_FrameCounter / pAnimetion->Waitframe) % pAnimetion->MaxPatern;
 
-	Texture Tex = *pTexture;
-	Tex.TexCoord = { pTexture->TexScale.width * (pAnimetion->AnimaPatern % pAnimetion->YMaxPatern),pTexture->TexScale.height * (pAnimetion->AnimaPatern / pAnimetion->YMaxPatern) };
+	NTexture::CTexture Tex = *pTexture;
+	Tex.Coord = { pTexture->Scale.x * (pAnimetion->AnimaPatern % pAnimetion->YMaxPatern),pTexture->Scale.y * (pAnimetion->AnimaPatern / pAnimetion->YMaxPatern) };
 	Render2D_Sprite_Rotate(pTransform,&Tex);
 }
 
 //===============================================
 //	スコアアニメーション
 //===============================================
-void Animation_Score(Transform2* pTransform,Texture* pTexture,Animation* pAnimetion, int Score, bool bLeft, bool bZero, int digitNum)
+void Animation_Score(Transform2* pTransform,NTexture::CTexture* pTexture,NTexture::CAnimation* pAnimetion, int Score, bool bLeft, bool bZero, int digitNum)
 {
 	int digit = 0, MaxScore = 1;
-	TEXCOORD AnimaTex = {};
+	D3DXVECTOR2 AnimaTex = {};
 
 	//桁取得
 	for (digit = 0; digit < digitNum; digit++)
@@ -123,10 +123,10 @@ void Animation_Score(Transform2* pTransform,Texture* pTexture,Animation* pAnimet
 		while (digit > 0)
 		{
 			Transform2 transform2 = *pTransform;
-			Texture AnimaTex = *pTexture;
+			NTexture::CTexture AnimaTex = *pTexture;
 
 			int AnimePatern = Score % 10;
-			AnimaTex.TexCoord = { pTexture->TexScale.width * (AnimePatern % pAnimetion->YMaxPatern), pTexture->TexScale.height *(AnimePatern / pAnimetion->YMaxPatern) };
+			AnimaTex.Coord = { pTexture->Scale.x * (AnimePatern % pAnimetion->YMaxPatern), pTexture->Scale.y *(AnimePatern / pAnimetion->YMaxPatern) };
 			transform2.Position = { position.x - (pTransform->Scale.x * 0.5f),position.y };
 			Render2D_Sprite(&transform2,&AnimaTex);
 			Score /= 10;
@@ -154,10 +154,10 @@ void Animation_Score(Transform2* pTransform,Texture* pTexture,Animation* pAnimet
 		while (digit > 0)
 		{
 			Transform2 transform2 = *pTransform;
-			Texture AnimaTex = *pTexture;
+			NTexture::CTexture AnimaTex = *pTexture;
 			
 			int AnimaPatern = Score % 10;
-			AnimaTex.TexCoord = { pTexture->TexScale.width * (AnimaPatern % pAnimetion->YMaxPatern),pTexture->TexScale.height *(AnimaPatern / pAnimetion->YMaxPatern) };
+			AnimaTex.Coord = { pTexture->Scale.x * (AnimaPatern % pAnimetion->YMaxPatern),pTexture->Scale.y *(AnimaPatern / pAnimetion->YMaxPatern) };
 			transform2.Position = { position.x - (pTransform->Scale.x * 0.75f),position.y };
 			Render2D_Sprite(&transform2,&AnimaTex);
 			Score /= 10;

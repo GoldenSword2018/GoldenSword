@@ -144,7 +144,7 @@ void MeshField_Ground_Initialize()
 //-------------------------------------
 //	•`‰æ
 //-------------------------------------
-void MeshField_Ground_Render(const D3DXVECTOR3 Center,TEXTURE_NAME Texture)
+void MeshField_Ground_Render(const D3DXVECTOR3 Center,NTexture::Name Texture)
 {
 	LPDIRECT3DDEVICE9 Device = System_GetDevice();
 
@@ -155,7 +155,7 @@ void MeshField_Ground_Render(const D3DXVECTOR3 Center,TEXTURE_NAME Texture)
 	Device->SetStreamSource(0,g_pMeshField_Ground_VertexBuffer,0,sizeof(MeshFieldVertex3D));
 	Device->SetIndices(g_pMeshField_Ground_IndexBuffer);
 	Device->SetFVF(FVF_MESHFIELD_VERTEX3D);
-	Device->SetTexture(0,Texture_GetTexture(Texture));
+	Device->SetTexture(0,NTexture::Get_Texture(Texture));
 	Device->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,0,0,VertexNum,0,PrimitiveNum);
 }
 

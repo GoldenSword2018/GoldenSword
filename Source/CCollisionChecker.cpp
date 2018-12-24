@@ -258,9 +258,10 @@ void TmpCollisionChecker::CheckCollisionPlayerVsStageObj( void )
 
 void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable)
 {
-	float diffX = (pShapeStable->pParentTransform->GetWorldPosision().x - pShapeMovable->pParentTransform->GetWorldPosision().x);		// X座標差分
-	float diffY = (pShapeStable->pParentTransform->GetWorldPosision().y - pShapeMovable->pParentTransform->GetWorldPosision().y);		// Y座標差分
-	float diffZ = (pShapeStable->pParentTransform->GetWorldPosision().z - pShapeMovable->pParentTransform->GetWorldPosision().z);		// Z座標差分
+
+	float diffX = (pShapeStable->pParentTransform->Get_Position().x - pShapeMovable->pParentTransform->Get_Position().x);		// X座標差分
+	float diffY = (pShapeStable->pParentTransform->Get_Position().y - pShapeMovable->pParentTransform->Get_Position().y);		// Y座標差分
+	float diffZ = (pShapeStable->pParentTransform->Get_Position().z - pShapeMovable->pParentTransform->Get_Position().z);		// Z座標差分
 
 	float absX = fabs(diffX);														// X差分絶対値
 	float absY = fabs(diffY);														// Y差分絶対値
@@ -278,16 +279,16 @@ void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable)
 			if (diffZ >= 0)
 			{
 				// 固定物が奥側にある
-				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->GetWorldPosision();
-				NewPos.z = pShapeStable->pParentTransform->GetWorldPosision().z - ( pShapeStable->Length[ 0 ] + pShapeMovable->Length[ 0 ] );
-				pShapeMovable->pParentTransform->SetWorldPosition( NewPos );
+				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->Get_Position();
+				NewPos.z = pShapeStable->pParentTransform->Get_Position().z - ( pShapeStable->Length[ 0 ] + pShapeMovable->Length[ 0 ] );
+				pShapeMovable->pParentTransform->Set_Position( NewPos );
 			}
 			else
 			{
 				// 固定物が手前側にある
-				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->GetWorldPosision();
-				NewPos.z = pShapeStable->pParentTransform->GetWorldPosision().z + ( pShapeStable->Length[ 0 ] + pShapeMovable->Length[ 0 ] );
-				pShapeMovable->pParentTransform->SetWorldPosition( NewPos );
+				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->Get_Position();
+				NewPos.z = pShapeStable->pParentTransform->Get_Position().z + ( pShapeStable->Length[ 0 ] + pShapeMovable->Length[ 0 ] );
+				pShapeMovable->pParentTransform->Set_Position( NewPos );
 			}
 		}
 		else
@@ -296,16 +297,16 @@ void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable)
 			if (diffY >= 0)
 			{
 				// 固定物が上側にある
-				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->GetWorldPosision();
-				NewPos.y = pShapeStable->pParentTransform->GetWorldPosision().y - ( pShapeStable->Length[ 2 ] + pShapeMovable->Length[ 2 ] );
-				pShapeMovable->pParentTransform->SetWorldPosition( NewPos );
+				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->Get_Position();
+				NewPos.y = pShapeStable->pParentTransform->Get_Position().y - ( pShapeStable->Length[ 2 ] + pShapeMovable->Length[ 2 ] );
+				pShapeMovable->pParentTransform->Set_Position( NewPos );
 			}
 			else
 			{
 				// 固定物が下側にある
-				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->GetWorldPosision();
-				NewPos.y = pShapeStable->pParentTransform->GetWorldPosision().y + ( pShapeStable->Length[ 2 ] + pShapeMovable->Length[ 2 ] );
-				pShapeMovable->pParentTransform->SetWorldPosition( NewPos );
+				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->Get_Position();
+				NewPos.y = pShapeStable->pParentTransform->Get_Position().y + ( pShapeStable->Length[ 2 ] + pShapeMovable->Length[ 2 ] );
+				pShapeMovable->pParentTransform->Set_Position( NewPos );
 			}
 		}
 	}
@@ -317,16 +318,16 @@ void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable)
 			if (diffZ >= 0)
 			{
 				// 固定物が奥側にある
-				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->GetWorldPosision();
-				NewPos.z = pShapeStable->pParentTransform->GetWorldPosision().z - ( pShapeStable->Length[ 0 ] + pShapeMovable->Length[ 0 ] );
-				pShapeMovable->pParentTransform->SetWorldPosition( NewPos );
+				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->Get_Position();
+				NewPos.z = pShapeStable->pParentTransform->Get_Position().z - ( pShapeStable->Length[ 0 ] + pShapeMovable->Length[ 0 ] );
+				pShapeMovable->pParentTransform->Set_Position( NewPos );
 			}
 			else
 			{
 				// 固定物が手前側にある
-				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->GetWorldPosision();
-				NewPos.z = pShapeStable->pParentTransform->GetWorldPosision().z + ( pShapeStable->Length[ 0 ] + pShapeMovable->Length[ 0 ] );
-				pShapeMovable->pParentTransform->SetWorldPosition( NewPos );
+				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->Get_Position();
+				NewPos.z = pShapeStable->pParentTransform->Get_Position().z + ( pShapeStable->Length[ 0 ] + pShapeMovable->Length[ 0 ] );
+				pShapeMovable->pParentTransform->Set_Position( NewPos );
 			}
 		}
 		else
@@ -335,16 +336,16 @@ void Collision_PushBack(ShapeOBB *pShapeMovable, ShapeOBB *pShapeStable)
 			if (diffX >= 0)
 			{
 				// 固定物が右側にある
-				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->GetWorldPosision();
-				NewPos.x = pShapeStable->pParentTransform->GetWorldPosision().x - ( pShapeStable->Length[ 1 ] + pShapeMovable->Length[ 1 ] );
-				pShapeMovable->pParentTransform->SetWorldPosition( NewPos );
+				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->Get_Position();
+				NewPos.x = pShapeStable->pParentTransform->Get_Position().x - ( pShapeStable->Length[ 1 ] + pShapeMovable->Length[ 1 ] );
+				pShapeMovable->pParentTransform->Set_Position( NewPos );
 			}
 			else
 			{
 				// 固定物が左側にある
-				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->GetWorldPosision();
-				NewPos.x = pShapeStable->pParentTransform->GetWorldPosision().x + ( pShapeStable->Length[ 1 ] + pShapeMovable->Length[ 1 ] );
-				pShapeMovable->pParentTransform->SetWorldPosition( NewPos );
+				D3DXVECTOR3 NewPos = pShapeMovable->pParentTransform->Get_Position();
+				NewPos.x = pShapeStable->pParentTransform->Get_Position().x + ( pShapeStable->Length[ 1 ] + pShapeMovable->Length[ 1 ] );
+				pShapeMovable->pParentTransform->Set_Position( NewPos );
 			}
 		}
 	}

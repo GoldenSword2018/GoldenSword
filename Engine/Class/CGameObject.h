@@ -31,16 +31,16 @@ public:
 
 public:
 	Transform transform;	//位置
-	Texture texture;		//テクスチャ
-	Render3D render;		//描画
+	NRender::Render3D render;		//描画
 
 public:
-	GameObject():GameObject(&Transform(), &Texture()) {};
-	GameObject(Transform* pTransform):GameObject(pTransform, &Texture()) {};
-	GameObject(Transform* pTransform,Texture* pTexture);
+	GameObject():GameObject(&Transform()) {};
+	GameObject(Transform* pTransform);
+	GameObject(Transform* pTransform, NMesh::AMesh* pModel);
 
 public:
 	void Set_Parent(GameObject* pParent);	//親を設定
+	void Relesase_Parent();	//親を放す
 
 public:
 	virtual void Update();

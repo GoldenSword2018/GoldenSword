@@ -16,16 +16,19 @@ class Sprite
 private:
 
 public:
-	Render2D render;
+	NRender::Render2D render;
 	Transform2 transform;	//位置
-	Texture texture;		//テクスチャ
-	Animation animation;	//アニメーションステータス
+	NTexture::CTexture texture;		//テクスチャ
+	NTexture::CAnimation animation;	//アニメーションステータス
 
+public:
 	//コンストラクタ
 	Sprite();
-	Sprite(Transform2* pTransform2,Texture* pTexture);
-	Sprite(Transform2* pTransform2,Texture* pTexture,Animation* pAnimation);
+	Sprite(Transform2* pTransform2,NTexture::CTexture* pTexture);
+	Sprite(Transform2* pTransform2,NTexture::CTexture* pTexture,NTexture::CAnimation* pAnimation);
 
+public:
+	void Begin();
 };
 
 

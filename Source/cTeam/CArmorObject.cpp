@@ -22,7 +22,7 @@ const D3DXVECTOR3 GRAVITY( 0.0f, -0.02f, 0.0f );	//重力
 //-------------------------------------
 //	コンストラクタ
 //-------------------------------------
-ArmorObject::ArmorObject(Transform* pTransform, Texture* pTexture, ARMOR_DISCHARGING_TYPE Type) :GameObject(pTransform,pTexture)
+ArmorObject::ArmorObject(Transform* pTransform, NMesh::AMesh* pModel,ARMOR_DISCHARGING_TYPE Type) :GameObject(pTransform,pModel)
 {
 	bBreak = false;
 	this->Discharging_Type = Type;
@@ -40,7 +40,7 @@ void ArmorObject::Update()
 	//--------------------------
 	if(bBreak && DelayFrameForDrop <= 0 )
 	{
-		this->transform.Position += this->Speed;
+		*this->transform.Position() += this->Speed;
 		this->Speed += GRAVITY;
 	}
 
